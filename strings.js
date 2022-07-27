@@ -22,7 +22,7 @@ export class StringBuilder {
   length = this.#value.length;
 
   constructor(initialValue) {
-    this.#value = initialValue;
+    this.#value = initialValue || ""; // in case null is passed
   }
 
   /** Appends str to the current value.
