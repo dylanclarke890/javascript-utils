@@ -1,3 +1,15 @@
+export function randomFromRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function randomNumber(num) {
+  return Math.floor(Math.random() * num);
+}
+
+export function randomValue(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 export function shuffleArr(array) {
   let currentIndex = array.length,
     randomIndex;
@@ -10,10 +22,6 @@ export function shuffleArr(array) {
     ];
   }
   return array;
-}
-
-export function randomNumberInRange(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 export function randomHSLColor(saturation = 100, brightness = 100) {
