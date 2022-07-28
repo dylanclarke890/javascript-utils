@@ -25,9 +25,9 @@ export function validatePassword(
     max: 64,
   }
 ) {
-  const vResults = {};
+  const validation = {};
   if (password === undefined || password === "") {
-    return [false, vResults];
+    return [false, validation];
   }
   const { min, max, contains } = settings;
   const { upper, lower, number, special } = contains;
@@ -49,18 +49,18 @@ export function validatePassword(
     if (lenRegEx) regStr += lenRegEx;
     regEx += "/";
     const regEx = new RegExp(regStr);
-    return [password.test(regEx), vResults];
+    return [password.test(regEx), validation];
   }
 
   // validation tests
-  if (lower) vResults.hasLower = password.test(new RegExp(lowerRegEx));
-  if (upper) vResults.hasUpper = password.test(new RegExp(upperRegEx));
-  if (number) vResults.hasNumber = password.test(new RegExp(numberRegEx));
-  if (special) vResults.hasSpecial = password.test(new RegExp(specialRegEx));
-  if (min) vResults.correctLength = length > min;
-  if (max) vResults.correctLength = length < max;
+  if (lower) validation.hasLower = password.test(new RegExp(lowerRegEx));
+  if (upper) validation.hasUpper = password.test(new RegExp(upperRegEx));
+  if (number) validation.hasNumber = password.test(new RegExp(numberRegEx));
+  if (special) validation.hasSpecial = password.test(new RegExp(specialRegEx));
+  if (min) validation.correctLength = length > min;
+  if (max) validation.correctLength = length < max;
 
   // true if all entries in vResults is true.
-  const oSuccess = Object.entries(vResults).every(([_, val]) => val === true);
-  return [oSuccess, vResults];
+  const success = Object.entries(validation).every(([_, val]) => val === true);
+  return [success, validation];
 }
