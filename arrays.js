@@ -33,6 +33,34 @@ export function firstNested(arr) {
 }
 
 // TODO: for large arrays the array could take a while to reverse.
-export function firstNested(arr) {
+export function lastNested(arr) {
   return firstNested(arr.reverse());
+}
+
+export function minOf(arr) {
+  if (!arr.length) return void 0;
+  return arr.reduce(
+    (currentMin, val) => (currentMin < val ? currentMin : val),
+    +Infinity
+  );
+}
+
+export function maxOf(arr) {
+  if (!arr.length) return void 0;
+  return arr.reduce(
+    (currentMax, val) => (currentMax > val ? currentMax : val),
+    -Infinity
+  );
+}
+
+export function sortNums(arrayOfNums, desc = false) {
+  return [...arrayOfNums].sort((a, b) => (desc ? b - a : a - b));
+}
+
+export function removeNulls(arr) {
+  const returnArr = [];
+  arr.forEach((val) => {
+    if (val !== null) returnArr.push(arr);
+  });
+  return returnArr;
 }
