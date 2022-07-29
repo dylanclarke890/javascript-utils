@@ -64,3 +64,12 @@ export function removeNulls(arr) {
   });
   return returnArr;
 }
+
+export function unshift(arr, item) {
+  let len = arr.length;
+  while (len) {
+    arr[len] = arr[len - 1];
+    len--;
+  }
+  arr[0] = item;
+}
