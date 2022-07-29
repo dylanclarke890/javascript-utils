@@ -35,23 +35,26 @@ export function msToTime(ms) {
 
 /**
  * Converts seconds to a `minutes:seconds` or `hours:minutes:seconds` time string
- * (if the second parameter is an object with `includeHours` set to a truthy value),
- * e.g. `123` becomes `"02:03"`, or `"00:02:03"` if `includeHours` is truthy.
+ * (if `includeHours` is true).
+ * @example secsToTimeString(123) => "02:03".
+ * @example secsToTimeString(123, includeHrs = true) => "00:02:03".
  * @param {number} secs The number of seconds.
- * @param {boolean} includeHours Optional.
+ * @param {boolean} includeHrs Optional.
  * @return {string} The time string.
  */
-export const secondsToTimeString = (secs, includeHours = false) => {
+export function secsToTimeString(secs, includeHrs = false) {
   if (!secs || !new RegExp(/^[0-9]+$/).test(secs)) {
-    return includeHours ? "00:00:00" : "00:00";
+    return includeHrs ? "00:00:00" : "00:00";
   }
+
   let hours = "";
   let minutes = integerDivision(secs, 60);
-  if (includeHours) {
+  if (includeHrs) {
     hours = `${(integerDivision(secs, 60 * 60) + "").padStart(2, "0")}:`;
     minutes = minutes % 60;
   }
-  minutes += "";
-  const seconds = (secs % 60) + "";
-  return `${hours}${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`;
-};
+  minutes = `${minutes}`.padStart(2, "0");
+  const seconds = `${secs % 60}`.padStart(2, "0");
+
+  return `${hours}${minutes}:${seconds}`;
+}
