@@ -1,28 +1,34 @@
-/** Returns distinct elements from a sequence. */
+/** @returns the distinct elements from the array. */
 export function distinct(arr) {
   return [...new Set(arr)];
 }
 
+/** @returns the sum of the array. */
 export function sumOf(arr) {
   return arr.reduce((a, b) => a + b, 0);
 }
 
+/** @returns a shallow copy of the array. */
 export function clone(arr) {
   return arr.slice(0);
 }
 
+/** @returns if all the items in the array are numbers, or the array is empty. */
 export function isArrayOfNumber(arr) {
   return !arr.some((v) => isNaN(v));
 }
 
+/** @returns the first item in the array. */
 export function firstItem(arr) {
   return arr[0];
 }
 
+/** @returns the last item in the array. */
 export function lastItem(arr) {
   return arr[arr.length - 1];
 }
 
+/** @returns the first nested array or object in the array. */
 export function firstNested(arr) {
   let nested;
   for (let val in arr) {
@@ -32,11 +38,13 @@ export function firstNested(arr) {
   return nested;
 }
 
-// TODO: for large arrays the array could take a while to reverse.
+/** @todo could take a while to reverse a large array.
+ *  @returns the first nested array or object in the array. */
 export function lastNested(arr) {
   return firstNested(arr.reverse());
 }
 
+/**  @returns the smallest value in the array. */
 export function minOf(arr) {
   if (!arr.length) return void 0;
   return arr.reduce(
@@ -45,6 +53,7 @@ export function minOf(arr) {
   );
 }
 
+/**  @returns the largest value in the array. */
 export function maxOf(arr) {
   if (!arr.length) return void 0;
   return arr.reduce(
@@ -53,10 +62,12 @@ export function maxOf(arr) {
   );
 }
 
+/**  @returns a sorted array without mutating the original. */
 export function sortNums(arrayOfNums, desc = false) {
   return [...arrayOfNums].sort((a, b) => (desc ? b - a : a - b));
 }
 
+/**  @returns an array without nulls that leaves the original unchanged. */
 export function removeNulls(arr) {
   const returnArr = [];
   arr.forEach((val) => {
@@ -65,6 +76,7 @@ export function removeNulls(arr) {
   return returnArr;
 }
 
+/**  unshifts an array. */
 export function unshift(arr, item) {
   let len = arr.length;
   while (len) {
