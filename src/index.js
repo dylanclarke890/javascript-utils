@@ -1,3 +1,4 @@
+export { StringBuilder } from "./modules/data-types/StringBuilder";
 export {
   isValidDate,
   isValidDateTimeStr,
@@ -98,7 +99,6 @@ export {
   str,
   trim,
   typeToStr,
-  StringBuilder,
 } from "./modules/misc/strings";
 export { uuid, NonCanonicalUUID, uniqueId } from "./modules/misc/uuid";
 export { validatePassword } from "./modules/misc/validation";
