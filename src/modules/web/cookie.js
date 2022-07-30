@@ -41,6 +41,6 @@ export function setCookie(name, value, exdays) {
  * @param {string} cookieName The cookie name.
  * @return {undefined}
  */
-export function unsetCookie(cookieName) {
+export function clearCookie(cookieName) {
   setCookie(cookieName, "", -365);
 }

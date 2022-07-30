@@ -175,7 +175,7 @@ export function nestedTreeMapSet(rootMap, keys, value) {
  * @param {Array} keys Array of keys to check. Each key represents a nested node of the tree map.
  * @return {boolean} "true" if all the nested keys exist, false otherwise.
  */
-export const nestedTreeMapHas = (rootMap, keys) => {
+export function nestedTreeMapHas(rootMap, keys) {
   let current = rootMap;
   let i = 0;
   const l = keys.length;
@@ -188,7 +188,7 @@ export const nestedTreeMapHas = (rootMap, keys) => {
     i++;
   }
   return i == l;
-};
+}
 
 /**
  * Gets a value from a nested tree map.
@@ -196,7 +196,7 @@ export const nestedTreeMapHas = (rootMap, keys) => {
  * @param {Array} keys Array of keys. Each key represents a nested node of the tree map.
  * @return {*} The value of the tree map or "undefined" if there is no value for the given nested keys.
  */
-export const nestedTreeMapGet = (rootMap, keys) => {
+export function nestedTreeMapGet(rootMap, keys) {
   let current = rootMap;
   let i = 0;
   const lastIndex = keys.length - 1;
@@ -216,7 +216,7 @@ export const nestedTreeMapGet = (rootMap, keys) => {
     }
   }
   return void 0;
-};
+}
 
 /**
  * Nests the properties of an object using an array of props definitions and defaults.

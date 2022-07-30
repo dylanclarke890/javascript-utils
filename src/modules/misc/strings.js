@@ -62,6 +62,15 @@ export function trim(str, characterMask, options = {}) {
   return str.replace(regex, "");
 }
 
+/**
+ * Converts a type to its string representation.
+ * @param {*} type
+ * @return {string} The string representation of `type`.
+ */
+export function typeToStr(type) {
+  return Object.prototype.toString.call(type);
+}
+
 export class StringBuilder {
   #value = "";
   hasValue = this.#value.length > 0;

@@ -34,7 +34,7 @@ export function isValidDateTimeStr(str) {
  * constructor which represents the date on which to compute and return the UTC date.
  * @return {string} The UTC datetime.
  */
-export const utcDate = ({
+export function utcDate({
   Y = true,
   m = true,
   d = true,
@@ -42,7 +42,7 @@ export const utcDate = ({
   i = true,
   s = true,
   date = null,
-} = []) => {
+} = []) {
   const finalDate = date ? new Date(date) : new Date();
   const year = finalDate.getUTCFullYear();
   const month = (finalDate.getUTCMonth() + 1 + "").padStart(2, "0");
@@ -71,4 +71,4 @@ export const utcDate = ({
   let finalUTCDate = UTCDate.replace("--", "-");
   finalUTCDate = finalUTCDate.replace("::", ":");
   return finalUTCDate;
-};
+}

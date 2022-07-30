@@ -4,7 +4,7 @@
  * @param {Function} [onSuccess] An optional callback to execute on success.
  * @param {Function} [onFailure] An optional callback to execute on failure.
  */
-function fallbackCopyTextToClipboard(text, onSuccess, onFailure) {
+export function fallbackCopyTextToClipboard(text, onSuccess, onFailure) {
   const bodyScrollTop =
     document.documentElement.scrollTop || document.body.scrollTop;
   const textArea = document.createElement("textarea");
