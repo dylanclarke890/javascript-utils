@@ -108,6 +108,55 @@ export function isObjEqualDeep(objA, objB) {
 }
 
 /**
+ * Tests if a partial object is a subset of another object.
+ * @param {Object} obj An object.
+ * @param {Object} subset The object to check.
+ * @return {boolean} False if subset has a key which is not in obj,
+ * or has at least one key which is also in obj but with a different value
+ * (weak comparison).
+ */
+export function partialShallowEqual(obj, subset) {
+  return isEqualShallow(
+    Object.keys(subset).reduce((carry, key) => {
+      carry[key] = obj[key];
+      return carry;
+    }, {}),
+    subset
+  );
+}
+
+/**
+ * If a property is on both objects but each object has a different value for that same property
+ * (using weak equality comparison), the returned property will be set on both objects with their
+ * respective values.
+ * @return {Object} An object containing the shallow difference of the objects.
+ */
+export function objDiffShallow(objA, objB) {
+  const diff = {
+    a: {},
+    b: {},
+  };
+  if (isEqualShallow(objA, objB)) return diff;
+  const keysA = Object.keys(objA);
+  const keysB = Object.keys(objB);
+  for (let i = 0; i < keysA.length; i++) {
+    const prop = keysA[i];
+    if (!isObjPropEqual(objA, objB, prop)) {
+      diff.a[prop] = objA[prop];
+      if (hasOwnProperty.call(objB, prop)) diff.b[prop] = objB[prop];
+    }
+  }
+  for (let i = 0; i < keysB.length; i++) {
+    const prop = keysB[i];
+    if (!isObjPropEqual(objB, objA, prop)) {
+      diff.b[prop] = objB[prop];
+      if (hasOwnProperty.call(objA, prop)) diff.a[prop] = objA[prop];
+    }
+  }
+  return diff;
+}
+
+/**
  * Returns a reference to the global object.
  * @return {Window|global} The global object (this function is cross-platform aware).
  */
