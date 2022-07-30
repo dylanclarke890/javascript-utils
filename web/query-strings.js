@@ -153,3 +153,13 @@ export function parseMultiDimQueryStrings(str, array) {
 
   return array;
 }
+
+/**
+ * Gets the query string arguments of the current location in a multidimensional fashion
+ * (multidimension-aware).
+ * @return {Object} An object representing the query string arguments.
+ */
+export function getMultiDimQueryStrings() {
+  const obj = {};
+  return parseMultiDimQueryStrings(location.search.substring(1), obj);
+}
