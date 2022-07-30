@@ -1,4 +1,4 @@
-import { trim } from "./strings";
+import { trim } from "../strings";
 
 /**
  * Tests if the given value is a valid date.
