@@ -1,9 +1,4 @@
 /**
- * @type {Function}
- */
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
  * Function implementing "Object.is" behaviour.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
  * @param {*} x The first value to compare.
@@ -18,6 +13,46 @@ export function is(x, y) {
 }
 
 /**
+ * @type {Function}
+ */
+const hasOwnProp = Object.prototype.hasOwnProperty;
+
+/**
+ * Tests if an object is empty.
+ * @param {Object} obj The object to test.
+ * @return {boolean} "true" if the given object is empty (does not have own properties),
+ * "false" otherwise. */
+export function isObjectEmpty(obj) {
+  for (const prop in obj) if (hasOwnProp.call(obj, prop)) return false;
+  return true;
+}
+
+/**
+ * Tests if a value is an object.
+ * @param {*} obj The value to test.
+ * @return {boolean} "true" if "obj" is indeed an object, "false" otherwise.
+ */
+export function isObject(obj) {
+  return (
+    Object.prototype.toString.call(obj) === Object.prototype.toString.call({})
+  );
+}
+
+/**
+ * Tests if a value is a plain object (i.e. "{}", an object literal).
+ * @param {*} obj The value to test.
+ * @return {boolean} "true" if "obj" is a plain object, "false" otherwise.
+ */
+export function isPlainObject(obj) {
+  return (
+    obj !== null &&
+    typeof obj === "object" &&
+    obj.constructor === Object &&
+    isObject(obj)
+  );
+}
+
+/**
  * Checks whether a prop of an object equals in the other object (shallow comparison).
  * @param {Object} objA The first object.
  * @param {Object} objB The second object.
@@ -25,7 +60,7 @@ export function is(x, y) {
  * @return {boolean} True if the value of "prop" in "objA" is shallowly equal to the value of "prop" in "objB".
  */
 export function objectPropEqual(objA, objB, prop) {
-  return hasOwnProperty.call(objB, prop) && is(objA[prop], objB[prop]);
+  return hasOwnProp.call(objB, prop) && is(objA[prop], objB[prop]);
 }
 
 /**
@@ -42,21 +77,19 @@ export function shallowEqual(objA, objB) {
 
   if (
     typeof objA !== "object" ||
-    objA === null ||
     typeof objB !== "object" ||
+    objA === null ||
     objB === null
-  ) {
+  )
     return false;
-  }
+
   const keysA = Object.keys(objA);
   const keysB = Object.keys(objB);
-
   if (keysA.length !== keysB.length) return false;
 
   // Test for A's keys different from B.
-  for (let i = 0; i < keysA.length; i++) {
+  for (let i = 0; i < keysA.length; i++)
     if (!objectPropEqual(objA, objB, keysA[i])) return false;
-  }
 
   return true;
 }
