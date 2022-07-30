@@ -1,11 +1,11 @@
-import { typeToStr } from "./conversions";
+import { typeToStr } from "../misc/strings";
 import {
   isPrimitiveType,
   isArray,
   isObjectLiteral,
   isReferenceType,
   hasCyclicReference,
-} from "./compare";
+} from "./introspection";
 import {
   nestedTreeMapHas,
   nestedTreeMapSet,

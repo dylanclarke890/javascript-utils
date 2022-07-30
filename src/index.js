@@ -72,7 +72,7 @@ export {
   ip,
   hostname,
   domain,
-  dirname,
+  directoryName,
   filename,
   rwxt,
   subnet,

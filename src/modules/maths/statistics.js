@@ -1,5 +1,5 @@
 import { sum, integerDivision, isOdd } from "./math";
-import { sortNums } from "./array";
+import { sortNums } from "../object-handling/arrays";
 
 /**
  * Computes the mean of the given numbers.

@@ -1,4 +1,4 @@
-import { hashString } from "./hash";
+import { hashString } from "../maths/hash";
 
 export function getLuminance(color) {
   const c = parseInt(color, 16);

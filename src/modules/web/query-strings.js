@@ -1,5 +1,5 @@
 import { buildFormData } from "./form-data";
-import { isJSONString } from "../introspection";
+import { isJSONString } from "../object-handling/introspection";
 
 /**
  * Constructs a query string from the given data.

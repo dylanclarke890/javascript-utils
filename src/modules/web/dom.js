@@ -1,4 +1,4 @@
-import { uniqueId } from "../uuid";
+import { uniqueId } from "../misc/uuid";
 
 /**
  * @return {boolean} True if the element is in viewport.

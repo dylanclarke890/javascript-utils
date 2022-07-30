@@ -1,4 +1,4 @@
-import { integerDivision } from "./math";
+import { integerDivision } from "../maths/math";
 
 /**
  * Returns the current Unix time in milliseconds.
