@@ -1,4 +1,4 @@
-import { escapeRegExp } from "./regex";
+import { escapeRegExp } from "./misc/regex";
 
 export function getDigits(str) {
   const asArr = [...str];
