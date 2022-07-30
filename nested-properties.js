@@ -217,3 +217,28 @@ export const nestedTreeMapGet = (rootMap, keys) => {
   }
   return void 0;
 };
+
+/**
+ * Nests the properties of an object using an array of props definitions and defaults.
+ * Returns the leaf.
+ * @param {Object} root The root object.
+ * @param {Array} nestedPropsDef The nexted props definitions.
+ * @param {boolean} [rootArrayIfFalse] True if the root should be an array if the first argument "root" is falsy.
+ * @return {*} The leaf.
+ */
+export function nestedObjectConstructValue(
+  root,
+  nestedPropsDef,
+  rootArrayIfFalse
+) {
+  root = root || (rootArrayIfFalse ? [] : {});
+  let leaf = root;
+  for (let i = 0; i < nestedPropsDef.length; i++) {
+    const propDef = nestedPropsDef[i];
+    const propKey = Object.keys(propDef)[0];
+    const propDefault = propDef[propKey];
+    leaf[propKey] = leaf[propKey] || propDefault;
+    leaf = leaf[propKey];
+  }
+  return leaf;
+}
