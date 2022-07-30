@@ -123,5 +123,33 @@ export function parseMultiDimQueryStrings(str, array) {
       lastObj[key] = value;
     }
   }
-  return lastObj;
+
+  const normalizeIfConsecInts = function (obj) {
+    const keys = Object.keys(obj);
+    const truthMap = {};
+    for (let i = 0; i < keys.length; i++) truthMap[i] = true;
+    const array = [];
+    for (let i = 0; i < keys.length; i++) {
+      const prop = keys[i] + "";
+      if (!prop.match(/^[0-9]+$/)) return obj;
+      const intProp = Number(prop);
+      if (truthMap[intProp]) {
+        array[intProp] = obj[prop];
+        delete truthMap[intProp];
+      } else return obj;
+    }
+    if (Object.keys(truthMap).length === 0) return array;
+    return obj;
+  };
+  const normalizeToArr = function normalizeToArr(obj) {
+    for (const prop in obj) {
+      if (isPlainObject(obj[prop])) {
+        obj[prop] = normalizeIfConsecInts(obj[prop]);
+        normalizeToArr(obj[prop]);
+      }
+    }
+  };
+  normalizeToArr(array);
+
+  return array;
 }
