@@ -251,3 +251,43 @@ export function hasCyclicReference(obj) {
   detect(obj);
   return detected;
 }
+
+/**
+ * Tests whether a value is undefined or not.
+ *
+ * @param {*} value A value
+ * @return {boolean} True value is undefined, false otherwise.
+ */
+export function isUndefined(value) {
+  return typeof value === "undefined";
+}
+
+/**
+ * Tests if the given value is an int.
+ *
+ * @param {*} value The value.
+ * @return {boolean} True if value is an int, false otherwise.
+ */
+export function isInt(value) {
+  return Number.isInteger(value);
+}
+
+/**
+ * Tests if the given string is an integer string.
+ *
+ * @param {*} a The string.
+ * @return {boolean} True if the given string is an integer string, false otherwise.
+ */
+export function ctypeDigit(a) {
+  return Boolean(a.match(/^[0-9]+$/));
+}
+
+/**
+ * Tests if the given value is an int or an integer string.
+ *
+ * @param {*} a The value.
+ * @return {boolean} True if the value is an int or an integer string, false otherwise.
+ */
+export function isIntegerOrIntegerStr(a) {
+  return Number.isInteger(a) || ctypeDigit(a);
+}
