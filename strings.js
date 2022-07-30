@@ -26,6 +26,14 @@ export function intSeparateThousands(num, sep = ",") {
     .join("");
 }
 
+/**
+ * Casts a value to a string.
+ * @return {string} The string representation of the value.
+ */
+export function str(v) {
+  return "" + v;
+}
+
 export class StringBuilder {
   #value = "";
   hasValue = this.#value.length > 0;
@@ -36,21 +44,21 @@ export class StringBuilder {
   }
 
   /** Appends str to the current value.
-   *  Returns the current instance so additional calls can be chained. */
+   *  @return the current instance so additional calls can be chained. */
   append(str) {
     this.#value = `${this.#value}${str}`;
     return this;
   }
 
   /** Prepends str to the current value.
-   *  Returns the current instance so additional calls can be chained. */
+   *  @return the current instance so additional calls can be chained. */
   prepend(str) {
     this.#value = `${str}${this.#value}`;
     return this;
   }
 
   /** Appends str to the current value at the specified start index.
-   *  Returns the current instance so additional calls can be chained. */
+   *  @return the current instance so additional calls can be chained. */
   insertAt(start, value) {
     this.#value =
       this.#value.substring(0, start) + value + this.value.substring(start);
@@ -58,7 +66,7 @@ export class StringBuilder {
   }
 
   /** Using either a regular expression or a string, find and replace the specified value.
-   * Returns the current instance so additional calls can be chained. */
+   * @return the current instance so additional calls can be chained. */
   replace(match, replacement) {
     if (searchFor instanceof RegExp)
       this.#value = this.#value.replace(match, replacement);
@@ -67,18 +75,18 @@ export class StringBuilder {
   }
 
   /** Clears the current instance.
-   *  Returns the current instance so additional calls can be chained. */
+   *  @return the current instance so additional calls can be chained. */
   clear() {
     this.#value = "";
     return this;
   }
 
-  /** Returns a new StringBuilder instance with the current value */
+  /** @return a new StringBuilder instance with the current value */
   copy() {
     return new StringBuilder(this.#value);
   }
 
-  /** Get the current value of this instance. */
+  /** @return the current value of this instance. */
   toString() {
     return this.#value;
   }

@@ -41,6 +41,40 @@ export function isNullOrWhiteSpace(str) {
 }
 
 /**
+ * Tests if a string is a valid JSON string.
+ * @return {boolean} True if str is a JSON string.
+ */
+export function isJSONString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Checks using strict equality.
+ */
+export function isTrue(value) {
+  return value === true;
+}
+
+/**
+ * @return {boolean} True if the val is truthy.
+ */
+export function isTruthy(value) {
+  return value == true;
+}
+
+/**
+ * @return {boolean} True if every value in the array is true.
+ */
+export function allTruthy(...values) {
+  return values.every(isTruthy);
+}
+
+/**
  * @return {boolean} True if value is undefined.
  */
 export function isUndefined(value) {
