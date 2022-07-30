@@ -34,21 +34,17 @@ export class NonCanonicalUUID {
   }
 }
 
-/**
- * @type {string}
- */
 const idCounter = "RANDOM_PREFIX";
 /**
  * Generates a unique ID which can be used as an "id" attribute.
- * @param {string|undefined} [uniqueIdPrefix] Local unique ID prefix which overrides the prefix
- * set on the "config" configuration object.
+ * @param {string|undefined} [uniqueIdPrefix] Local unique ID prefix
  * @return {string} The unique ID.
  */
-export function uniqueId(uniqueIdPrefix = void 0) {
+export function uniqueId(uniqueIdPrefix = "RANDOM_PREFIX") {
   const globalObject = getGlobalObject();
   globalObject[idCounter] = globalObject[idCounter] || 0;
   globalObject[idCounter]++;
   const uniqueIdCounter = globalObject[idCounter];
-  const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
+  const uniqueId = uniqueIdPrefix + uniqueIdCounter;
   return uniqueId;
 }
