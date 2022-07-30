@@ -41,10 +41,11 @@ export function arrToObject(arr, func) {
  * @return {Object} An object having only the properties which return true for
  * the callback function.
  */
-export const selectPropertiesWhere = (obj, func) =>
-  Object.keys(obj).reduce((carry, key) => {
-    if (func(obj[key], key)) {
-      carry[key] = obj[key];
-    }
-    return carry;
-  }, {});
+export function selectPropertiesWhere(obj, func) {
+    return Object.keys(obj).reduce((carry, key) => {
+      if (func(obj[key], key)) {
+        carry[key] = obj[key];
+      }
+      return carry;
+    }, {});
+}
