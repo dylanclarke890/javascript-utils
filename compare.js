@@ -132,3 +132,77 @@ export function getGlobalObject() {
   return typeof global !== "undefined" ? global : window;
 }
 
+/**
+ * Yields values of an array mapping the yielded value.
+ * @generator
+ * @param {Array} items An array of items.
+ * @param {*} func The function to call.
+ *               The function will receive, in order the nth item,
+ *               the index of the item in the array of items and the whole items array
+ *               as parameters.
+ * @param {*} thisArg Optional this arg of the called function (defaults to undefined).
+ * @yields {*} The next yielded mapped item.
+ */
+export function* mapYield(items, func, thisArg = void 0) {
+  items.map();
+  const boundFunc = func.bind(thisArg);
+  for (let i = 0; i < items.length; i++) yield boundFunc(items[i], i, items);
+}
+
+/**
+ * Compares two arrays deeply.
+ *
+ * @param {Array} arr1 First array.
+ * @param {Array} arr2 Second array.
+ * @return {boolean} True if they are equal (same indexes and same values), false otherwise.
+ */
+export function deepCompareArr(arr1, arr2) {
+  if (arr1.length != arr2.length) return false;
+
+  const toString = Object.prototype.toString;
+  const arrProtoStr = toString.call([]);
+  for (let i = 0; i < arr1.length; i++) {
+    if (!(i in arr2)) return false;
+    else if (isPlainObject(arr1[i])) {
+      if (!isPlainObject(arr2[i]) || !deepObjectCompare(arr1[i], arr2[i]))
+        return false;
+    } else if (arrProtoStr === toString.call(arr1[i]))
+      if (
+        arrProtoStr !== toString.call(arr2[i]) ||
+        !deepCompareArr(arr1[i], arr2[i])
+      )
+        return false;
+
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
+}
+
+/**
+ * Compare two objects deeply.
+ * @param {Object} obj1 First object.
+ * @param {Object} obj2 Second object.
+ * @return {boolean} True if they are equal by value or ref, false otherwise.
+ */
+export function deepObjectCompare(obj1, obj2) {
+  const toString = Object.prototype.toString;
+  const arrProtoStr = toString.call([]);
+  for (const property in obj1) {
+    if (!obj2[property]) return false;
+    else if (isPlainObject(obj1[property])) {
+      if (
+        !isPlainObject(obj2[property]) ||
+        !deepObjectCompare(obj1[property], obj2[property])
+      )
+        return false;
+    } else if (arrProtoStr === toString.call(obj1[property])) {
+      if (
+        arrProtoStr !== toString.call(obj2[property]) ||
+        !deepArrayCompare(obj1[property], obj2[property])
+      )
+        return false;
+    } else if (obj1[property] !== obj2[property]) return false;
+  }
+
+  return true;
+}
