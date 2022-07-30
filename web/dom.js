@@ -143,3 +143,42 @@ export function countTextareaLines(textarea) {
   if (result == 0) result = 1;
   return result;
 }
+
+/**
+ * Checks if the scroll of an element is on the bottom.
+ * @param {Element} DOMNode Element.
+ * @return {boolean} True if the scroll is on the bottom.
+ */
+export function isScrollOnBottom(DOMNode) {
+  const ret = DOMNode.scrollTop + DOMNode.offsetHeight >= DOMNode.scrollHeight;
+  return ret;
+}
+
+/**
+ * Returns the default browser's vertical scrollbar width.
+ * @return {Number} The scrollbar width.
+ */
+export function getVerticalScrollBarWidth() {
+  const scrollDiv = document.createElement("div");
+  scrollDiv.className = "vertical-scrollbar-measure";
+  const sheet = document.createElement("style");
+  sheet.innerHTML =
+    "div.vertical-scrollbar-measure { width: 100px; height: 100px; overflow: scroll; position: absolute; top: -9999px; }";
+  document.body.appendChild(sheet);
+  document.body.appendChild(scrollDiv);
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  const sheetParent = sheet.parentNode;
+  sheetParent.removeChild(sheet);
+  return scrollbarWidth;
+}
+
+/**
+ * Checks if an element with "text-overflow: ellipsis;" has the ellipsis active
+ * and therefore its text is truncated.
+ * @param {Element} e The DOM element.
+ * @return {boolean} True if ellipsis are present, false otherwise.
+ */
+export function isEllipsisActive(e) {
+  return e.offsetWidth < e.scrollWidth;
+}
