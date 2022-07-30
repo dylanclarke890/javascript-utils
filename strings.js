@@ -1,11 +1,3 @@
-export function isNullOrEmpty(str) {
-  return str === undefined || str === "";
-}
-
-export function isNullOrWhiteSpace(str) {
-  return str === undefined || str === " ";
-}
-
 export function getDigits(str) {
   const asArr = [...str];
   const res = [];

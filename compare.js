@@ -93,3 +93,42 @@ export function shallowEqual(objA, objB) {
 
   return true;
 }
+
+/**
+ * Tests to see whether something is an array or not.
+ * @param {*} val A variable to check whether it is an array or not.
+ * @return {boolean} True if the parameter passed in is an array, false otherwise.
+ */
+export function isArray(val) {
+  return (
+    Object.prototype.toString.call(val) === Object.prototype.toString.call([])
+  );
+}
+
+/**
+ * Tests if the given value is callable.
+ * @param {*} v The value.
+ * @return {boolean} True if callable, false otherwise.
+ */
+export function isCallable(v) {
+  return typeof v === "function";
+}
+
+/** Checks if the given string is undefined or equal to an empty string ("") */
+export function isNullOrEmpty(str) {
+  return str === undefined || str === "";
+}
+
+/** Checks if the given string is undefined or whitespace only (" ") */
+export function isNullOrWhiteSpace(str) {
+  return str === undefined || str === " ";
+}
+
+/**
+ * Returns a reference to the global object.
+ * @return {Window|global} The global object (this function is cross-platform aware).
+ */
+export function getGlobalObject() {
+  return typeof global !== "undefined" ? global : window;
+}
+

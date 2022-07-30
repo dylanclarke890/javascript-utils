@@ -1,3 +1,5 @@
+import { getGlobalObject } from "./compare";
+
 /**
  * Generates a new UUID.
  * @see https://github.com/tastejs/todomvc/blob/gh-pages/examples/react/js/utils.js
@@ -30,4 +32,23 @@ export class NonCanonicalUUID {
     const UUID = uuid();
     return UUID + "-" + this.#count;
   }
+}
+
+/**
+ * @type {string}
+ */
+const idCounter = "RANDOM_PREFIX";
+/**
+ * Generates a unique ID which can be used as an "id" attribute.
+ * @param {string|undefined} [uniqueIdPrefix] Local unique ID prefix which overrides the prefix
+ * set on the "config" configuration object.
+ * @return {string} The unique ID.
+ */
+export function uniqueId(uniqueIdPrefix = void 0) {
+  const globalObject = getGlobalObject();
+  globalObject[idCounter] = globalObject[idCounter] || 0;
+  globalObject[idCounter]++;
+  const uniqueIdCounter = globalObject[idCounter];
+  const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
+  return uniqueId;
 }
