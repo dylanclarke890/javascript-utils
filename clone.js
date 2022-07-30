@@ -2,7 +2,7 @@ import { typeToStr } from "./conversions";
 import {
   isPrimitiveType,
   isArray,
-  isPlainObject,
+  isObjectLiteral,
   isReferenceType,
   hasCyclicReference,
 } from "./compare";
@@ -85,7 +85,7 @@ export function deepObjectExtend(
   extendArrays = true
 ) {
   for (const property in sourceObject) {
-    if (sourceObject[property] && isPlainObject(sourceObject[property])) {
+    if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
       destinationObject[property] = destinationObject[property] || {};
       deepObjectExtend(
         destinationObject[property],
@@ -122,7 +122,7 @@ export function deepObjectCloningExtend(...args) {
   for (let i = 1; args[i]; i++) {
     sourceObject = args[i];
     for (const property in sourceObject) {
-      if (sourceObject[property] && isPlainObject(sourceObject[property])) {
+      if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
         destinationObject[property] = destinationObject[property] || {};
         deepObjectExtend(
           destinationObject[property],
@@ -149,7 +149,7 @@ export function extend(destinationObj, ...sourceObjects) {
   let options = {};
   if (sourceObjects.length) {
     const last = sourceObjects.pop();
-    if (isArray(last) && last.length === 1 && isPlainObject(last[0])) {
+    if (isArray(last) && last.length === 1 && isObjectLiteral(last[0])) {
       options = last[0];
     } else sourceObjects.push(last);
   }
@@ -237,9 +237,11 @@ export function extendDecorate(destinationObject, ...rest) {
         property,
         path: currentPath,
       } = currentStack.pop();
-      if (sourceObject[property] && isPlainObject(sourceObject[property])) {
+      if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
         // "sourceObject[property]" is an object of class "Object".
-        destinationObject[property] = isPlainObject(destinationObject[property])
+        destinationObject[property] = isObjectLiteral(
+          destinationObject[property]
+        )
           ? destinationObject[property]
           : {};
         mapKeys(
