@@ -182,3 +182,117 @@ export function getVerticalScrollBarWidth() {
 export function isEllipsisActive(e) {
   return e.offsetWidth < e.scrollWidth;
 }
+
+/**
+ * Focuses an input without scrolling.
+ * @see https://stackoverflow.com/questions/4963053/focus-to-input-without-scrolling
+ * @param {Element} elem The DOM element.
+ */
+export const cursorFocus = function (elem) {
+  let x, y;
+  // More sources for scroll x, y offset.
+  if (typeof window.pageXOffset !== "undefined") {
+    x = window.pageXOffset;
+    y = window.pageYOffset;
+  } else if (typeof window.scrollX !== "undefined") {
+    x = window.scrollX;
+    y = window.scrollY;
+  } else if (
+    document.documentElement &&
+    typeof document.documentElement.scrollLeft !== "undefined"
+  ) {
+    x = document.documentElement.scrollLeft;
+    y = document.documentElement.scrollTop;
+  } else {
+    x = document.body.scrollLeft;
+    y = document.body.scrollTop;
+  }
+  elem.focus();
+  if (typeof x !== "undefined") window.scrollTo(x, y);
+};
+
+/**
+ * Detects wrapped elements.
+ * @param {string|Element[]} classNameOrElements A class name (with or without the leading dot) or
+ * the DOM elements to check.
+ * @return {Element[]} The wrapped DOM elements.
+ */
+export function detectWrapped(classNameOrElements) {
+  let elements;
+  if (typeof classNameOrElements === "string") {
+    classNameOrElements = classNameOrElements.replace(/^\./, "");
+    elements = document.getElementsByClassName(classNameOrElements);
+  } else elements = classNameOrElements;
+  const wrapped = [];
+  let prev = {};
+  let curr = {};
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    curr = element.getBoundingClientRect();
+    if (prev && prev.top < curr.top) wrapped.push(element);
+    prev = i === 0 ? curr : prev;
+  }
+  return wrapped;
+}
+
+/**
+ * Gets the maximum nesting level of an element (or of the whole DOM if "document.body" is given
+ * as parameter).abs
+ * @param {Element} elem The DOM element from which to start identifying the maximum nesting level.
+ * @return {number} The maximum nesting level, starting from 0 if the given element has no children.
+ */
+export function maxNestingLevel(el) {
+  if (!el.children) return 0;
+  let max = -1;
+  for (let i = 0; i < el.children.length; i++) {
+    const nestingLevel = maxNestingLevel(el.children[i]);
+    if (nestingLevel > max) max = nestingLevel;
+  }
+  return max + 1;
+}
+
+/**
+ * Get the first scrollable ancestor of an element.
+ * @param {Element} el The element to use as the base from which to determine its
+ * first scrollable ancestor.
+ * @return {Element} The first scrollable ancestor element scroll, or the document body.
+ */
+export function getScrollableAncestor(el) {
+  const REGEXP_SCROLL_PARENT = /^(visible|hidden)/;
+  return !(el instanceof HTMLElement) ||
+    typeof window.getComputedStyle !== "function"
+    ? null
+    : el.scrollHeight >= el.clientHeight &&
+      !REGEXP_SCROLL_PARENT.test(
+        window.getComputedStyle(el).overflowY || "visible"
+      )
+    ? el
+    : getScrollableAncestor(el.parentElement) ||
+      document.scrollingElement ||
+      document.body;
+}
+
+/**
+ * Smoothly scrolls to the top of a scrollable element or the browser's window.
+ * @param {Element} [el] The element. Defaults to "window".
+ * @return {undefined}
+ */
+export function scrollToTop(el = window) {
+  return el.scroll({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+/**
+ * Downloads a file without opening a new browser's tab.
+ * @see https://stackoverflow.com/questions/1066452/easiest-way-to-open-a-download-window-without-navigating-away-from-the-page#answer-43523297
+ * @param {string} fileURI The URI of the file to download.
+ * @return {undefined}
+ */
+export function downloadFile(fileURI) {
+  var link = document.createElement("a");
+  link.href = fileURI;
+  link.download = fileURI.substring(fileURI.lastIndexOf("/") + 1);
+  link.click();
+}
