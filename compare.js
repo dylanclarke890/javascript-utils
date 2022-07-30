@@ -206,3 +206,48 @@ export function deepObjectCompare(obj1, obj2) {
 
   return true;
 }
+
+/**
+ * Tests whether the given value is a reference type or not.
+ *
+ * @param {*} value Any value which can be an object or a primitive type.
+ * @return {boolean} True if the given value is a reference type, false otherwise.
+ */
+export function isReferenceType(value) {
+  return new Object(value) === value;
+}
+
+/**
+ * Tests whether the given value is a primitive type or not.
+ *
+ * @param {*} value Any value which can be an object or a primitive type.
+ * @return {boolean} True if the given value is a primitive type, false otherwise.
+ */
+export function isPrimitiveType(value) {
+  return new Object(value) !== value;
+}
+
+/**
+ * Checks whether an object has a cyclic reference or not.
+ *
+ * @param {Object} obj The object to check for a cyclic reference.
+ * @return {boolean} True if the object has a cyclic reference, false otherwise.
+ */
+export function hasCyclicReference(obj) {
+  const stackSet = [];
+  let detected = false;
+  function detect(obj) {
+    if (detected) return;
+    if (typeof obj !== "object") return;
+    const indexOfObj = stackSet.indexOf(obj);
+    detected = indexOfObj !== -1;
+    if (detected) return;
+    stackSet.push(obj);
+    for (const k in obj)
+      if (Object.prototype.hasOwnProperty.call(obj, k)) detect(obj[k]);
+    stackSet.splice(indexOfObj, 1);
+    return;
+  }
+  detect(obj);
+  return detected;
+}
