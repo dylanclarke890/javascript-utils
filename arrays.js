@@ -8,11 +8,6 @@ export function sumOf(arr) {
   return arr.reduce((a, b) => a + b, 0);
 }
 
-/** @returns a shallow copy of the array. */
-export function clone(arr) {
-  return arr.slice(0);
-}
-
 /** @returns if all the items in the array are numbers, or the array is empty. */
 export function isArrayOfNumber(arr) {
   return !arr.some((v) => isNaN(v));
