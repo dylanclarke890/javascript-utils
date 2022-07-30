@@ -29,3 +29,22 @@ export function arrToObject(arr, func) {
     {}
   );
 }
+
+/**
+ * Selects the properties of an object which return true for a
+ * supplied callback function.
+ * @param {Object} obj The input object.
+ * @param {Function} func A function which will receive two parameters:
+ * - value: The current value of the input object for a given property;
+ * - prop: The name of the current property of the input object.
+ * and return true or false based on the
+ * @return {Object} An object having only the properties which return true for
+ * the callback function.
+ */
+export const selectPropertiesWhere = (obj, func) =>
+  Object.keys(obj).reduce((carry, key) => {
+    if (func(obj[key], key)) {
+      carry[key] = obj[key];
+    }
+    return carry;
+  }, {});
