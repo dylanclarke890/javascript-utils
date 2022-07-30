@@ -1,3 +1,5 @@
+import { escapeRegExp } from "./regex";
+
 export function getDigits(str) {
   const asArr = [...str];
   const res = [];
@@ -32,6 +34,32 @@ export function intSeparateThousands(num, sep = ",") {
  */
 export function str(v) {
   return "" + v;
+}
+
+/**
+ * Trim characters from the beginning and end of a string.
+ *
+ * @param {string} str
+ * @param {string} characterMask
+ * @param {Object} options
+ * @param {Object.boolean} options.trimLeft defaults to true if omitted
+ * @param {Object.boolean} options.trimRight defaults to true if omitted
+ * @return {string} The trimmed string.
+ */
+export function trim(str, characterMask, options = {}) {
+  if (typeof characterMask === "undefined") characterMask = " ";
+  characterMask = escapeRegExp(characterMask);
+  const shouldTrimLeft =
+    typeof options.trimLeft === "undefined" || options.trimLeft;
+  const shouldTrimRight =
+    typeof options.trimRight === "undefined" || options.trimRight;
+  const regexParts = [];
+  if (shouldTrimLeft)
+    regexParts[regexParts.length] = "^[" + characterMask + "]+";
+  if (shouldTrimRight)
+    regexParts[regexParts.length] = "[" + characterMask + "]+$";
+  const regex = new RegExp(regexParts.join("|"), "gm");
+  return str.replace(regex, "");
 }
 
 export class StringBuilder {
