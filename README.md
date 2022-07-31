@@ -2,6 +2,8 @@
 
 Utility functions/classes for JavaScript with no external dependencies.
 
+## Getting Started
+
 To install (using NPM): 
 
 ``` npm
