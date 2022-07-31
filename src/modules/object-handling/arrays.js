@@ -80,3 +80,34 @@ export function unshift(arr, item) {
   }
   arr[0] = item;
 }
+
+/**
+ * Create an array which allows the usage of negative indices to retrieve its data,
+ * where -1 indicates the last element of the array (same as
+ * `array.length - 1`).
+ * @param {Array} array An array to use as the target object.
+ * @param {Object} options Options.
+ * @param {boolean} [options.wrap] Whether or not to wrap if the negative index is greater
+ * than the length of the array. If false, undefined will be returned if the index is out of
+ * range.
+ * @return {Proxy} The proxy object for the given array.
+ */
+export function arrayWithNegativeIndices(array, { wrap = true } = {}) {
+  return new Proxy(array, {
+    get: function (target, propKey) {
+      let numberPropKey = Number(propKey);
+      if (
+        !Number.isNaN(numberPropKey) &&
+        Number.isInteger(numberPropKey) &&
+        numberPropKey < 0
+      ) {
+        const absNumberPropKey = Math.abs(numberPropKey);
+        if (wrap || absNumberPropKey <= target.length) {
+          numberPropKey = target.length - (absNumberPropKey % target.length);
+          propKey = String(numberPropKey === target.length ? 0 : numberPropKey);
+        }
+      }
+      return target[propKey];
+    },
+  });
+}
