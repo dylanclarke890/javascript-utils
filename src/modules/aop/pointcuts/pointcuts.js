@@ -1,8 +1,8 @@
 import FunctionCallPointcut from "./FunctionCallPointcut";
-import MethodCallPointcut from "../MethodCallPointcut";
+import MethodCallPointcut from "./MethodCallPointcut";
 import ObjectConstructionPointcut from "./ObjectConstructionPointcut";
-import PropertyGettingPointcut from "../PropertyGettingPointcut";
-import PropertySettingPointcut from "../PropertySettingPointcut";
+import PropertyGettingPointcut from "./PropertyGettingPointcut";
+import PropertySettingPointcut from "./PropertySettingPointcut";
 
 /**
  * Returns a new function call pointcut.
