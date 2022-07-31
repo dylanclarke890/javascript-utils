@@ -9,6 +9,7 @@ import {
 import NotImplementedError from "../../../errors/NotImplementedError";
 
 export default class TrapExecutor {
+  nameOf = this.constructor.name;
   static isWithinExecContext = false;
   static ExecContextStack = [];
   static ExecContextID = -1;
@@ -139,35 +140,23 @@ export default class TrapExecutor {
   }
 
   executeBeforeAdvice(trapArgs, advice, rule) {
-    throw new NotImplementedError(this.constructor.name, "executeBeforeAdvice");
+    throw new NotImplementedError(this.nameOf, "executeBeforeAdvice");
   }
 
-  // eslint-disable-next-line no-unused-vars
   executeAroundAdvice(trapArgs, advice, rule, proceed, context) {
-    throw new Error(
-      `pigretto - ${this.constructor.name} trap executor does not implement "executeAroundAdvice".`
-    );
+    throw new NotImplementedError(this.nameOf, "executeAroundAdvice");
   }
 
-  // eslint-disable-next-line no-unused-vars
   executeAfterAdvice(trapArgs, advice, rule, returnValue) {
-    throw new Error(
-      `pigretto - ${this.constructor.name} trap executor does not implement "executeAfterAdvice".`
-    );
+    throw new NotImplementedError(this.nameOf, "executeAfterAdvice");
   }
 
-  // eslint-disable-next-line no-unused-vars
   performUnderlyingOperation(trapArgs) {
-    throw new Error(
-      `pigretto - ${this.constructor.name} trap executor does not implement "performUnderlyingOperation".`
-    );
+    throw new NotImplementedError(this.nameOf, "performUnderlyingOperation");
   }
 
-  // eslint-disable-next-line no-unused-vars
   executeProceedCallback(trapArgs, rule, returnValue, callback) {
-    throw new Error(
-      `pigretto - ${this.constructor.name} trap executor does not implement "executeProceedCallback".`
-    );
+    throw new NotImplementedError(this.nameOf, "executeProceedCallback");
   }
 
   /**
