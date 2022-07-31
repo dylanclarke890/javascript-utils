@@ -1,1 +1,5 @@
-export default class Advice {}
+export default class Advice {
+  constructor(func) {
+    this.fn = func;
+  }
+}
