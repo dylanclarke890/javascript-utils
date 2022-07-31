@@ -1,44 +1,22 @@
 {
-  "name": "javascript-utils",
+  "name": "dc-javascript-utils",
   "version": "1.0.0",
-  "description": "A collection of JS utility functions to be used across several applications or libraries.",
-  "keywords": [
-    "javascript",
-    "js",
-    "utils",
-    "utility",
-    "functions",
-    "utility-functions"
-  ],
-  "author": "Dylan Clarke",
-  "license": "MIT",
-  "main": "dist/javascript-utils.js",
-  "module": "dist/es6/index.js",
+  "description": "A collection of utility functions for JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dylanclarke890/javascript-utils.git"
+    "url": "git+https://github.com/dylanclarke890/javascript-utils.git"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "WEBPACK_ENV=watch webpack --progress --color --watch",
-    "clear-build": "find ./dist ! -name '.gitignore' -type f -exec rm -f {} +",
-    "dev-build": "WEBPACK_ENV=watch webpack --progress --color",
-    "build": "WEBPACK_ENV=build webpack",
-    "build-all": "npm run clear-build && npm run build && npm run dev-build && npm run build-module",
-    "publish-patch": "npm run build-all && npm version patch && npm run publish-git",
-    "publish-minor": "npm run build-all && npm version minor && npm run publish-git",
-    "publish-major": "npm run build-all && npm version major && npm run publish-git"
-  },
-  "devDependencies": {
-    "webpack": "^5.45.1",
-    "webpack-cli": "^4.8.0"
-  },
+  "keywords": [
+    "js"
+  ],
+  "author": "Dylan <DylanClarke890@gmail.com> (http://github.com/DylanClarke890/javascript-utils)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dylanclarke890/javascript-utils/issues"
   },
-  "homepage": "https://github.com/dylanclarke890",
-  "files": [
-    "dist",
-    "src"
-  ]
+  "homepage": "https://github.com/dylanclarke890/javascript-utils#readme"
 }
