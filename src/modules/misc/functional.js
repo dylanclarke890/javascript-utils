@@ -21,3 +21,7 @@ export function chain(...funcs) {
     return chainFunc(args);
   };
 }
+
+export function noActionFunc() {
+  return void 0;
+}
