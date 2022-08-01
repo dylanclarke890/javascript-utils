@@ -70,3 +70,10 @@ export function trim(str, characterMask, options = {}) {
 export function typeToStr(type) {
   return Object.prototype.toString.call(type);
 }
+
+/**
+ * Pluralizes a word.
+ */
+export function pluralize(word, count) {
+  return count === 1 ? word : `${word}s`;
+}
