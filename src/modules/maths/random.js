@@ -29,3 +29,23 @@ export function randomHSLColor(saturation = 100, brightness = 100) {
     Math.random() * 360
   )}, ${saturation}%, ${brightness}%})`;
 }
+
+/**
+ * Returns a function, that when called, will return a random number that
+ * is never the same as the previous.
+ * @param {number} minimum
+ * @param {number} maximum
+ * @returns {Function} a function to call to receive a unique random number
+ * between minimum and maximum.
+ */
+export function uniqueRandom(minimum, maximum) {
+  let previousValue;
+  return function random() {
+    const number = Math.floor(
+      Math.random() * (maximum - minimum + 1) + minimum
+    );
+    previousValue =
+      number === previousValue && minimum !== maximum ? random() : number;
+    return previousValue;
+  };
+}
