@@ -1,6 +1,7 @@
 import handlerFactory from "./factory/handlerFactory";
 import { isAOPProxy } from "./isAOPProxy";
-import { EFFECTIVE_TARGET_PROP } from "./constants";
+
+export const EFFECTIVE_TARGET_PROP = "-FKgGSKjfL00OFSs8fX5S";
 
 /**
  * Generates a new AOP proxy object.

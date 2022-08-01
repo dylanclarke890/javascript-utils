@@ -1,7 +1,7 @@
 import TrapExecutor from "./TrapExecutor";
 import { withFunctionTrapExecutor } from "./behaviours/withFunctionTrapExecutor";
 import { shallowExtend } from "../../../object-handling/clone";
-import { EFFECTIVE_TARGET_PROP } from "../../constants";
+import { EFFECTIVE_TARGET_PROP } from "../../AOPProxy";
 
 export default withFunctionTrapExecutor(
   class CallTrapExecutor extends TrapExecutor {

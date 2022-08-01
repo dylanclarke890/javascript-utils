@@ -1,4 +1,4 @@
-import AOPProxy from "./AOPProxy";
+import AOPProxy, { EFFECTIVE_TARGET_PROP } from "./AOPProxy";
 import applyRule from "./rules/applyRule";
 import constructRule from "./rules/constructRule";
 import { call, get, set, apply, construct } from "./pointcuts/pointcuts";
@@ -6,7 +6,6 @@ import lazyObject from "./builtin/lazyObject";
 import throwErrorForUnknownProperty from "./builtin/throwErrorForUnknownProperty";
 import POJOPromiser from "./builtin/POJOPromiser";
 import arrayWithNegativeIndices from "../object-handling/arrays";
-import { EFFECTIVE_TARGET_PROP } from "./constants";
 
 /*
  * Mapping the API properties to the pigretto function.

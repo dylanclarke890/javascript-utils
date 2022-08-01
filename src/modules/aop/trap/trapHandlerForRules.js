@@ -2,7 +2,7 @@ import rulesGenerator from "../rules/rulesGenerator";
 import parseRule from "../rules/parseRule";
 import Trap from "./Trap";
 import { isAOPProxy } from "../isAOPProxy";
-import { EFFECTIVE_TARGET_PROP } from "../constants";
+import { EFFECTIVE_TARGET_PROP } from "../AOPProxy";
 import { reflectGet, reflectSet } from "./reflect";
 import { defineProperty } from "../../object-handling/objects";
 

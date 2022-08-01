@@ -2,7 +2,7 @@ import TrapExecutor from "./TrapExecutor";
 import { reflectSet, reflectGet } from "../reflect";
 import { shallowExtend } from "../../../object-handling/clone";
 import { isArray } from "../../../object-handling/introspection";
-import { EFFECTIVE_TARGET_PROP } from "../../constants";
+import { EFFECTIVE_TARGET_PROP } from "../../AOPProxy";
 
 /**
  * @type {Object}
