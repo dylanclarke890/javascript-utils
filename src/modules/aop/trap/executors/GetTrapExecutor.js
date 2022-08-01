@@ -1,7 +1,7 @@
 import TrapExecutor from "./TrapExecutor";
 import { reflectGet } from "../reflect";
 import { shallowExtend } from "../../../object-handling/clone";
-import { EFFECTIVE_TARGET_PROP } from "../constants";
+import { EFFECTIVE_TARGET_PROP } from "../../constants";
 
 export default class GetTrapExecutor extends TrapExecutor {
   executeBeforeAdvice([target, property, receiver], advice, rule) {
