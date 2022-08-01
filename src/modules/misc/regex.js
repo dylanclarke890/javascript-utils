@@ -111,3 +111,16 @@ export default function escapeStringRegexp(string) {
 export function escapeRegExp(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+/**********************************************************************************************
+ *                          J S  C O M M E N T S  R E G E X
+ */
+
+export const lineCommentRegex = /(?:^|\s)\/\/(.+?)$/gms;
+export const blockCommentRegex = /\/\*(.*?)\*\//gms;
+export function commentRegex() {
+  return new RegExp(
+    `(?:${lineCommentRegex().source})|(?:${blockCommentRegex().source})`,
+    "gms"
+  );
+}
