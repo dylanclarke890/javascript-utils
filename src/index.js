@@ -215,3 +215,29 @@ export {
   parseMultiDimQueryStrings,
   appendEncodedJSONFragmentToURI,
 } from "./modules/web/query-strings";
+
+/******************************************************************
+ | I M M U T A B L E  L I N K E D  O R D E R E D  L I S T
+*/
+
+import {
+  ImmutableLinkedOrderedMap,
+  ImmutableLinkedOrderedMapMode,
+} from "./modules/data-types/ILOM/ImmutableLinkedOrderedMap";
+import {
+  map,
+  lazyMap,
+  lazyMapFactory,
+} from "./modules/data-types/ILOM/shortcuts";
+
+[
+  ["lazyMap", lazyMap],
+  ["map", map],
+  ["lazyMapFactory", lazyMapFactory],
+].map(([key, value]) => (ImmutableLinkedOrderedMap[key] = value));
+export {
+  ImmutableLinkedOrderedMap,
+  ImmutableLinkedOrderedMapMode,
+  lazyMap,
+  lazyMapFactory,
+};
