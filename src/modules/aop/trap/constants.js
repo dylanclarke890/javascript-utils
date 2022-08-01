@@ -1,0 +1,1 @@
+export const EFFECTIVE_TARGET_PROP = "-FKgGSKjfL00OFSs8fX5S";
