@@ -1,35 +1,38 @@
-export { StringBuilder } from "./modules/data-types/StringBuilder";
+export { StringBuilder } from "./src/modules/data-types/StringBuilder";
 export {
   isValidDate,
   isValidDateTimeStr,
   utcDate,
-} from "./modules/date-time/date";
+} from "./src/modules/date-time/date";
 export {
   now,
   time,
   msToTime,
   secsToTimeString,
-} from "./modules/date-time/time";
-export { bestZoomForBounds } from "./modules/maps/google-maps";
+} from "./src/modules/date-time/time";
+export { bestZoomForBounds } from "./src/modules/maps/google-maps";
 export {
   clampLatitude,
   wrapLongitude,
   normalizeLatitude,
   normalizeLongitude,
-} from "./modules/maps/map-coordinates";
+} from "./src/modules/maps/map-coordinates";
 export {
   turnNthBitOff,
   turnNthBitOn,
   toggleNthBit,
   checkNthBitOn,
-} from "./modules/maths/bitwise";
-export { binaryToDecimal, decimalToBinary } from "./modules/maths/conversions";
+} from "./src/modules/maths/bitwise";
+export {
+  binaryToDecimal,
+  decimalToBinary,
+} from "./src/modules/maths/conversions";
 export {
   hashArrayOfStrings,
   hashString,
   hashStringSinglePass,
   hashSumOfIntArray,
-} from "./modules/maths/hash";
+} from "./src/modules/maths/hash";
 export {
   round,
   sum,
@@ -37,34 +40,34 @@ export {
   isEven,
   isOdd,
   proportion,
-} from "./modules/maths/math";
+} from "./src/modules/maths/math";
 export {
   randomNumber,
   randomFromRange,
   randomValue,
   shuffleArr,
   randomHSLColor,
-} from "./modules/maths/random";
+} from "./src/modules/maths/random";
 export {
   mean,
   median,
   minAbsDeviationFromValue,
   minAbsDeviationFromExcludedValue,
-} from "./modules/maths/statistics";
-export { delay, debounce, throttle } from "./modules/misc/callbacks";
+} from "./src/modules/maths/statistics";
+export { delay, debounce, throttle } from "./src/modules/misc/callbacks";
 export {
   getLuminance,
   intToRGBHexString,
   colorFromString,
-} from "./modules/misc/color";
-export { xRange } from "./modules/misc/iterators";
+} from "./src/modules/misc/color";
+export { xRange } from "./src/modules/misc/iterators";
 export {
   basename,
   getPathExtension,
   pathInfo,
   filenameExtension,
   dirname,
-} from "./modules/misc/path";
+} from "./src/modules/misc/path";
 export {
   AWS_access_key,
   AWS_host_ip,
@@ -92,16 +95,16 @@ export {
   filterInt,
   filterFloat,
   escapeRegExp,
-} from "./modules/misc/regex";
+} from "./src/modules/misc/regex";
 export {
   getDigits,
   intSeparateThousands,
   str,
   trim,
   typeToStr,
-} from "./modules/misc/strings";
-export { uuid, NonCanonicalUUID, uniqueId } from "./modules/misc/uuid";
-export { validatePassword } from "./modules/misc/validation";
+} from "./src/modules/misc/strings";
+export { uuid, NonCanonicalUUID, uniqueId } from "./src/modules/misc/uuid";
+export { validatePassword } from "./src/modules/misc/validation";
 export {
   distinct,
   sumOf,
@@ -115,7 +118,7 @@ export {
   sortNums,
   removeNulls,
   unshift,
-} from "./modules/object-handling/arrays";
+} from "./src/modules/object-handling/arrays";
 export {
   cloneArr,
   cloneDeepJSON,
@@ -125,7 +128,7 @@ export {
   extend,
   extendDecorate,
   shallowExtend,
-} from "./modules/object-handling/clone";
+} from "./src/modules/object-handling/clone";
 export {
   is,
   isObjPropEqual,
@@ -136,8 +139,8 @@ export {
   objDiffShallow,
   getGlobalObject,
   mapYield,
-} from "./modules/object-handling/compare";
-export { deepFreeze } from "./modules/object-handling/immutability";
+} from "./src/modules/object-handling/compare";
+export { deepFreeze } from "./src/modules/object-handling/immutability";
 export {
   isPrimitiveType,
   isInt,
@@ -157,7 +160,7 @@ export {
   isArray,
   isCallable,
   hasCyclicReference,
-} from "./modules/object-handling/introspection";
+} from "./src/modules/object-handling/introspection";
 export {
   getNestedPropertyValue,
   setNestedPropertyValue,
@@ -169,7 +172,7 @@ export {
   nestedTreeMapHas,
   nestedTreeMapSet,
   nestedObjectConstructValue,
-} from "./modules/object-handling/nested-properties";
+} from "./src/modules/object-handling/nested-properties";
 export {
   mapObject,
   arrToObject,
@@ -178,14 +181,17 @@ export {
   prop,
   defineProperty,
   completeObjectAssign,
-} from "./modules/object-handling/objects";
-export { includes, findIndex } from "./modules/object-handling/weak-equality";
-export { rAFLooper, nestedRAF } from "./modules/web/animation";
+} from "./src/modules/object-handling/objects";
+export {
+  includes,
+  findIndex,
+} from "./src/modules/object-handling/weak-equality";
+export { rAFLooper, nestedRAF } from "./src/modules/web/animation";
 export {
   copyTextToClipboard,
   fallbackCopyTextToClipboard,
-} from "./modules/web/clipboard";
-export { getCookie, setCookie, clearCookie } from "./modules/web/cookie";
+} from "./src/modules/web/clipboard";
+export { getCookie, setCookie, clearCookie } from "./src/modules/web/cookie";
 export {
   isInViewport,
   isScrolledIntoView,
@@ -204,8 +210,8 @@ export {
   getScrollableAncestor,
   scrollToTop,
   downloadFile,
-} from "./modules/web/dom";
-export { buildFormData, objToformData } from "./modules/web/form-data";
+} from "./src/modules/web/dom";
+export { buildFormData, objToformData } from "./src/modules/web/form-data";
 export {
   buildQueryString,
   getRawURIFragment,
@@ -214,7 +220,7 @@ export {
   getMultiDimQueryStrings,
   parseMultiDimQueryStrings,
   appendEncodedJSONFragmentToURI,
-} from "./modules/web/query-strings";
+} from "./src/modules/web/query-strings";
 
 /******************************************************************
  | I M M U T A B L E  L I N K E D  O R D E R E D  L I S T
@@ -223,12 +229,12 @@ export {
 import {
   ImmutableLinkedOrderedMap,
   ImmutableLinkedOrderedMapMode,
-} from "./modules/data-types/ILOM/ImmutableLinkedOrderedMap";
+} from "./src/modules/data-types/ILOM/ImmutableLinkedOrderedMap";
 import {
   map,
   lazyMap,
   lazyMapFactory,
-} from "./modules/data-types/ILOM/shortcuts";
+} from "./src/modules/data-types/ILOM/shortcuts";
 
 [
   ["lazyMap", lazyMap],
@@ -246,20 +252,20 @@ export {
  |                  A O P  P R O X Y
 */
 
-import AOPProxy, { EFFECTIVE_TARGET_PROP } from "./modules/aop/AOPProxy";
-import applyRule from "./modules/aop/rules/applyRule";
-import constructRule from "./modules/aop/rules/constructRule";
+import AOPProxy, { EFFECTIVE_TARGET_PROP } from "./src/modules/aop/AOPProxy";
+import applyRule from "./src/modules/aop/rules/applyRule";
+import constructRule from "./src/modules/aop/rules/constructRule";
 import {
   call,
   get,
   set,
   apply,
   construct,
-} from "./modules/aop/pointcuts/pointcuts";
-import lazyObject from "./modules/aop/builtins/lazyObject";
-import throwErrorForUnknownProperty from "./modules/aop/builtins/throwErrorForUnknownProperty";
-import POJOPromiser from "./modules/aop/builtins/POJOPromiser";
-import arrayWithNegativeIndices from "./modules/object-handling/arrays";
+} from "./src/modules/aop/pointcuts/pointcuts";
+import lazyObject from "./src/modules/aop/builtins/lazyObject";
+import throwErrorForUnknownProperty from "./src/modules/aop/builtins/throwErrorForUnknownProperty";
+import POJOPromiser from "./src/modules/aop/builtins/POJOPromiser";
+import arrayWithNegativeIndices from "./src/modules/object-handling/arrays";
 
 /*
  * Mapping the API properties to the pigretto function.
