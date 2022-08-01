@@ -296,3 +296,38 @@ export function shallowExtend(destinationObject, ...sourceObjects) {
   );
   return destinationObject;
 }
+
+const regExpFlagMap = {
+  global: "g",
+  ignoreCase: "i",
+  multiline: "m",
+  dotAll: "s",
+  sticky: "y",
+  unicode: "u",
+};
+
+/**
+ * Clone a RegExp.
+ * @param {RegExp} regexp 
+ * @param {Object} options Optionally modify the cloned RegExp instance.
+    Properties: source, global, ignoreCase, multiline, dotAll, sticky, unicode, lastIndex
+ * @returns The cloned instance, configured with any passed options.
+ */
+export function cloneRegExp(regexp, options = {}) {
+  if (!regexp instanceof RegExp) {
+    throw new TypeError("Expected a RegExp instance");
+  }
+  const flags = Object.keys(regExpFlagMap)
+    .map((flag) =>
+      (typeof options[flag] === "boolean" ? options[flag] : regexp[flag])
+        ? regExpFlagMap[flag]
+        : ""
+    )
+    .join("");
+  const clonedRegexp = new RegExp(options.source || regexp.source, flags);
+  clonedRegexp.lastIndex =
+    typeof options.lastIndex === "number"
+      ? options.lastIndex
+      : regexp.lastIndex;
+  return clonedRegexp;
+}
