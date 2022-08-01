@@ -1,4 +1,4 @@
-import { noActionFunc } from "../../../misc/functional";
+import { noActionFunc } from "../../misc/functional";
 
 /**
  * @type {Object}
