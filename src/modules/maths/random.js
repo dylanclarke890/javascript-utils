@@ -31,12 +31,11 @@ export function randomHSLColor(saturation = 100, brightness = 100) {
 }
 
 /**
- * Returns a function, that when called, will return a random number that
- * is never the same as the previous.
+ * Generate random numbers that are consecutively unique.
  * @param {number} minimum
  * @param {number} maximum
- * @returns {Function} a function to call to receive a unique random number
- * between minimum and maximum.
+ * @returns {Function} a function, that when called, will return a random number that
+ * is never the same as the previous (between minimum and maximum).
  */
 export function uniqueRandom(minimum, maximum) {
   let previousValue;
@@ -48,4 +47,15 @@ export function uniqueRandom(minimum, maximum) {
       number === previousValue && minimum !== maximum ? random() : number;
     return previousValue;
   };
+}
+
+/**
+ * Get consecutively unique elements from an array.
+ * @param {Array} arr
+ * @returns {Function} a function, that when called, will return a random element
+ * that's never the same as the previous.
+ */
+export function uniqueRandomFromArr(arr) {
+  const random = uniqueRandom(0, arr.length - 1);
+  return () => arr[random()];
 }
