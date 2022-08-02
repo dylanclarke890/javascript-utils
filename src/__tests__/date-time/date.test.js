@@ -1,4 +1,8 @@
-import { isValidDate, isValidDateTimeStr } from "../../modules/date-time/date";
+import {
+  isValidDate,
+  isValidDateTimeStr,
+  utcDate,
+} from "../../modules/date-time/date";
 
 describe("isValidDate", () => {
   test("handles undefined argument", () => {
@@ -36,3 +40,5 @@ describe("isValidDateTimeStr", () => {
       expect(isValidDateTimeStr(valid)).toBe(true);
   });
 });
+
+// TODO: Test cases for utcDate.
