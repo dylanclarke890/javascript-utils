@@ -114,3 +114,21 @@ export function hashSumOfIntArray(seq) {
   }
   return hash;
 }
+
+/**
+ * Create a MD5 hash with hex encoding. Please don't use MD5 hashes for anything sensitive!
+ * Works in the browser too, when used with a bundler like Webpack, Rollup, Browserify.
+ * @param {Buffer | string | Array<Buffer | string>} data Prefer buffers as they're faster to hash, but strings can be useful for
+ * small things. Pass an array instead of concatenating strings and/or buffers. The output
+ * is the same, but arrays do not incur the overhead of concatenation.
+ */
+export function md5Hex(data) {
+  const hash = crypto.createHash("md5");
+  const update = (buffer) => {
+    const inputEncoding = typeof buffer === "string" ? "utf8" : undefined;
+    hash.update(buffer, inputEncoding);
+  };
+  if (Array.isArray(data)) for (const element of data) update(element);
+  else update(data);
+  return hash.digest("hex");
+}
