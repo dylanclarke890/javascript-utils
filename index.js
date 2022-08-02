@@ -1,4 +1,6 @@
 export { StringBuilder } from "./src/modules/data-types/StringBuilder";
+export { DeferredPromise } from "./src/modules/data-types/DeferredPromise";
+export { LinkedQueue } from "./src/modules/data-types/LinkedQueue";
 export {
   isValidDate,
   isValidDateTimeStr,

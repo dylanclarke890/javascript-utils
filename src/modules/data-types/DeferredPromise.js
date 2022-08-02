@@ -3,7 +3,7 @@
  */
 const privateScope = new WeakMap();
 
-export default class DeferredPromise extends Promise {
+export class DeferredPromise extends Promise {
   constructor(executor = () => {}) {
     let resolve, reject;
     let isSettled = false,
