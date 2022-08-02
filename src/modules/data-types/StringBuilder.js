@@ -13,30 +13,35 @@ export class StringBuilder {
     this.#value = initialValue || ""; // in case null is passed
   }
 
-  /** Appends str to the current value.
-   *  @return the current instance so additional calls can be chained. */
+  /** Append a string to the current instance.
+   *  @param {string} str the string to append.
+   *  @return {this} the current instance so additional calls can be chained. */
   append(str) {
     this.#value = `${this.#value}${str}`;
     return this;
   }
 
-  /** Prepends str to the current value.
-   *  @return the current instance so additional calls can be chained. */
+  /** Prepend a string to the current instance.
+   *  @param {string} str the string to prepend.
+   *  @return {this} the current instance so additional calls can be chained. */
   prepend(str) {
     this.#value = `${str}${this.#value}`;
     return this;
   }
 
-  /** Appends str to the current value at the specified start index.
-   *  @return the current instance so additional calls can be chained. */
+  /** Append a string to the current instance at a specific index.
+   *  @param {string} str the string to prepend.
+   *  @return {this} the current instance so additional calls can be chained. */
   insertAt(start, value) {
     const _v = this.#value;
     this.#value = `${_v.substring(0, start)}${value}${_v.substring(start)}`;
     return this;
   }
 
-  /** Using either a regular expression or a string, find and replace the specified value.
-   * @return the current instance so additional calls can be chained. */
+  /** Find and replace text in the current instance using either a string
+   *  value or RegExp.
+   *  @param {string | RegExp} match the string or regexp to use for matches.
+   *  @return {this} the current instance so additional calls can be chained. */
   replace(match, replacement) {
     if (match instanceof RegExp)
       this.#value = this.#value.replace(match, replacement);
@@ -51,6 +56,7 @@ export class StringBuilder {
     return this;
   }
 
+  /** Copy the current instance. */
   /** @return a new StringBuilder instance with the current value */
   copy() {
     return new StringBuilder(this.#value);
