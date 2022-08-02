@@ -77,3 +77,20 @@ export function typeToStr(type) {
 export function pluralize(word, count) {
   return count === 1 ? word : `${word}s`;
 }
+
+/**
+ * Split a string on the first occurrence of a given separator.
+ * @param string - The string to split.
+ * @param separator - The separator to split on.
+ */
+export function splitOnFirst(string, separator) {
+  if (!(typeof string === "string" && typeof separator === "string"))
+    throw new TypeError("Expected the arguments to be of type `string`");
+  if (string === "" || separator === "") return [];
+  const separatorIndex = string.indexOf(separator);
+  if (separatorIndex === -1) return [];
+  return [
+    string.slice(0, separatorIndex),
+    string.slice(separatorIndex + separator.length),
+  ];
+}
