@@ -296,3 +296,10 @@ export function downloadFile(fileURI) {
   link.download = fileURI.substring(fileURI.lastIndexOf("/") + 1);
   link.click();
 }
+
+/**
+ * @returns {boolean} True if the given API is supported.
+ */
+export default function isApiSupported(api) {
+  return typeof window !== "undefined" ? api in window : false;
+}
