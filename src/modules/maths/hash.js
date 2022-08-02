@@ -1,3 +1,19 @@
+import crypto from "node:crypto";
+import { Buffer } from "node:buffer";
+
+/**
+ * Create a hash for file revving. Creates an md5 hash from an input buffer or string,
+ * and truncates it to 10 characters, which is unique enough for the purpose of file-revving.
+ * @see https://blog.risingstack.com/automatic-cache-busting-for-your-css/
+ * @param {Buffer | string} data
+ * @returns
+ */
+export function revisionHash(data) {
+  if (typeof data !== "string" && !Buffer.isBuffer(data))
+    throw new TypeError("Expected a Buffer or string");
+  return crypto.createHash("md5").update(data).digest("hex").slice(0, 10);
+}
+
 /**
  * Computes a hash of an array of strings (the order of strings does not matter).
  *
