@@ -111,3 +111,38 @@ export function arrayWithNegativeIndices(array, { wrap = true } = {}) {
     },
   });
 }
+
+/**
+ * Moves the item to the new position in the array array. Useful for huge arrays where
+ * absolute performance is needed.
+ * @param {Array<any>} array
+ * @param {number} fromIndex The index of the item to move. If negative, it will begin that
+ * many elements from the end.
+ * @param {number} toIndex The index of where to move the item. If negative, it will begin
+ * that many elements from the end.
+ * @returns {Array<any>} The same array with the item in it's new position.
+ */
+export function arrayMoveMutable(array, fromIndex, toIndex) {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
+    const [item] = array.splice(fromIndex, 1);
+    array.splice(endIndex, 0, item);
+  }
+}
+
+/**
+ * Clones the given array, moves the item to a new position in the new array, and then
+ * returns the new array. The given array is not mutated.
+ * @param {Array<any>} array
+ * @param {number} fromIndex The index of the item to move. If negative, it will begin that
+ * many elements from the end.
+ * @param {number} toIndex The index of where to move the item. If negative, it will begin
+ * that many elements from the end.
+ * @returns {Array<any>} A new array with the item in it's new position.
+ */
+export function arrayMoveImmutable(array, fromIndex, toIndex) {
+  const newArray = [...array];
+  arrayMoveMutable(newArray, fromIndex, toIndex);
+  return newArray;
+}
