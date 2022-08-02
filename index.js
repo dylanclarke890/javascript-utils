@@ -268,7 +268,7 @@ import POJOPromiser from "./src/modules/aop/builtins/POJOPromiser";
 import arrayWithNegativeIndices from "./src/modules/object-handling/arrays";
 
 /*
- * Mapping the API properties to the pigretto function.
+ * Mapping the API properties to the proxy function.
  */
 AOPProxy.pointcuts = {};
 [
@@ -294,12 +294,18 @@ AOPProxy.constants = {};
   ([prop, val]) => (AOPProxy.constants[prop] = val)
 );
 
-export default AOPProxy;
-export { call, get, set, applyRule, apply, constructRule, construct };
 export {
+  AOPProxy,
+  call,
+  get,
+  set,
+  applyRule,
+  apply,
+  constructRule,
+  construct,
   lazyObject,
   throwErrorForUnknownProperty,
   POJOPromiser,
   arrayWithNegativeIndices,
+  EFFECTIVE_TARGET_PROP,
 };
-export { EFFECTIVE_TARGET_PROP };
