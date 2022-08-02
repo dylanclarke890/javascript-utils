@@ -25,3 +25,13 @@ export function chain(...funcs) {
 export function noActionFunc() {
   return void 0;
 }
+
+/**
+ * Returns a function which lets picking the properties of an object.
+ * @param {...string|...number} props The properties to pick.
+ * @return {Function} A function which if called picks the "props" properties from its argument
+ * object and returns a new object with the picked properties.
+ */
+export function pick(...props) {
+  return (o) => props.reduce((a, e) => ({ ...a, [e]: o[e] }), {});
+}
