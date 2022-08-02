@@ -3,7 +3,7 @@ import { trim } from "../misc/strings";
 /**
  * Tests if the given value is a valid date.
  * @param {*} value The value to test.
- * @return {boolean} True if it is a valid date, false otherwise.
+ * @return {boolean} True if it is a valid date.
  */
 export function isValidDate(value) {
   return (
