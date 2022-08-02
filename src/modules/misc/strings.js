@@ -63,6 +63,32 @@ export function trim(str, characterMask, options = {}) {
 }
 
 /**
+ * Trim characters from the end of a string.
+ * @param {string} str The string.
+ * @param {string} characterMask Character mask.
+ * @return {string} The trimmed string.
+ */
+export function trimEnd(str, characterMask) {
+  return trim(str, characterMask, {
+    shouldTrimLeft: false,
+    shouldTrimRight: true,
+  });
+}
+
+/**
+ * Trim characters from the start of a string.
+ * @param {string} str The string.
+ * @param {string} characterMask Character mask.
+ * @return {string} The trimmed string.
+ */
+export function trimStart(str, characterMask) {
+  return trim(str, characterMask, {
+    shouldTrimLeft: true,
+    shouldTrimRight: false,
+  });
+}
+
+/**
  * Converts a type to its string representation.
  * @param {*} type
  * @return {string} The string representation of `type`.
