@@ -1,7 +1,7 @@
 import { trim } from "../misc/strings";
 
 /**
- * Tests if the given value is a valid date.
+ * Check if a value is date.
  * @param {*} value The value to test.
  * @return {boolean} True if it is a valid date.
  */
@@ -13,9 +13,9 @@ export function isValidDate(value) {
 }
 
 /**
- * Tests if the given string is a valid datetime string (e.g. in ISO "YYYY-MM-DD HH:ii:ss" format).
- * @param {string} str The given string.
- * @return {boolean} True if it is a valid datetime string, false otherwise.
+ * Check if a value is a valid datetime string (e.g. in ISO "YYYY-MM-DD HH:ii:ss" format).
+ * @param {string} str The string.
+ * @return {boolean} True if it is a valid datetime string.
  */
 export function isValidDateTimeStr(str) {
   return isValidDate(new Date(str));
@@ -24,15 +24,14 @@ export function isValidDateTimeStr(str) {
 /**
  * Returns a UTC datetime in ISO `YYYY-MM-DD HH:ii:ss` format.
  * @param {Object} [options] An optional object of options.
- * @param {boolean} [options.Y] True to return the year of the UTC datetime. Defaults to true.
- * @param {boolean} [options.m] True to return the month of the UTC datetime. Defaults to true.
- * @param {boolean} [options.d] True to return the day of the UTC datetime. Defaults to true.
- * @param {boolean} [options.H] True to return the hours of the UTC datetime. Defaults to true.
- * @param {boolean} [options.i] True to return the minutes of the UTC datetime. Defaults to true.
- * @param {boolean} [options.s] True to return the seconds of the UTC datetime. Defaults to true.
- * @param {Date|string} [options.date] A date or a string that will be passed to the `Date`
- * constructor which represents the date on which to compute and return the UTC date.
- * @return {string} The UTC datetime.
+ * @param {boolean} [options.Y] True to return the year. Default: true.
+ * @param {boolean} [options.m] True to return the month. Default: true.
+ * @param {boolean} [options.d] True to return the day. Default: true.
+ * @param {boolean} [options.H] True to return the hours. Default: true.
+ * @param {boolean} [options.i] True to return the minutes. Default: true.
+ * @param {boolean} [options.s] True to return the seconds. Default: true.
+ * @param {Date|string} [options.date] The date to format. Default: the current date.
+ * @return {string} The UTC datetime in ISO `YYYY-MM-DD HH:ii:ss` format.
  */
 export function utcDate({
   Y = true,
