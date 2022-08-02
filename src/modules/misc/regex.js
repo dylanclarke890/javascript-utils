@@ -8,6 +8,16 @@ export function emailRegex(exact) {
   return exact ? new RegExp(`^${regex}$`) : new RegExp(regex, "g");
 }
 
+const regex = "@[a-z\\d][\\w-.]+/[a-z\\d][\\w-.]*";
+/**
+ * Regular expression for matching scoped npm package names.
+ * @param {boolean} exact only match exact strings.
+ * @returns {RegExp} a RegExp for matching scoped package names.
+ */
+export function scopedRegex(exact) {
+  return exact ? new RegExp(`^${regex}$`, "i") : new RegExp(regex, "gi");
+}
+
 // TODO: update below to JS RegExp
 
 /**********************************************************************************************
