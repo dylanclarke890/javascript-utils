@@ -300,6 +300,17 @@ export function downloadFile(fileURI) {
 /**
  * @returns {boolean} True if the given API is supported.
  */
-export default function isApiSupported(api) {
+export function isApiSupported(api) {
   return typeof window !== "undefined" ? api in window : false;
 }
+
+/**
+ * Checks whether this function is called from client or server side by
+ * checking on the window object
+ * @returns {boolean} True if this call is made from the client side.
+ */
+export const isClient = !!(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
