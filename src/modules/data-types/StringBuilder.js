@@ -1,7 +1,10 @@
 export class StringBuilder {
   #value = "";
   hasValue = this.#value.length > 0;
-  length = this.#value.length;
+
+  get length() {
+    return this.#value.length;
+  }
 
   constructor(initialValue) {
     this.#value = initialValue || ""; // in case null is passed
