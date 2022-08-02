@@ -94,3 +94,72 @@ export function splitOnFirst(string, separator) {
     string.slice(separatorIndex + separator.length),
   ];
 }
+
+function transformQuotes(input, toSingleQuotes) {
+  let result = "";
+  let isBetweenQuotes = false;
+  let quoteCharacter;
+  let changeTo = "";
+  let toChange = "";
+
+  if (toSingleQuotes) {
+    changeTo = "'";
+    toChange = '"';
+  } else {
+    changeTo = '"';
+    toChange = "'";
+  }
+
+  for (let i = 0; i < input.length; i++) {
+    const current = input[i];
+    const next = input[i + 1];
+    // Found double-quote or single-quote
+    if (current === '"' || current === "'") {
+      // If not processing in between quotes
+      if (!isBetweenQuotes) {
+        quoteCharacter = current;
+        isBetweenQuotes = true;
+        result += changeTo;
+      } else if (quoteCharacter === current) {
+        // If processing between quotes, close quotes
+        result += changeTo;
+        isBetweenQuotes = false;
+      } else result += "\\" + changeTo; // Still inside quotes
+    } else if (current === "\\" && (next === "'" || next === '"')) {
+      // If escape character is found and double or single quote after
+      // Escape + quote to change to
+      if (next === changeTo) {
+        // If in between quotes and quote is equal to changeTo only escape once
+        result +=
+          isBetweenQuotes && quoteCharacter === changeTo
+            ? "\\" + changeTo
+            : "\\\\" + changeTo;
+        i++;
+      } else if (next === toChange) {
+        // Escape + quote to be changed
+        // If between quotes can mantain tochange
+        result += isBetweenQuotes ? toChange : changeTo;
+        i++;
+      } else result += current;
+    } else if (current === "\\" && next === "\\") {
+      // Don't touch backslashes
+      result += "\\\\";
+      i++;
+    } else result += current;
+  }
+  return result;
+}
+
+/**
+ * Convert matching double-quotes to single-quotes: I "love" unicorns → I 'love' unicorns.
+ */
+export function toSingleQuotes(string) {
+  return transformQuotes(string, true);
+}
+
+/**
+ * Convert matching single-quotes to double-quotes: I 'love' unicorns → I "love" unicorns.
+ */
+export function toDoubleQuotes(string) {
+  return transformQuotes(string, false);
+}
