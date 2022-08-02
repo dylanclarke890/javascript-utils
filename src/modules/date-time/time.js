@@ -260,3 +260,17 @@ export function objToMilliseconds(timeDescriptor) {
   }
   return totalMilliseconds;
 }
+
+/**
+ * Pretty time zone: +2 or -9:30
+ * @param {Date} date
+ * @returns A human readable timezone.
+ */
+export function timeZone(date = new Date()) {
+  const offset = date.getTimezoneOffset();
+  const absOffset = Math.abs(offset);
+  const hours = Math.floor(absOffset / 60);
+  const minutes = absOffset % 60;
+  const minutesOut = minutes > 0 ? ":" + ("0" + minutes).slice(-2) : "";
+  return (offset < 0 ? "+" : "-") + hours + minutesOut;
+}
