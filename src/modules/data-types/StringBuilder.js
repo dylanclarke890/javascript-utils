@@ -38,7 +38,7 @@ export class StringBuilder {
   /** Using either a regular expression or a string, find and replace the specified value.
    * @return the current instance so additional calls can be chained. */
   replace(match, replacement) {
-    if (searchFor instanceof RegExp)
+    if (match instanceof RegExp)
       this.#value = this.#value.replace(match, replacement);
     else this.#value = this.#value.split(match).join(replacement);
     return this;

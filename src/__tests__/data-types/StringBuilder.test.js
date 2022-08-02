@@ -24,18 +24,32 @@ test("hasValue property returns the correct value when read.", () => {
 
 test("appending a value then reading returns expected string.", () => {
   const sb = new StringBuilder("test");
-  expect(sb.toString()).toBe("test");
+  expectSbValToBe(sb, "test");
   expectSbValToBe(sb.append("ing"), "testing");
 });
 
 test("prepending a value then reading returns expected string.", () => {
   const sb = new StringBuilder("ing");
-  expect(sb.toString()).toBe("ing");
+  expectSbValToBe(sb, "ing");
   expectSbValToBe(sb.prepend("test"), "testing");
 });
 
 test("inserting a value then reading returns expected string.", () => {
   const sb = new StringBuilder("tst");
-  expect(sb.toString()).toBe("tst");
+  expectSbValToBe(sb, "tst");
   expectSbValToBe(sb.insertAt(1, "e"), "test");
+});
+
+describe("replacing a value", () => {
+  test("using a string as parameter then reading returns expected string", () => {
+    const sb = new StringBuilder("testing");
+    expectSbValToBe(sb, "testing");
+    expectSbValToBe(sb.replace("ing", "ed"), "tested");
+  });
+  test("using a RegExp as parameter then reading returns expected string", () => {
+    const sb = new StringBuilder("testing");
+    expectSbValToBe(sb, "testing");
+    const regEx = new RegExp(/ing/i);
+    expectSbValToBe(sb.replace(regEx, "ed"), "tested");
+  });
 });
