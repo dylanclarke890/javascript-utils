@@ -1,6 +1,9 @@
 export class StringBuilder {
   #value = "";
-  hasValue = this.#value.length > 0;
+
+  get hasValue() {
+    return this.#value.length > 0;
+  }
 
   get length() {
     return this.#value.length;
