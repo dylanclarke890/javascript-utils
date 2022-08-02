@@ -140,6 +140,14 @@ export function isCallable(v) {
 }
 
 /**
+ * Safe implementation of `Object.prototype.hasOwnProperty` (with null check).
+ * @returns {boolean} True if the object has the property.
+ */
+export function safeHasOwnProperty(obj, prop) {
+  return obj ? Object.prototype.hasOwnProperty.call(obj, prop) : false;
+}
+
+/**
  * Detects whether an object has a cyclic reference or not.
  * @param {Object} obj The object to check.
  * @return {boolean} True if the object has a cyclic reference.
