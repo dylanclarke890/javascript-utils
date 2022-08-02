@@ -30,8 +30,8 @@ export class StringBuilder {
   /** Appends str to the current value at the specified start index.
    *  @return the current instance so additional calls can be chained. */
   insertAt(start, value) {
-    this.#value =
-      this.#value.substring(0, start) + value + this.value.substring(start);
+    const _v = this.#value;
+    this.#value = `${_v.substring(0, start)}${value}${_v.substring(start)}`;
     return this;
   }
 
