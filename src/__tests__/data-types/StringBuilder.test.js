@@ -53,3 +53,17 @@ describe("replacing a value", () => {
     expectSbValToBe(sb.replace(regEx, "ed"), "tested");
   });
 });
+
+test("clearing the value then reading returns empty string", () => {
+  const sb = new StringBuilder("testing");
+  expectSbValToBe(sb, "testing");
+  expectSbValToBe(sb.clear(), "");
+});
+
+test("copying a StringBuilder instance returns an instance with the same value", () => {
+  const sb = new StringBuilder("testing");
+  expectSbValToBe(sb, "testing");
+  const sbCopy = sb.copy();
+  expectSbValToBe(sbCopy, "testing");
+  expect(sbCopy).not.toBe(sb);
+});
