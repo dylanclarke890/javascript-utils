@@ -1,7 +1,7 @@
 /**
  * Rounds a number.
  * @param {number} number The number to round.
- * @param {number} precision The decimal precision.
+ * @param {number} precision The decimal precision (significant figures).
  * @return {number} The rounded number.
  */
 export function round(number, precision = 0) {
@@ -21,7 +21,7 @@ export function sum(...numbers) {
 /**
  * Integer division (without decimal part).
  * @param {number} number A number.
- * @param {number} divideBy The number by which to divide "num".
+ * @param {number} divideBy The number to divide by.
  * @return {number} The result of the integer division.
  */
 export function integerDivision(number, divideBy) {
@@ -29,7 +29,7 @@ export function integerDivision(number, divideBy) {
 }
 
 /**
- * Tests if a number is even.
+ * Check if a number is even.
  * @param {number} num A number.
  * @return {boolean} True if even, false if odd.
  */
@@ -38,7 +38,7 @@ export function isEven(num) {
 }
 
 /**
- * Tests if a number is odd.
+ * Check if a number is odd.
  * @param {number} num A number.
  * @return {boolean} True if odd, false if even.
  */
