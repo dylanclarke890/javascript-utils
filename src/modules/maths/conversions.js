@@ -1,7 +1,16 @@
+/**
+ * Convert a binary number to decimal.
+ * @param {string} x The binary number to convert.
+ * @returns The decimal number.
+ */
 export function binaryToDecimal(x) {
   return parseInt(x, 2);
 }
-
+/**
+ * Convert a decimal number to binary.
+ * @param {number} x The decimal number to convert.
+ * @returns The binary number.
+ */
 export function decimalToBinary(x) {
   return x.toString(2);
 }
@@ -85,7 +94,7 @@ export function toLocaleString(number, locale, options) {
  * digits to display. If neither minimumFractionDigits or maximumFractionDigits are set, the
  * default behavior is to round to 3 significant digits.
  */
-export default function convertBytes(number, options) {
+export function convertBytes(number, options) {
   if (!Number.isFinite(number))
     throw new TypeError(
       `Expected a finite number, got ${typeof number}: ${number}`
