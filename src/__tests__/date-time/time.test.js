@@ -9,7 +9,14 @@ import {
   timeZone,
 } from "../../modules/date-time/time";
 
-// TODO: test cases for now
+describe("now", () => {
+  test("uses fallback if Date.now is not available", () => {
+    Date.now = jest.fn(() => null);
+    expect(now()).toBeGreaterThan(0);
+  });
+  // TODO: test cases for now
+});
+
 // TODO: test cases for time
 // TODO: test cases for msToTime
 // TODO: test cases for secsToTimeString
