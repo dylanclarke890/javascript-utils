@@ -156,15 +156,11 @@ function newImmutableLinkedOrderedMap({
     (mode = DEFAULT_MAP_MODE);
   let map = newMapFromMode(mode);
   hydrateNew.call(map, { keyPropName, mode });
-  if (lazy) {
-    map = newLazyMap(map, initialItems);
-  } else {
-    appendInitialItemsToMap(map, initialItems);
-  }
+  if (lazy) map = newLazyMap(map, initialItems);
+  else appendInitialItemsToMap(map, initialItems);
+  
   return map;
 }
-
-/* ======================================================================================================== */
 
 /**
  * Creates a new map given the mode.
@@ -178,8 +174,6 @@ function newMapFromMode(mode) {
     ImmutableLinkedOrderedMapForMode[mode].ImmutableLinkedOrderedMapClass;
   return new ImmutableLinkedOrderedMapClass();
 }
-
-/* ======================================================================================================== */
 
 /**
  * Defines a getter and optional setter on an object's property.
@@ -214,8 +208,6 @@ function makeNode(previous, next, element) {
     element,
   };
 }
-
-/* ======================================================================================================== */
 
 /**
  * Hydrates a new map when the client code creates it.
@@ -299,7 +291,6 @@ class hydrate {
 
 /**
  * Returns a node or undefined if the node is an orphan node.
- *
  * @param {Object|undefined} node
  * @return {*} The node if it is valid and is not an orphan node, or "undefined" otherwise.
  */
@@ -309,7 +300,6 @@ function nodeOrUndefined(node) {
 
 /**
  * Tests if a node is an orphan node or not.
- *
  * @param {Object} node The node to test.
  * @return {boolean} "true" if the node is orphan, "false" otherwise.
  */
@@ -320,7 +310,6 @@ function isOrphanNode(node) {
 /**
  * Creates a new lazy map which appends its initial items only when the map is used for the very first time
  * (by calling a method, accessing or setting one of its properties).
- *
  * @param {ImmutableLinkedOrderedMap} map The map.
  * @param {Array} items Array of items to append.
  * @return {ImmutableLinkedOrderedMap} The lazy map.
@@ -339,7 +328,6 @@ function newLazyMap(map, initialItems = []) {
 /**
  * Mutates a map's shared structure (structural sharing) by appending items to the map.
  * This internal function assumes that the given map is empty.
- *
  * @param {ImmutableLinkedOrderedMap} map The map.
  * @param {Array} items Array of items to append.
  * @return {undefined}
@@ -409,7 +397,6 @@ function appendInitialItemsToMap(map, items = []) {
 
 /**
  * Gets the key and the value of an item.
- *
  * @param {string} keyPropName The name of the key property to use for the items of the map.
  * @param {Object} item An item.
  * @return {Object} An object with a "key" and a "value" property.
@@ -436,7 +423,6 @@ function keyValueForItem(keyPropName, item) {
 
 /**
  * Stores a change on a map.
- *
  * @param {ImmutableLinkedOrderedMap} map The map.
  * @param {string} changeLabel The label identifying the change.
  * @param {*} [payload] The optional payload of the change.
@@ -481,7 +467,6 @@ function forkMap(map) {
 
 /**
  * Adds an orphan node with "undefined" as a value to the given map for the given key.
- *
  * @param {ImmutableLinkedOrderedMap} map The map.
  * @param {string|number} key The key.
  * @return {undefined}
@@ -501,7 +486,6 @@ let creatingNew = false;
 
 /**
  * Base class of an immutable linked ordered map.
- *
  * This is the only class exposed to the code of the client using this library.
  * Internally it uses the factory function "newImmutableLinkedOrderedMap"
  * to return the correct subclass given the passed options.
@@ -1581,8 +1565,6 @@ class ImmutableLinkedOrderedMap {
   }
 }
 
-/* ======================================================================================================== */
-
 /**
  * Binds two nodes of a map in single mode.
  *
@@ -1632,7 +1614,6 @@ function makeSingleModeImmutableLinkedOrderedMapNode(
 /**
  * Finds a previous or next node of a node in the context of an immutable linked ordered map
  * in single mode.
- *
  * @param {SingleModeImmutableLinkedOrderedMap} map The map.
  * @param {Object} fromNode From node.
  * @param {string} nextNodeDirection The direction, either "previous" or "next".
@@ -1660,7 +1641,6 @@ function findSingleModeMapNodeByDirection(map, fromNode, nextNodeDirection) {
 
 /**
  * Updates a heap map shared structure (structural sharing) of a map in single mode.
- *
  * @param {SingleModeImmutableLinkedOrderedMap} map The map which shared heap map should be updated.
  * @param {Object} itemNode The linked node of the item.
  * @return {undefined}
@@ -1678,7 +1658,6 @@ function updateSingleModeHeapMap(map, itemNode) {
 
 /**
  * Lookups a node in a single mode map.
- *
  * @param {SingleModeImmutableLinkedOrderedMap} map The map.
  * @param {string|number} key The key to lookup.
  * @return {Object|undefined} The node in the heap map or undefined, if the value for that key is missing.
@@ -1703,7 +1682,6 @@ function lookupSingleMode(map, key) {
 /**
  * Throws an error for a second mutation operation on an immutable linkerd ordered map
  * in single mode.
- *
  * @param {string} operation A string identifying the mutation operation.
  * @return {undefined}
  * @throws {Error}
@@ -1784,8 +1762,6 @@ class SingleModeImmutableLinkedOrderedMap extends ImmutableLinkedOrderedMap {
     return map;
   }
 }
-
-/* ======================================================================================================== */
 
 /**
  * Binds two nodes of a map in multiway mode.
@@ -2004,8 +1980,6 @@ class MultiwayModeImmutableLinkedOrderedMap extends ImmutableLinkedOrderedMap {
     return instance;
   }
 }
-
-/* ======================================================================================================== */
 
 /**
  * Binds two nodes of a map in lightweight mode.
@@ -2315,8 +2289,6 @@ class LightweightModeImmutableLinkedOrderedMap extends ImmutableLinkedOrderedMap
   }
 }
 
-/* ======================================================================================================== */
-
 /**
  * A mutable linked ordered map (used internally).
  *
@@ -2498,8 +2470,6 @@ class LinkedOrderedMap {
     return array;
   }
 }
-
-/* ======================================================================================================== */
 
 /**
  * A mutable linked list (used internally).
@@ -2685,8 +2655,6 @@ class LinkedList {
     this.shouldNextForEachBreak = true;
   }
 }
-
-/* ======================================================================================================== */
 
 /**
  * @type {Object}
