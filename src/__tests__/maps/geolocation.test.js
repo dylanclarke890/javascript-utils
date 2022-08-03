@@ -3,29 +3,94 @@ import {
   makePositionObj,
 } from "../../modules/maps/geolocation";
 
-// TODO: test cases for isSamePosition
-// TODO: test cases for makePositionObj
-
 describe("isSamePosition", () => {
   test("handles invalid args", () => {
-    throw new Error("Not Implemented!");
+    const invalidArgs = [
+      [null, null],
+      ["invalid", "invalid"],
+      [1, 3],
+      [{}, {}],
+      [{}, { coords: {} }],
+    ];
+    for (let [first, second] in invalidArgs)
+      expect(isSamePosition(first, second)).toBe(false);
   });
   test("returns false for inequal objects", () => {
-    throw new Error("Not Implemented!");
+    const first = {
+        coords: {
+          latitude: 1,
+        },
+      },
+      second = {
+        coords: {
+          latitude: 10,
+        },
+      };
+
+    expect(isSamePosition(first, second)).toBe(false);
   });
   test("returns true for equal objects", () => {
-    throw new Error("Not Implemented!");
+    const first = {
+        coords: {
+          latitude: 1,
+          longitude: 12,
+          altitude: 14,
+          accuracy: "78%",
+          altitudeAccuracy: 12,
+          heading: 12,
+          speed: 12,
+        },
+      },
+      second = first;
+    expect(isSamePosition(first, second)).toBe(true);
   });
 });
 
 describe("makePositionObj", () => {
   test("handles invalid args", () => {
-    throw new Error("Not Implemented!");
+    const invalidArgs = [
+      null,
+      {
+        latitude: 1,
+        longitude: 12,
+        altitude: 14,
+        accuracy: "78%",
+        altitudeAccuracy: 12,
+        heading: 12,
+        speed: 12,
+      },
+      1,
+      "1",
+      new Date(),
+    ];
+    for (let arg in invalidArgs) expect(makePositionObj(arg)).toBe(null);
   });
   test("returns expected obj", () => {
-    throw new Error("Not Implemented!");
-  });
-  test("returns true for equal objects", () => {
-    throw new Error("Not Implemented!");
+    const input = {
+        timestamp: 12,
+        coords: {
+          latitude: 1,
+          longitude: 12,
+          altitude: 14,
+          accuracy: "78%",
+          altitudeAccuracy: 12,
+          heading: 12,
+          speed: 12,
+        },
+        extraData: { asd: "asd" },
+      },
+      output = {
+        timestamp: 12,
+        coords: {
+          latitude: 1,
+          longitude: 12,
+          altitude: 14,
+          accuracy: "78%",
+          altitudeAccuracy: 12,
+          heading: 12,
+          speed: 12,
+        },
+      };
+    expect(makePositionObj(input)).toStrictEqual(output);
   });
 });

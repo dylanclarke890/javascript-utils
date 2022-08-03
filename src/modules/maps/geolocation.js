@@ -5,14 +5,22 @@ export const geoStandardOptions = Object.freeze({
 });
 
 /**
- * Checks if two position are equals
+ * Checks if two position are equal. Instead of throwing an error, this method
+ * will also return false if the supplied args are invalid.
+ * @param {Object} current a Position object.
+ * @param {Object} next the obj to compare against.
+ * @returns {boolean} True if they are equal.
  */
 export function isSamePosition(current, next) {
-  if (!current || !next || !next.coords) return false;
   if (
-    current.timestamp &&
-    next.timestamp &&
-    current.timestamp !== next.timestamp
+    typeof current !== "object" ||
+    typeof next !== "object" ||
+    !current ||
+    !next ||
+    !next.coords ||
+    (current.timestamp &&
+      next.timestamp &&
+      current.timestamp !== next.timestamp)
   )
     return false;
 
@@ -28,10 +36,13 @@ export function isSamePosition(current, next) {
 }
 
 /**
- * Given a position object returns only its properties
+ * Given a object with coords properties returns only its timestamp 
+ * and coord properties.
+ * @param {Object} position The object to convert.
+ * @returns {Object} a position object.
  */
 export function makePositionObj(position) {
-  return !position
+  return !position || typeof position !== 'object'
     ? null
     : {
         timestamp: position.timestamp,
