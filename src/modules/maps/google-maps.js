@@ -1,6 +1,10 @@
+/** A google.maps.LatLngBounds or object literal with lat and lng properties.
+ *  @typedef {Object} LatLngBounds
+ *  @property {number} lat
+ *  @property {number} lng
+ * /
 /**
  * Determines the best zoom level for a Google map.
- *
  * @param {LatLngBounds} bounds The bounds.
  * @param {Object} mapDimensions POJO with height and width properties.
  * @param {number} mapDimensions.height The height of the map's div.
@@ -8,6 +12,13 @@
  * @return {number} The best zoom level.
  */
 export function bestZoomForBounds(bounds, mapDimensions) {
+  if (
+    typeof bounds !== "object" ||
+    typeof mapDimensions !== "object" ||
+    !bounds ||
+    !mapDimensions
+  )
+    return null;
   const WORLD_DIM = { height: 256, width: 256 };
   const ZOOM_MAX = 21;
 
