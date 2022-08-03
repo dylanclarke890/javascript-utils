@@ -80,7 +80,7 @@ const DEFAULT_MAP_MODE = ImmutableLinkedOrderedMapMode.MULTIWAY;
  * @param {string} [keyPropName] The name of the key property of an item which value should be
  * used for the key of the map (defaults to "id").
  * @param {number} mode The mode of the map (a value of the enum-like object
- * "ImmutableLinkedOrderedMapMode"). When the map is single mode 
+ * "ImmutableLinkedOrderedMapMode"). When the map is single mode
  * ("ImmutableLinkedOrderedMapMode.SINGLE"), it will only allow a single mutation operation
  * per linked ordered immutable map instance. This mode allows faster lookups as the version
  * tree of the map will consist of only one branch and should cover almost all practical use
@@ -122,7 +122,7 @@ const DEFAULT_MAP_MODE = ImmutableLinkedOrderedMapMode.MULTIWAY;
  *                                                        anotherNewMapFromNewMap (Fourth version, first branch)
  * This mode should be used only if client code needs to perform several mutation operations on
  * the same map instance over time. Also, a single mode map cannot become a multiway and
- * viceversa. The last available mode is lightweight mode 
+ * viceversa. The last available mode is lightweight mode
  * ("ImmutableLinkedOrderedMapMode.LIGHTWEIGHT"). This mode is the most restrictive and does not
  * allow to perform any operation on a map on which a mutation operation has occurred (basically
  * once a mutation operation occurs on a map, it becomes useless and only the new map could be
@@ -169,7 +169,7 @@ function newImmutableLinkedOrderedMap({
 /**
  * Creates a new map given the mode.
  *
- * @param {number} mode The mode of the map (a property value of the enum-like object 
+ * @param {number} mode The mode of the map (a property value of the enum-like object
  * "ImmutableLinkedOrderedMapMode").
  * @return {ImmutableLinkedOrderedMap} A new immutable linked ordered map.
  */
@@ -271,28 +271,30 @@ function hydrateNew({ keyPropName, mode }) {
  * @param {Object|undefined} tail Tail of the map.
  * @return {undefined}
  */
-function hydrate({
-  heapMap,
-  depth,
-  length,
-  keyPropName,
-  mode,
-  head,
-  tail,
-  ancestorMap,
-} = {}) {
-  prop(this, "heapMap", () => heapMap);
-  this.depth = depth || 0;
-  this.length = length || 0;
-  this.keyPropName = keyPropName;
-  prop(this, "mode", () => mode);
-  this.head = head || null;
-  this.tail = tail || null;
-  this.ancestorMap = ancestorMap || null;
-  this.shouldNextForEachBreak = false;
-  this.forEachNextFn = void 0;
-  this.change = null;
-  this[MAP_TAG] = MAP_TAG_VALUE;
+class hydrate {
+  constructor({
+    heapMap,
+    depth,
+    length,
+    keyPropName,
+    mode,
+    head,
+    tail,
+    ancestorMap,
+  } = {}) {
+    prop(this, "heapMap", () => heapMap);
+    this.depth = depth || 0;
+    this.length = length || 0;
+    this.keyPropName = keyPropName;
+    prop(this, "mode", () => mode);
+    this.head = head || null;
+    this.tail = tail || null;
+    this.ancestorMap = ancestorMap || null;
+    this.shouldNextForEachBreak = false;
+    this.forEachNextFn = void 0;
+    this.change = null;
+    this[MAP_TAG] = MAP_TAG_VALUE;
+  }
 }
 
 /**
@@ -388,14 +390,11 @@ function appendInitialItemsToMap(map, items = []) {
         }
       }
 
-      if (map.head === null) {
-        map.head = lastNode;
-      }
+      if (map.head === null) map.head = lastNode;
     } else {
-      if (previousTail === null) {
-        // "newTail" is the first node ever of this map.
-        map.head = newTail;
-      } else {
+      if (previousTail === null)
+        map.head = newTail; // "newTail" is the first node ever of this map.
+      else {
         // Only one item, i.e. only the one in "newTail".
         // There was a previous tail, though.
         ImmutableLinkedOrderedMapForMode[mode].bindNodes(
@@ -420,9 +419,8 @@ function keyValueForItem(keyPropName, item) {
   let value;
   if (item) {
     key = item[keyPropName];
-    if (typeof key !== "undefined") {
-      value = item;
-    } else {
+    if (typeof key !== "undefined") value = item;
+    else {
       for (const prop in item) {
         key = prop;
         break;
@@ -457,7 +455,6 @@ let isFork = false;
 
 /**
  * Forks a new map from an existent one, hydrating it as needed.
- *
  * @param {ImmutableLinkedOrderedMap} map The map from which to fork.
  * @return {ImmutableLinkedOrderedMap} The new forked map instance.
  */
@@ -512,15 +509,11 @@ let creatingNew = false;
 class ImmutableLinkedOrderedMap {
   /**
    * Constructor.
-   *
    * @constructor
-   *
    * @param {Object} options Options.
    */
   constructor(options) {
-    if (isFork) {
-      return;
-    }
+    if (isFork) return;
     if (!creatingNew) {
       creatingNew = true;
       const instance = newImmutableLinkedOrderedMap(options);
@@ -560,10 +553,9 @@ class ImmutableLinkedOrderedMap {
       // items is either a non-empty array or it's not an array.
       // If it's falsy, then return this same map.
       !items
-    ) {
-      // No valid item/items provided.
-      return this;
-    } else if (
+    )
+      return this; // No valid item/items provided.
+    else if (
       // If it's not falsy and is not an array, wrap it in an array.
       !itemsIsArray
     ) {
@@ -603,36 +595,30 @@ class ImmutableLinkedOrderedMap {
         if (firstPrepend) {
           // Store old tail before first appending operation.
           firstPrepend = false;
-          if (map.tail !== null) {
-            appendOperationOldTail = map.tail;
-          }
+          if (map.tail !== null) appendOperationOldTail = map.tail;
           map.tail = newNode;
           ret = false;
-        } else {
+        } else
           ret = {
             newNext: lastPrepend,
           };
-        }
         lastPrepend = newNode;
         return ret;
       };
       loopEnd = () => {
         if (lastPrepend) {
-          if (map.head === null) {
-            map.head = lastPrepend;
-          }
-          if (appendOperationOldTail) {
+          if (map.head === null) map.head = lastPrepend;
+          if (appendOperationOldTail)
             ImmutableLinkedOrderedMapForMode[map.mode].bindNodes(
               map,
               appendOperationOldTail,
               lastPrepend
             );
-          }
         }
       };
-    } else {
-      // Prepend missing.
+    } else
       nodes = (map, newNode) => {
+        // Prepend missing.
         // Prepend.
         const oldHead = map.head;
         map.head = newNode;
@@ -640,14 +626,11 @@ class ImmutableLinkedOrderedMap {
           newNext: oldHead,
         };
       };
-    }
     for (; valid(); updateI()) {
       const item = items[i];
       const { key, value } = keyValueForItem(this.keyPropName, item);
-      if (keysMap[key]) {
-        // Duplicate key, ignore.
-        continue;
-      }
+      // Duplicate key, ignore.
+      if (keysMap[key]) continue;
       keysMap[key] = true;
 
       const node = ImmutableLinkedOrderedMapForMode[this.mode].lookup(
@@ -728,10 +711,7 @@ class ImmutableLinkedOrderedMap {
             previous,
             newNode
           );
-        } else {
-          // "node" was a head. Update head.
-          map.head = newNode;
-        }
+        } else map.head = newNode; // "node" was a head. Update head.
 
         // Check for tail.
         if (next !== null) {
@@ -744,10 +724,7 @@ class ImmutableLinkedOrderedMap {
         } else if (appendOperationOldTail) {
           // Tail has been updated during the first append operation.
           appendOperationOldTail = newNode;
-        } else {
-          // "node" was a tail. Update tail.
-          map.tail = newNode;
-        }
+        } else map.tail = newNode; // "node" was a tail. Update tail.
 
         updated.unshift({
           key,
@@ -757,10 +734,8 @@ class ImmutableLinkedOrderedMap {
     }
     loopEnd();
 
-    if (!map) {
-      // Nothing has changed.
-      return this;
-    } else {
+    if (!map) return this; // Nothing has changed.
+    else {
       // Store the change on the new map and return it.
       mapChange(map, "set", {
         inserted,
@@ -832,12 +807,8 @@ class ImmutableLinkedOrderedMap {
         if (existentNodeForKey) {
           hadExistentNodeForKey = true;
           if (existentNodeForKey.element.value !== value) {
-            if (existentNodeForKey === map.head) {
-              map.head = newNode;
-            }
-            if (existentNodeForKey === map.tail) {
-              map.tail = newNode;
-            }
+            if (existentNodeForKey === map.head) map.head = newNode;
+            if (existentNodeForKey === map.tail) map.tail = newNode;
             const existentNodeForKeyPrevious = ImmutableLinkedOrderedMapForMode[
               this.mode
             ].findMapNodeByDirection(this, existentNodeForKey, "previous");
@@ -870,9 +841,8 @@ class ImmutableLinkedOrderedMap {
             const newPrevious = map.tail;
             map.tail = newNode;
 
-            if (newPrevious === null) {
-              map.head = map.tail;
-            } else {
+            if (newPrevious === null) map.head = map.tail;
+            else {
               ImmutableLinkedOrderedMapForMode[map.mode].bindNodes(
                 map,
                 newPrevious,
@@ -884,9 +854,8 @@ class ImmutableLinkedOrderedMap {
             const newNext = map.head;
             map.head = newNode;
 
-            if (newNext === null) {
-              map.tail = map.head;
-            } else {
+            if (newNext === null) map.tail = map.head;
+            else {
               ImmutableLinkedOrderedMapForMode[map.mode].bindNodes(
                 map,
                 newNode,
@@ -928,12 +897,8 @@ class ImmutableLinkedOrderedMap {
           if (existentNodeForKey) {
             hadExistentNodeForKey = true;
             if (existentNodeForKey.element.value !== value) {
-              if (existentNodeForKey === map.head) {
-                map.head = newNode;
-              }
-              if (existentNodeForKey === map.tail) {
-                map.tail = newNode;
-              }
+              if (existentNodeForKey === map.head) map.head = newNode;
+              if (existentNodeForKey === map.tail) map.tail = newNode;
               const existentNodeForKeyPrevious =
                 ImmutableLinkedOrderedMapForMode[
                   this.mode
@@ -954,9 +919,7 @@ class ImmutableLinkedOrderedMap {
                     previous,
                     newNode
                   );
-                } else {
-                  map.head = newNode;
-                }
+                } else map.head = newNode;
               }
               if (existentNodeForKeyNext !== null) {
                 if (node !== existentNodeForKeyNext) {
@@ -971,9 +934,7 @@ class ImmutableLinkedOrderedMap {
                     newNode,
                     next
                   );
-                } else {
-                  map.tail = newNode;
-                }
+                } else map.tail = newNode;
               }
             }
             map.length--;
@@ -984,16 +945,13 @@ class ImmutableLinkedOrderedMap {
           if (previous === null) {
             // It's a head.
             map.head = newNode;
-            if (next === null) {
-              // It's also a tail.
-              map.tail = newNode;
-            } else {
+            if (next === null) map.tail = newNode; // It's also a tail.
+            else
               ImmutableLinkedOrderedMapForMode[map.mode].bindNodes(
                 map,
                 newNode,
                 next
               );
-            }
           } else if (next === null) {
             // It's a tail and has a previous node.
             map.tail = newNode;
@@ -1022,10 +980,8 @@ class ImmutableLinkedOrderedMap {
       }
     }
 
-    if (!map) {
-      // Nothing has changed.
-      return this;
-    } else {
+    if (!map) return this; // Nothing has changed.
+    else {
       // Store the change on the new map and return it.
       mapChange(map, "replace", {
         oldKey,
@@ -1059,9 +1015,7 @@ class ImmutableLinkedOrderedMap {
     if (Array.isArray(itemsOrKey)) {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       let map = this;
-      for (const item of itemsOrKey) {
-        map = map.unsetKey(item[keyPropName]);
-      }
+      for (const item of itemsOrKey) map = map.unsetKey(item[keyPropName]);
       return map;
     }
     return this.unsetKey(itemsOrKey[keyPropName]);
@@ -1069,9 +1023,7 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Unsets an item by its key.
-   *
    * The same map instance will be returned if the given key does not exist.
-   *
    * @param {string|number} key The key to unset.
    * @return {ImmutableLinkedOrderedMap} A new immutable linked ordered map or this map if nothing has changed.
    */
@@ -1175,10 +1127,8 @@ class ImmutableLinkedOrderedMap {
       }
     }
 
-    if (!map) {
-      // Nothing has changed.
-      return this;
-    } else {
+    if (!map) return this; // Nothing has changed.
+    else {
       mapChange(map, "unset", {
         key,
         value,
@@ -1195,11 +1145,7 @@ class ImmutableLinkedOrderedMap {
    * @return {ImmutableLinkedOrderedMap} A new emptied immutable linked ordered map.
    */
   empty() {
-    if (this.length <= 0) {
-      // The map is already empty. Nothing has changed.
-      return this;
-    }
-
+    if (this.length <= 0) return this; // The map is already empty. Nothing has changed.
     const map = new ImmutableLinkedOrderedMap({
       initialItems: [],
       keyPropName: this.keyPropName,
@@ -1214,73 +1160,60 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Lookups a value in the map.
-   *
    * @param {string|number} key The key to lookup.
    * @return {*} The associated value, or undefined, if the given key is missing.
    */
   get(key) {
     const node = ImmutableLinkedOrderedMapForMode[this.mode].lookup(this, key);
-    if (node) {
-      return node.element.value;
-    }
+    if (node) return node.element.value;
     return void 0;
   }
 
   /**
    * Returns a key/value pair of the first item in the map.
-   *
-   * @return {Object|undefined} An object with the property "key" (the key of the item in the map) and "value"
-   *                            (the value of the item in the map).
-   *                            If the map is empty, "undefined" will be returned.
+   * @return {Object|undefined} An object with the property "key" (the key of the item in the
+   * map) and "value" (the value of the item in the map). If the map is empty, "undefined" will
+   * be returned.
    */
   first() {
-    if (this.head) {
-      return {
-        key: this.head.element.key,
-        value: this.head.element.value,
-      };
-    } else {
-      return void 0;
-    }
+    return this.head ? ({
+      key: this.head.element.key,
+      value: this.head.element.value,
+    }) : void 0;
   }
 
   /**
    * Returns a key/value pair of the last item in the map.
-   *
-   * @return {Object|undefined} An object with the property "key" (the key of the item in the map) and "value"
-   *                            (the value of the item in the map).
-   *                            If the map is empty, "undefined" will be returned.
+   * @return {Object|undefined} An object with the property "key" (the key of the item in the
+   * map) and "value" (the value of the item in the map). If the map is empty, "undefined" will
+   * be returned.
    */
   last() {
-    if (this.tail) {
-      return {
-        key: this.tail.element.key,
-        value: this.tail.element.value,
-      };
-    } else {
-      return void 0;
-    }
+    return this.tail ? ({
+      key: this.tail.element.key,
+      value: this.tail.element.value,
+    }) : void 0;
   }
 
   /**
    * Returns a range of key/value pairs before the given key up to a max number of items
    * (counting the given key if included).
-   *
    * @param {string|number} key The key to lookup and use for the creation of the range.
-   * @param {number} maxNumberOfItems Max number of key/value pairs to return for the range including or not including the item at the given key
-   *                                  (depending on the value of the "itemAtKeyIncluded" opton).
-   *                                  By default, all items before the given key are included in the returned range of key/value pairs.
-   * @param {boolean} itemAtKeyIncluded Whether or not to include the item at the given key in the range (by default the item is included).
-   * @return {Array} An array which represents the range, each item being a key/value pair representing an item of the map.
-   *                 An empty array if the given key does not exist in the map or the given key does exist in the map but is not included
-   *                 in the range and its item is the first of the map.
-   *                 An empty array is also returned if "maxNumberOfItems" is less than or equal to 0.
+   * @param {number} maxNumberOfItems Max number of key/value pairs to return for the range
+   * including or not including the item at the given key (depending on the value of the
+   * "itemAtKeyIncluded" option). By default, all items before the given key are included in
+   * the returned range of key/value pairs.
+   * @param {boolean} itemAtKeyIncluded Whether or not to include the item at the given key in
+   * the range (by default the item is included).
+   * @return {Array} An array which represents the range, each item being a key/value pair
+   * representing an item of the map. An empty array if the given key does not exist in the map
+   * or the given key does exist in the map but is not included in the range and its item is the
+   * first of the map. An empty array is also returned if "maxNumberOfItems" is less than or 
+   * equal to 0.
    */
   rangeBefore(key, maxNumberOfItems = Infinity, itemAtKeyIncluded = true) {
     const node = ImmutableLinkedOrderedMapForMode[this.mode].lookup(this, key);
-    if (!node || maxNumberOfItems <= 0) {
-      return [];
-    }
+    if (!node || maxNumberOfItems <= 0) return [];
 
     let current = itemAtKeyIncluded
       ? node
@@ -1289,18 +1222,14 @@ class ImmutableLinkedOrderedMap {
           node,
           "previous"
         );
-    if (!current) {
-      return [];
-    }
+    if (!current) return [];
 
     const range = [{ key: current.element.key, value: current.element.value }];
     while (current && range.length < maxNumberOfItems) {
       current = ImmutableLinkedOrderedMapForMode[
         this.mode
       ].findMapNodeByDirection(this, current, "previous");
-      if (!current) {
-        break;
-      }
+      if (!current) break;
       range.push({ key: current.element.key, value: current.element.value });
     }
     return range.reverse();
@@ -1309,22 +1238,22 @@ class ImmutableLinkedOrderedMap {
   /**
    * Returns a range of key/value pairs after the given key up to a max number of items
    * (counting the given key if included).
-   *
    * @param {string|number} key The key to lookup and use for the creation of the range.
-   * @param {number} maxNumberOfItems Max number of key/value pairs to return for the range including or not including the item at the given key
-   *                                  (depending on the value of the "itemAtKeyIncluded" opton).
-   *                                  By default, all items after the given key are included in the returned range of key/value pairs.
-   * @param {boolean} itemAtKeyIncluded Whether or not to include the item at the given key in the range (by default the item is included).
-   * @return {Array} An array which represents the range, each item being a key/value pair representing an item of the map.
-   *                 An empty array if the given key does not exist in the map or the given key does exist in the map but is not included
-   *                 in the range and its item is the last of the map.
-   *                 An empty array is also returned if "maxNumberOfItems" is less than or equal to 0.
+   * @param {number} maxNumberOfItems Max number of key/value pairs to return for the range
+   * including or not including the item at the given key (depending on the value of the 
+   * "itemAtKeyIncluded" option). By default, all items after the given key are included in
+   * the returned range of key/value pairs.
+   * @param {boolean} itemAtKeyIncluded Whether or not to include the item at the given key
+   * in the range (by default the item is included).
+   * @return {Array} An array which represents the range, each item being a key/value pair
+   * representing an item of the map. An empty array if the given key does not exist in the
+   * map or the given key does exist in the map but is not included in the range and its item
+   * is the last of the map. An empty array is also returned if "maxNumberOfItems" is less than
+   * or equal to 0.
    */
   rangeAfter(key, maxNumberOfItems = Infinity, itemAtKeyIncluded = true) {
     const node = ImmutableLinkedOrderedMapForMode[this.mode].lookup(this, key);
-    if (!node || maxNumberOfItems <= 0) {
-      return [];
-    }
+    if (!node || maxNumberOfItems <= 0) return [];
 
     let current = itemAtKeyIncluded
       ? node
@@ -1333,18 +1262,14 @@ class ImmutableLinkedOrderedMap {
           node,
           "next"
         );
-    if (!current) {
-      return [];
-    }
-
+    if (!current) return [];
     const range = [{ key: current.element.key, value: current.element.value }];
     while (current && range.length < maxNumberOfItems) {
       current = ImmutableLinkedOrderedMapForMode[
         this.mode
       ].findMapNodeByDirection(this, current, "next");
-      if (!current) {
+      if (!current) 
         break;
-      }
       range.push({ key: current.element.key, value: current.element.value });
     }
     return range;
@@ -1352,7 +1277,6 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Tests if the map is empty.
-   *
    * @return {boolean} True if the map is empty, false otherwise.
    */
   isEmpty() {
@@ -1361,14 +1285,12 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Loop through all the values of this immutable linked ordered map in the order they were added.
-   *
    * @param {Function} fn A callback function to call for each value stored in the map.
-   *                      The callback will receive the value as the first argument, the key as the second argument
-   *                      and the index of the item in the map as the third argument.
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
-   * @return {undefined}
+   * The callback will receive the value as the first argument, the key as the second argument
+   * and the index of the item in the map as the third argument.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse
+   * order (starting from the tail node). The default is to loop through all the elements
+   * starting from the head node.
    */
   forEach(fn, reversed = false) {
     let key;
@@ -1399,23 +1321,17 @@ class ImmutableLinkedOrderedMap {
         key = element.key;
         value = element.value;
         const result = (this.forEachNextFn || fn).call(this, value, key, i);
-        if (result === false) {
-          // Break instantly.
-          break;
-        }
+        if (result === false) break; // Break instantly.
         current = ImmutableLinkedOrderedMapForMode[
           this.mode
         ].findMapNodeByDirection(this, current, nextNodeDirection);
         updateI();
-      } else {
-        break;
-      }
+      } else break;
     }
   }
 
   /**
    * Break the next "forEach" loop iteration occurring on this immutable linked ordered map.
-   *
    * @return {undefined}
    */
   break() {
@@ -1424,11 +1340,10 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Returns an array of values of this map.
-   *
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
-   *                             If "reversed" is set to "true", the returned values will be in reverse order.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order
+   * (starting from the tail node). The default is to loop through all the elements starting
+   * from the head node. If "reversed" is set to "true", the returned values will be in reverse
+   * order.
    * @return {Array} An array of all the values of this map, in the order they were added to the map.
    */
   values(reversed = false) {
@@ -1444,16 +1359,16 @@ class ImmutableLinkedOrderedMap {
   /**
    * Returns an array of keys of this map.
    *
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
-   *                             If "reversed" is set to "true", the returned keys will be in reverse order.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse
+   * order (starting from the tail node). The default is to loop through all the elements
+   * starting from the head node. If "reversed" is set to "true", the returned keys will be
+   * in reverse order.
    * @return {Array} An array of all the keys of this map, in the order they were added to the map.
    */
   keys(reversed = false) {
     const array = new Array(this.length);
     let i = 0;
-    this.forEach(function (value, key) {
+    this.forEach(function (_, key) {
       array[i] = key;
       i++;
     }, reversed);
@@ -1462,13 +1377,12 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Returns an array of key/value pairs for each item in the map.
-   *
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
-   *                             If "reversed" is set to "true", the returned key/value pairs will be in reverse order.
-   * @return {Array} An array of objects where each object has the property "key" (the key of the item in the map)
-   *                 and "value" (the value of the item in the map).
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order
+   * (starting from the tail node). The default is to loop through all the elements starting
+   * from the head node. If "reversed" is set to "true", the returned key/value pairs will be in
+   * reverse order.
+   * @return {Array} An array of objects where each object has the property "key" (the key of
+   * the item in the map) and "value" (the value of the item in the map).
    */
   keysValues(reversed = false) {
     const array = new Array(this.length);
@@ -1486,15 +1400,14 @@ class ImmutableLinkedOrderedMap {
   /**
    * Map all the values of this immutable linked ordered map in the order they were added
    * to a new array.
-   *
-   * @param {Function} fn A callback function to call for each value stored in the map.
-   *                      The callback will receive the value as the first argument,
-   *                      the key as the second argument, and the index of the item in the map as the third argument.
-   *                      It's return value will be used as an element of the returned array for that item.
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
-   *                             If "reversed" is set to "true", the returned mapped values will be in reverse order.
+   * @param {Function} fn A callback function to call for each value stored in the map. The
+   * callback will receive the value as the first argument, the key as the second argument,
+   * and the index of the item in the map as the third argument. It's return value will be
+   * used as an element of the returned array for that item.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order
+   * (starting from the tail node). The default is to loop through all the elements starting
+   * from the head node. If "reversed" is set to "true", the returned mapped values will be in
+   * reverse order.
    * @return {Array} An array with the mapped values.
    */
   map(fn, reversed = false) {
@@ -1509,27 +1422,26 @@ class ImmutableLinkedOrderedMap {
 
   /**
    * Reduce all the values of this immutable linked ordered map to a single output value.
-   *
    * @param {Function} fn A callback function to call for each value stored in the map.
-   *                      The callback will receive the accumulator as the first argument,
-   *                      the current value as the second argument, the current value's key as the third argument
-   *                      and the index of the item in the map as the fourth argument.
-   *
-   *                      It's return value is assigned to the accumulator, whose value is remembered across each iteration
-   *                      throughout the map and ultimately becomes the final, single resulting value.
-   *
-   *                      The first time the callback is called, accumulator and current value can be one of two values.
-   *                      If "initialValue" is provided in the call to "reduce()", then accumulator will be equal to "initialValue",
-   *                      and the current value will be equal to the first value in the map.
-   *                      If no "initialValue" is provided, then the accumulator will be equal to the first or last value in the map
-   *                      (if "reversed" is either "false" or "true", respectively), and the current value will be equal to the value of
-   *                      the next or previous item (again, if "reversed" is either "false" or "true", respectively).
-   * @param {*} initialValue A value to use as the first argument to the first call of the callback.
-   *                         If no "initialValue" is supplied, the first element in the map will be used and skipped.
-   *                         Calling "reduce()" on an empty map without an initial value will throw a "TypeError".
-   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
-   *                             from the tail node). The default is to loop through all the elements starting
-   *                             from the head node.
+   * The callback will receive the accumulator as the first argument,
+   * the current value as the second argument, the current value's key as the third argument
+   * and the index of the item in the map as the fourth argument.
+   * It's return value is assigned to the accumulator, whose value is remembered across each iteration
+   * throughout the map and ultimately becomes the final, single resulting value.
+   * The first time the callback is called, accumulator and current value can be one of two values.
+   * If "initialValue" is provided in the call to "reduce()", then accumulator will be equal to 
+   * "initialValue", and the current value will be equal to the first value in the map.
+   * If no "initialValue" is provided, then the accumulator will be equal to the first or last
+   * value in the map (if "reversed" is either "false" or "true", respectively), and the current
+   * value will be equal to the value of the next or previous item (again, if "reversed" is
+   * either "false" or "true", respectively).
+   * @param {*} initialValue A value to use as the first argument to the first call of the
+   * callback. If no "initialValue" is supplied, the first element in the map will be used
+   * and skipped. Calling "reduce()" on an empty map without an initial value will throw a
+   * "TypeError".
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order
+   * (starting from the tail node). The default is to loop through all the elements starting
+   * from the head node.
    * @return {*} The single value that results from the reduction.
    */
   reduce(fn, initialValue, reversed = false) {
@@ -1552,13 +1464,15 @@ class ImmutableLinkedOrderedMap {
     const accFn = (value, key, index) => {
       acc = fn(acc, value, key, index);
     };
-    const overridableFn = function (value, key, index) {
-      this.forEachNextFn = accFn;
-      if (skipFirst) {
-        return;
+    class overridableFn {
+      constructor(value, key, index) {
+        this.forEachNextFn = accFn;
+        if (skipFirst) {
+          return;
+        }
+        accFn(value, key, index);
       }
-      accFn(value, key, index);
-    };
+    }
     this.forEach(overridableFn, reversed);
 
     return acc;
@@ -1939,10 +1853,10 @@ function makeMultiwayModeImmutableLinkedOrderedMapNode(
  * @param {string} version The version of the map in the context of the version tree,
  *                         used during lookups.
  */
-function hydrateMultiwayMode({
-  version = MULTIWAY_MODE_INITIAL_MAP_TREE_DEPTH_VERSION,
-} = {}) {
-  this.version = version;
+class hydrateMultiwayMode {
+  constructor({ version = MULTIWAY_MODE_INITIAL_MAP_TREE_DEPTH_VERSION } = {}) {
+    this.version = version;
+  }
 }
 
 /**
@@ -2408,191 +2322,182 @@ class LightweightModeImmutableLinkedOrderedMap extends ImmutableLinkedOrderedMap
  *
  * @constructor
  */
-function LinkedOrderedMap() {
-  /**
-   * @property {Object} map An object used for fast key lookups.
-   */
-  this.map = {};
+class LinkedOrderedMap {
+  constructor() {
+    /**
+     * @property {Object} map An object used for fast key lookups.
+     */
+    this.map = {};
 
-  /**
-   * @property {LinkedList} keyValueList A list keeping the keys with the corresponding values in the order they were added while
-   *                                     adding them to this linked ordered map.
-   */
-  this.keyValueList = new LinkedList();
+    /**
+     * @property {LinkedList} keyValueList A list keeping the keys with the corresponding values in the order they were added while
+     *                                     adding them to this linked ordered map.
+     */
+    this.keyValueList = new LinkedList();
 
-  /**
-   * @property {Boolean} A boolean indicating whether the next "forEach" loop iteration should break.
-   */
-  this.shouldNextForEachBreak = false;
-}
-
-/**
- * Sets a value correlated with a key. If another value with the same key already exists,
- * it will be overwritten by the new value.
- *
- * @param {string|number} key A key used to lookup the value subsequently.
- * @param {*} value Anything The value to set.
- * @param {boolean} prepend By default, this method appends a new element to the linked list.
- *                          If set to "true", new elements will be prepended.
- * @return {undefined}
- */
-LinkedOrderedMap.prototype.set = function (key, value, prepend = false) {
-  if (key in this.map) {
-    // key already exists, replace value.
-    this.map[key].element.value = value;
-  } else {
-    // Insert new key and value.
-    const appendOrPrepend = prepend ? "prepend" : "append";
-    const node = this.keyValueList[appendOrPrepend]({ key, value }); // Keys are needed here too if we want to loop through them within a "forEach" loop.
-    this.map[key] = node; // The map will reference the node containing the key and the corresponding value.
+    /**
+     * @property {Boolean} A boolean indicating whether the next "forEach" loop iteration should break.
+     */
+    this.shouldNextForEachBreak = false;
   }
-};
-
-/**
- * Removes an element from the map.
- *
- * @param {string|number} key The key of the element to remove.
- * @return {undefined}
- * @throws {Error} If the given key does not exist.
- */
-LinkedOrderedMap.prototype.remove = function (key) {
-  if (key in this.map) {
-    this.keyValueList.remove(this.map[key]); // Removing the node from the underlying linked list.
-    delete this.map[key]; // Removing the key from the underlying map.
-  } else {
-    throw new Error("key does not exist");
+  /**
+   * Static method that creates a new map from an existent array of items.
+   * Each item must have a property identified by the "key" parameter.
+   *
+   * @param {Array} array
+   * @param {string|number} key
+   * @return {LinkedOrderedMap}
+   */
+  static fromArray(array, key) {
+    const map = new LinkedOrderedMap();
+    for (let i = 0; i < array.length; i++) {
+      const item = array[i];
+      map.set(item[key], item);
+    }
+    return map;
   }
-};
-
-/**
- * Empties this map.
- *
- * @return {undefined}
- */
-LinkedOrderedMap.prototype.empty = function () {
-  this.map = {};
-  this.keyValueList = new LinkedList();
-  this.shouldNextForEachBreak = false;
-};
-
-/**
- * Tests whether this map is empty.
- *
- * @return {boolean} True if empty, false otherwise.
- */
-LinkedOrderedMap.prototype.isEmpty = function () {
-  return this.getLength() <= 0;
-};
-
-/**
- * Retrieves a map value.
- *
- * @param {string|number} key The key.
- * @param {boolean} [returnWholeNode] True to return the whole node of the internal linked list,
- *                                    otherwise, returns just the value.
- * @return {*} The value correlated with the specified key or undefined if no value exists for that key.
- *             If "returnWholeNode" is "true", returns the whole node of the internal linked list.
- */
-LinkedOrderedMap.prototype.get = function (key, returnWholeNode = false) {
-  return (
-    this.map[key] &&
-    (returnWholeNode ? this.map[key] : this.map[key].element.value)
-  );
-};
-
-/**
- * Loop through the elements in the order they were added.
- *
- * @param {Function} f A callback to call for each value stored in the map. The callback will receive the key as the first argument
- *                     and the value as the second argument.
- * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
- *                             from the tail node). The default is to loop through all the elements starting
- *                             from the head node.
- * @return {undefined}
- */
-LinkedOrderedMap.prototype.forEach = function (f, reversed = false) {
-  let key, value;
-  this.shouldNextForEachBreak = false;
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const thisMap = this;
-  this.keyValueList.forEach(function (i, element) {
-    if (!this.shouldNextForEachBreak) {
-      key = element.key;
-      value = element.value;
-      const result = f.call(thisMap, key, value);
-      if (result === false) {
+  /**
+   * Sets a value correlated with a key. If another value with the same key already exists,
+   * it will be overwritten by the new value.
+   *
+   * @param {string|number} key A key used to lookup the value subsequently.
+   * @param {*} value Anything The value to set.
+   * @param {boolean} prepend By default, this method appends a new element to the linked list.
+   *                          If set to "true", new elements will be prepended.
+   * @return {undefined}
+   */
+  set(key, value, prepend = false) {
+    if (key in this.map) {
+      // key already exists, replace value.
+      this.map[key].element.value = value;
+    } else {
+      // Insert new key and value.
+      const appendOrPrepend = prepend ? "prepend" : "append";
+      const node = this.keyValueList[appendOrPrepend]({ key, value }); // Keys are needed here too if we want to loop through them within a "forEach" loop.
+      this.map[key] = node; // The map will reference the node containing the key and the corresponding value.
+    }
+  }
+  /**
+   * Removes an element from the map.
+   *
+   * @param {string|number} key The key of the element to remove.
+   * @return {undefined}
+   * @throws {Error} If the given key does not exist.
+   */
+  remove(key) {
+    if (key in this.map) {
+      this.keyValueList.remove(this.map[key]); // Removing the node from the underlying linked list.
+      delete this.map[key]; // Removing the key from the underlying map.
+    } else {
+      throw new Error("key does not exist");
+    }
+  }
+  /**
+   * Empties this map.
+   *
+   * @return {undefined}
+   */
+  empty() {
+    this.map = {};
+    this.keyValueList = new LinkedList();
+    this.shouldNextForEachBreak = false;
+  }
+  /**
+   * Tests whether this map is empty.
+   *
+   * @return {boolean} True if empty, false otherwise.
+   */
+  isEmpty() {
+    return this.getLength() <= 0;
+  }
+  /**
+   * Retrieves a map value.
+   *
+   * @param {string|number} key The key.
+   * @param {boolean} [returnWholeNode] True to return the whole node of the internal linked list,
+   *                                    otherwise, returns just the value.
+   * @return {*} The value correlated with the specified key or undefined if no value exists for that key.
+   *             If "returnWholeNode" is "true", returns the whole node of the internal linked list.
+   */
+  get(key, returnWholeNode = false) {
+    return (
+      this.map[key] &&
+      (returnWholeNode ? this.map[key] : this.map[key].element.value)
+    );
+  }
+  /**
+   * Loop through the elements in the order they were added.
+   *
+   * @param {Function} f A callback to call for each value stored in the map. The callback will receive the key as the first argument
+   *                     and the value as the second argument.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
+   *                             from the tail node). The default is to loop through all the elements starting
+   *                             from the head node.
+   * @return {undefined}
+   */
+  forEach(f, reversed = false) {
+    let key, value;
+    this.shouldNextForEachBreak = false;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const thisMap = this;
+    this.keyValueList.forEach(function (i, element) {
+      if (!this.shouldNextForEachBreak) {
+        key = element.key;
+        value = element.value;
+        const result = f.call(thisMap, key, value);
+        if (result === false) {
+          return false;
+        }
+      } else {
         return false;
       }
-    } else {
-      return false;
-    }
-  }, reversed);
-};
-
-/**
- * Break the next "forEach" loop iteration occurring on this linked ordered map.
- *
- * @return {undefined}
- */
-LinkedOrderedMap.prototype.break = function () {
-  this.shouldNextForEachBreak = true;
-};
-
-/**
- * Gets the length of the map, i.e. the number of key value pairs in it.
- *
- * @return {Number} The number of key value pairs stored in this map.
- */
-LinkedOrderedMap.prototype.getLength = function () {
-  return this.keyValueList.length;
-};
-
-/**
- * Returns an array containing the values of this ordered map in the order they were added originally.
- *
- * @return {Array<Anything>} An array containing the values stored in the map.
- */
-LinkedOrderedMap.prototype.toArray = function () {
-  const array = new Array(this.getLength());
-  let i = 0;
-  this.forEach(function (key, value) {
-    array[i] = value;
-    i++;
-  });
-  return array;
-};
-
-/**
- * Returns the keys of this ordered map in the order their corresponding values were added to this map.
- *
- * @return {Array<Number|String>} An array containing the keys of this ordered map.
- */
-LinkedOrderedMap.prototype.keys = function () {
-  const array = new Array(this.getLength());
-  let i = 0;
-  this.forEach(function (key) {
-    array[i] = key;
-    i++;
-  });
-  return array;
-};
-
-/**
- * Static method that creates a new map from an existent array of items.
- * Each item must have a property identified by the "key" parameter.
- *
- * @param {Array} array
- * @param {string|number} key
- * @return {LinkedOrderedMap}
- */
-LinkedOrderedMap.fromArray = function (array, key) {
-  const map = new LinkedOrderedMap();
-  for (let i = 0; i < array.length; i++) {
-    const item = array[i];
-    map.set(item[key], item);
+    }, reversed);
   }
-  return map;
-};
+  /**
+   * Break the next "forEach" loop iteration occurring on this linked ordered map.
+   *
+   * @return {undefined}
+   */
+  break() {
+    this.shouldNextForEachBreak = true;
+  }
+  /**
+   * Gets the length of the map, i.e. the number of key value pairs in it.
+   *
+   * @return {Number} The number of key value pairs stored in this map.
+   */
+  getLength() {
+    return this.keyValueList.length;
+  }
+  /**
+   * Returns an array containing the values of this ordered map in the order they were added originally.
+   *
+   * @return {Array<Anything>} An array containing the values stored in the map.
+   */
+  toArray() {
+    const array = new Array(this.getLength());
+    let i = 0;
+    this.forEach(function (key, value) {
+      array[i] = value;
+      i++;
+    });
+    return array;
+  }
+  /**
+   * Returns the keys of this ordered map in the order their corresponding values were added to this map.
+   *
+   * @return {Array<Number|String>} An array containing the keys of this ordered map.
+   */
+  keys() {
+    const array = new Array(this.getLength());
+    let i = 0;
+    this.forEach(function (key) {
+      array[i] = key;
+      i++;
+    });
+    return array;
+  }
+}
 
 /* ======================================================================================================== */
 
@@ -2601,190 +2506,185 @@ LinkedOrderedMap.fromArray = function (array, key) {
  *
  * @constructor
  */
-function LinkedList() {
-  /**
-   * @property {Object} head The head node of this linked list.
-   */
-  this.head = null;
+class LinkedList {
+  constructor() {
+    /**
+     * @property {Object} head The head node of this linked list.
+     */
+    this.head = null;
 
-  /**
-   * @property {Object} tail The tail node of this linked list.
-   */
-  this.tail = null;
+    /**
+     * @property {Object} tail The tail node of this linked list.
+     */
+    this.tail = null;
 
-  /**
-   * @property {Number} length The length of this linked list
-   */
-  this.length = 0;
+    /**
+     * @property {Number} length The length of this linked list
+     */
+    this.length = 0;
 
-  /**
-   * @property {Boolean} shouldNextForEachBreak A boolean indicating whether the next "forEach" loop iteration should break.
-   */
-  this.shouldNextForEachBreak = false;
-}
-
-/**
- * Adds an element to the tail of this linked list. After this method is called,
- * the tail node will reference an object containing the added element.
- *
- * @param {*} anything Anything to add to this linked list.
- * @return {Object} A reference to the new added node object of this linked list.
- */
-LinkedList.prototype.append = function (anything) {
-  this.length++;
-
-  if (this.head) {
-    const oldTail = this.tail;
-    this.tail = makeNode(oldTail, null, anything);
-    oldTail.next = this.tail;
-  } else {
-    this.tail = makeNode(null, null, anything);
-    this.head = this.tail;
+    /**
+     * @property {Boolean} shouldNextForEachBreak A boolean indicating whether the next "forEach" loop iteration should break.
+     */
+    this.shouldNextForEachBreak = false;
   }
-  return this.tail;
-};
+  /**
+   * Adds an element to the tail of this linked list. After this method is called,
+   * the tail node will reference an object containing the added element.
+   *
+   * @param {*} anything Anything to add to this linked list.
+   * @return {Object} A reference to the new added node object of this linked list.
+   */
+  append(anything) {
+    this.length++;
 
-/**
- * Adds an element to the head of this linked list. After this method is called,
- * the head of this linked list will reference an object containing the added element.
- *
- * @param {*} anything Anything to add to this linked list.
- * @return {Object} A reference to the new added node object of this linked list.
- */
-LinkedList.prototype.prepend = function (anything) {
-  this.length++;
-
-  if (this.head) {
-    const oldHead = this.head;
-    this.head = makeNode(null, oldHead, anything);
-    oldHead.previous = this.head;
-  } else {
-    this.tail = makeNode(null, null, anything);
-    this.head = this.tail;
-  }
-  return this.head;
-};
-
-/**
- * Removes a node from this linked list.
- *
- * @param {Object} node The node to remove (not the element added, but the object
- *                      "{ next : nextNode, previous : previousNode, element : anything }"
- *                      previously created when adding the element to this linked list.
- * @return {LinkeList} A reference to this linked list.
- */
-LinkedList.prototype.remove = function (node) {
-  if (node !== null) {
-    if (node.previous) {
-      node.previous.next = node.next;
-      if (node.next) {
-        node.next.previous = node.previous;
-      } else {
-        this.tail = node.previous;
-      }
-      this.length--;
-    } else if (node.next) {
-      this.head = node.next;
-      this.head.previous = null;
-      this.length--;
+    if (this.head) {
+      const oldTail = this.tail;
+      this.tail = makeNode(oldTail, null, anything);
+      oldTail.next = this.tail;
     } else {
-      this.head = null;
-      this.tail = null;
-      this.length = 0;
+      this.tail = makeNode(null, null, anything);
+      this.head = this.tail;
     }
-    node = null;
+    return this.tail;
   }
-};
+  /**
+   * Adds an element to the head of this linked list. After this method is called,
+   * the head of this linked list will reference an object containing the added element.
+   *
+   * @param {*} anything Anything to add to this linked list.
+   * @return {Object} A reference to the new added node object of this linked list.
+   */
+  prepend(anything) {
+    this.length++;
 
-/**
- * Removes the last element from the list (the element of the tail node) and returns it.
- *
- * @return {*} The element of the tail node of this linked list.
- */
-LinkedList.prototype.pop = function () {
-  if (this.tail) {
-    const element = this.tail.element;
-    this.remove(this.tail);
-    return element;
+    if (this.head) {
+      const oldHead = this.head;
+      this.head = makeNode(null, oldHead, anything);
+      oldHead.previous = this.head;
+    } else {
+      this.tail = makeNode(null, null, anything);
+      this.head = this.tail;
+    }
+    return this.head;
   }
-};
-
-/**
- * Removes the first element from the list (the element of the tail node) and returns it.
- *
- * @return {*} The element of the head node of this linked list.
- */
-LinkedList.prototype.shift = function () {
-  if (this.head) {
-    const element = this.head.element;
-    this.remove(this.head);
-    return element;
+  /**
+   * Removes a node from this linked list.
+   *
+   * @param {Object} node The node to remove (not the element added, but the object
+   *                      "{ next : nextNode, previous : previousNode, element : anything }"
+   *                      previously created when adding the element to this linked list.
+   * @return {LinkeList} A reference to this linked list.
+   */
+  remove(node) {
+    if (node !== null) {
+      if (node.previous) {
+        node.previous.next = node.next;
+        if (node.next) {
+          node.next.previous = node.previous;
+        } else {
+          this.tail = node.previous;
+        }
+        this.length--;
+      } else if (node.next) {
+        this.head = node.next;
+        this.head.previous = null;
+        this.length--;
+      } else {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+      }
+      node = null;
+    }
   }
-};
-
-/**
- * Loops on this linked list.
- *
- * @param {Function} fn A function which will be called for each element in this linked list:
- *
- *                          fn(Number i, Anything element)
- *
- *                      The function will receive two parameters:
- *                      - the first parameter will be the index of the element (starting from 0 and incrementing by 1
- *                        if the parameter "reversed" is false, or from the length of this linked list minus 1
- *                        and decrementing by 1 if the parameter "reversed" is true)
- *                      - the second parameter will be the nth element of the list.
- *
- *                      Within the function body, this will point to the linked list instance and "this.break()" can be
- *                      called to stop the next iteration.
- *                      Otherwise, if the function returns false, the loop will stop immediately.
- * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
- *                             from the tail node). The default is to loop through all the elements starting
- *                             from the head node.
- * @return {undefined}
- */
-LinkedList.prototype.forEach = function (fn, reversed = false) {
-  let current, nextNodeDirection, i, updateIndexFn;
-  this.shouldNextForEachBreak = false;
-  if (reversed) {
-    i = this.length - 1;
-    current = this.tail;
-    nextNodeDirection = "previous";
-    updateIndexFn = function () {
-      i--;
-    };
-  } else {
-    i = 0;
-    current = this.head;
-    nextNodeDirection = "next";
-    updateIndexFn = function () {
-      i++;
-    };
+  /**
+   * Removes the last element from the list (the element of the tail node) and returns it.
+   *
+   * @return {*} The element of the tail node of this linked list.
+   */
+  pop() {
+    if (this.tail) {
+      const element = this.tail.element;
+      this.remove(this.tail);
+      return element;
+    }
   }
+  /**
+   * Removes the first element from the list (the element of the tail node) and returns it.
+   *
+   * @return {*} The element of the head node of this linked list.
+   */
+  shift() {
+    if (this.head) {
+      const element = this.head.element;
+      this.remove(this.head);
+      return element;
+    }
+  }
+  /**
+   * Loops on this linked list.
+   *
+   * @param {Function} fn A function which will be called for each element in this linked list:
+   *
+   *                          fn(Number i, Anything element)
+   *
+   *                      The function will receive two parameters:
+   *                      - the first parameter will be the index of the element (starting from 0 and incrementing by 1
+   *                        if the parameter "reversed" is false, or from the length of this linked list minus 1
+   *                        and decrementing by 1 if the parameter "reversed" is true)
+   *                      - the second parameter will be the nth element of the list.
+   *
+   *                      Within the function body, this will point to the linked list instance and "this.break()" can be
+   *                      called to stop the next iteration.
+   *                      Otherwise, if the function returns false, the loop will stop immediately.
+   * @param {boolean} [reversed] An optional boolean indicating whether to loop in reverse order (starting
+   *                             from the tail node). The default is to loop through all the elements starting
+   *                             from the head node.
+   * @return {undefined}
+   */
+  forEach(fn, reversed = false) {
+    let current, nextNodeDirection, i, updateIndexFn;
+    this.shouldNextForEachBreak = false;
+    if (reversed) {
+      i = this.length - 1;
+      current = this.tail;
+      nextNodeDirection = "previous";
+      updateIndexFn = function () {
+        i--;
+      };
+    } else {
+      i = 0;
+      current = this.head;
+      nextNodeDirection = "next";
+      updateIndexFn = function () {
+        i++;
+      };
+    }
 
-  while (current) {
-    if (!this.shouldNextForEachBreak) {
-      const element = current.element;
-      const result = fn.call(this, i, element);
-      if (result === false) {
+    while (current) {
+      if (!this.shouldNextForEachBreak) {
+        const element = current.element;
+        const result = fn.call(this, i, element);
+        if (result === false) {
+          break;
+        }
+        current = current[nextNodeDirection];
+        updateIndexFn();
+      } else {
         break;
       }
-      current = current[nextNodeDirection];
-      updateIndexFn();
-    } else {
-      break;
     }
   }
-};
-
-/**
- * Breaks the next "forEach" loop iteration occurring on this linked list.
- *
- * @return {undefined}
- */
-LinkedList.prototype.break = function () {
-  this.shouldNextForEachBreak = true;
-};
+  /**
+   * Breaks the next "forEach" loop iteration occurring on this linked list.
+   *
+   * @return {undefined}
+   */
+  break() {
+    this.shouldNextForEachBreak = true;
+  }
+}
 
 /* ======================================================================================================== */
 
