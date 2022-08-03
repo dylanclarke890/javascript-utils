@@ -1,3 +1,5 @@
+import CTypeError from "../errors/CTypeError";
+
 /**
  * Clamps a latitude value so that it is always between -90 and 90.
  * @param {number|string} latitude Either a number or a string
@@ -5,6 +7,7 @@
  * @return {number} Latitude, clamped.
  */
 export function clampLatitude(latitude) {
+  if (typeof latitude !== "number") throw new CTypeError("number", latitude);
   latitude = Number(latitude);
   if (latitude < -90) return -90;
   return latitude < 90 ? latitude : 90;
@@ -17,6 +20,7 @@ export function clampLatitude(latitude) {
  * @return {number} the wrapped longitude.
  */
 export const wrapLongitude = (longitude) => {
+  if (typeof longitude !== "number") throw new CTypeError("number", longitude);
   longitude = Number(longitude);
   while (longitude > 180) {
     longitude -= 360;
