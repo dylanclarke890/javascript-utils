@@ -1,45 +1,67 @@
-/** @returns the distinct elements from the array. */
+import { roundToNearestMinutes } from "date-fns";
+
+/**
+ * @param {any[]} arr an array of values.
+ * @returns the distinct elements from the array. */
 export function distinct(arr) {
   return [...new Set(arr)];
 }
 
-/** @returns the sum of the array. */
+/**
+ * @param {number[]} arr an array of numbers.
+ * @returns the sum of the array. */
 export function sumOf(arr) {
   return arr.reduce((a, b) => a + b, 0);
 }
 
-/** @returns if all the items in the array are numbers, or the array is empty. */
+/**
+ * Check if an array is all numbers.
+ * @param {any[]} arr an array of values.
+ * @returns True if all the items in the array are numbers, or the array is empty. */
 export function isArrayOfNumber(arr) {
   return !arr.some((v) => isNaN(v));
 }
 
-/** @returns the first item in the array. */
+/**
+ * Get the first item in an array.
+ * @param {any[]} arr an array of values.
+ * @returns the first item in the array. */
 export function firstItem(arr) {
   return arr[0];
 }
 
-/** @returns the last item in the array. */
+/**
+ * Get the last item in an array.
+ * @param {any[]} arr an array of values.
+ * @returns the last item in the array. */
 export function lastItem(arr) {
   return arr[arr.length - 1];
 }
 
-/** @returns the first nested array or object in the array. */
+/**
+ * Get the first nested object in an array, if present.
+ * @param {any[]} arr an array of values.
+ * @returns {Object | undefined} the first nested array or object in the array. */
 export function firstNested(arr) {
   let nested;
-  for (let val in arr) {
-    if (typeof val === "object") nested = val;
-    break;
-  }
+  nested = arr.find((val) => typeof val === "object");
   return nested;
 }
 
-/** @todo could take a while to reverse a large array.
- *  @returns the first nested array or object in the array. */
+/**
+ * Get the last nested object in an array, if present.
+ * @param {any[]} arr an array of values.
+ * @returns the first nested array or object in the array. */
 export function lastNested(arr) {
+  // TODO: could take a while to reverse a large array.
   return firstNested(arr.reverse());
 }
 
-/**  @returns the smallest value in the array. */
+/**
+ * Get the smallest value of an array. WARNING: may
+ * return unpredictable results with non-int arrays.
+ * @param {any[]} arr an array of values.
+ * @returns {any} the smallest value in the array. */
 export function minOf(arr) {
   if (!arr.length) return void 0;
   return arr.reduce(
@@ -48,7 +70,11 @@ export function minOf(arr) {
   );
 }
 
-/**  @returns the largest value in the array. */
+/**
+ * Get the largeste value of an array. WARNING: may
+ * return unpredictable results with non-int arrays.
+ * @param {any[]} arr an array of values.
+ * @returns {any} the largest value in the array. */
 export function maxOf(arr) {
   if (!arr.length) return void 0;
   return arr.reduce(
@@ -57,21 +83,31 @@ export function maxOf(arr) {
   );
 }
 
-/**  @returns a sorted array without mutating the original. */
-export function sortNums(arrayOfNums, desc = false) {
-  return [...arrayOfNums].sort((a, b) => (desc ? b - a : a - b));
+/**
+ * Sort an array of numbers in ascending or descending order.
+ * @param {number[]} arr an array of numbers.
+ * @param {boolean} desc flag to sort ascending/descending. Default is ascending.
+ * @returns {number[]} a sorted array without mutating the original. */
+export function sortNums(arr, desc = false) {
+  return [...arr].sort((a, b) => (desc ? b - a : a - b));
 }
 
-/**  @returns an array without nulls that leaves the original unchanged. */
+/**
+ * Remove nulls from an array. Returns a new array.
+ * @param {any[]} arr
+ * @returns an array without nulls that leaves the original unchanged. */
 export function removeNulls(arr) {
   const returnArr = [];
   arr.forEach((val) => {
-    if (val !== null) returnArr.push(arr);
+    if (val !== undefined && val !== null) returnArr.push(val);
   });
   return returnArr;
 }
 
-/**  unshifts an array. */
+/**  
+ * 'Unshift' an item to an array (will become the new first item).
+ * @param {any[]} arr The array to unshift.
+ * @param {*} item the item to "prepend" to the array. */
 export function unshift(arr, item) {
   let len = arr.length;
   while (len) {
@@ -83,31 +119,26 @@ export function unshift(arr, item) {
 
 /**
  * Create an array which allows the usage of negative indices to retrieve its data,
- * where -1 indicates the last element of the array (same as
- * `array.length - 1`).
+ * where -1 indicates the last element of the array (same as `array.length - 1`). Can also
+ * be configured to wrap indexes if the index is out of range in either direction.
  * @param {Array} array An array to use as the target object.
  * @param {Object} options Options.
- * @param {boolean} [options.wrap] Whether or not to wrap if the negative index is greater
+ * @param {boolean} [options.wrapOverflow] Whether or not to wrap if the negative index is greater
  * than the length of the array. If false, undefined will be returned if the index is out of
  * range.
  * @return {Proxy} The proxy object for the given array.
  */
-export function arrayWithNegativeIndices(array, { wrap = true } = {}) {
+export function indexWrappedArray(array, options = { wrapOverflow: true }) {
   return new Proxy(array, {
-    get: function (target, propKey) {
-      let numberPropKey = Number(propKey);
-      if (
-        !Number.isNaN(numberPropKey) &&
-        Number.isInteger(numberPropKey) &&
-        numberPropKey < 0
-      ) {
-        const absNumberPropKey = Math.abs(numberPropKey);
-        if (wrap || absNumberPropKey <= target.length) {
-          numberPropKey = target.length - (absNumberPropKey % target.length);
-          propKey = String(numberPropKey === target.length ? 0 : numberPropKey);
-        }
+    get: function (arr, index) {
+      index = Number(index);
+      index = index < 0 ? index + arr.length : index;
+      if (options.wrapOverflow) {
+        while (index < 0) index = index + arr.length;
+        while (index > arr.length) index = index - arr.length;
+        if (index === arr.length) index = 0;
       }
-      return target[propKey];
+      return arr[index];
     },
   });
 }
