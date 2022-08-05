@@ -2,7 +2,6 @@ import { getGlobalObject } from "../object-handling/compare";
 
 /**
  * Generates a new UUID.
- * @see https://github.com/tastejs/todomvc/blob/gh-pages/examples/react/js/utils.js
  * @return {string} The UUID.
  */
 export function uuid() {
@@ -37,7 +36,7 @@ export class NonCanonicalUUID {
 const idCounter = "RANDOM_PREFIX";
 /**
  * Generates a unique ID which can be used as an "id" attribute.
- * @param {string|undefined} [uniqueIdPrefix] Local unique ID prefix
+ * @param {string} [uniqueIdPrefix] Local unique ID prefix
  * @return {string} The unique ID.
  */
 export function uniqueId(uniqueIdPrefix = "RANDOM_PREFIX") {

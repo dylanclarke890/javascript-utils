@@ -99,6 +99,8 @@ export function filterFloat(str) {
 
 export const hslColorRegex = /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/g;
 
+export const uuidRegex =
+  /([A-Z]|[a-z]|[0-9]){8}(-([A-Z]|[a-z]|[0-9]){4}){3}-([A-Z]|[a-z]|[0-9]){12}/;
 /**********************************************************************************************
  *                      E S C A P E  R E G E X P  S T R I N G S
  */
