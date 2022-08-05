@@ -1,15 +1,36 @@
+/**
+ * Get a random number between min and max.
+ * @param {number} min The minimum.
+ * @param {number} max The maximum.
+ * @returns {number} The random number in the range.
+ */
 export function randomFromRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+/**
+ * Get a random number up to num.
+ * @param {number} num The maximum number.
+ * @returns {number} The random number in the range of 0 - num.
+ */
 export function randomNumber(num) {
   return Math.floor(Math.random() * num);
 }
 
+/**
+ * Get a random value from an array.
+ * @param {Array} arr The arr to retrieve a value from.
+ * @returns {*} A random value from any index of the array.
+ */
 export function randomValue(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+/**
+ * Shuffle the values of an array.
+ * @param {Array} arr The arr to shuffle.
+ * @returns {Array} The same array with it's values shuffled.
+ */
 export function shuffleArr(array) {
   let currentIndex = array.length,
     randomIndex;
@@ -27,7 +48,7 @@ export function shuffleArr(array) {
 export function randomHSLColor(saturation = 100, brightness = 100) {
   return `hsl(${Math.floor(
     Math.random() * 360
-  )}, ${saturation}%, ${brightness}%})`;
+  )}, ${saturation}%, ${brightness}%)`;
 }
 
 /**
