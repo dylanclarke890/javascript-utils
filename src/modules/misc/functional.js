@@ -1,7 +1,3 @@
-function chainLink(func, next) {
-  return (args) => func(args, next && ((...args) => next(args)));
-}
-
 /**
  * A higher-order function to create a chain of functions following the Chain of
  * Responsibility design pattern.
@@ -12,6 +8,9 @@ function chainLink(func, next) {
  * last parameter.
  */
 export function chain(...funcs) {
+  function chainLink(func, next) {
+    return (args) => func(args, next && ((...args) => next(args)));
+  }
   return (...args) => {
     funcs = funcs.flat(1);
     const chainFunc = funcs.reduceRight(
@@ -22,15 +21,19 @@ export function chain(...funcs) {
   };
 }
 
+/**
+ * A simple function that performs no action. Useful as a placeholder.
+ * @returns {undefined}
+ */
 export function noActionFunc() {
   return void 0;
 }
 
 /**
  * Returns a function which lets picking the properties of an object.
- * @param {...string|...number} props The properties to pick.
- * @return {Function} A function which if called picks the "props" properties from its argument
- * object and returns a new object with the picked properties.
+ * @param {...string|...number} props An array of properties to pick from the obj.
+ * @return {Function} A function which if called picks the revelant properties from its
+ * initial argument array and returns a new object with the picked properties.
  */
 export function pick(...props) {
   return (o) => props.reduce((a, e) => ({ ...a, [e]: o[e] }), {});
@@ -107,7 +110,7 @@ export const proceedCallingFn = {
  * is invoked for the very first time);
  * @return {Function} The curried version of the function.
  */
-export const curry = (
+export function curry(
   fn,
   {
     arity = void 0,
@@ -117,7 +120,7 @@ export const curry = (
     onCurriedFnFirstCall = void 0,
     onNewCurriedFn = void 0,
   } = {}
-) => {
+) {
   let curriedFnFirstCall = true;
 
   const expectedNumberOfArgs = typeof arity !== "undefined" ? arity : fn.length;
@@ -232,4 +235,4 @@ export const curry = (
   onNewCurriedFn &&
     onNewCurriedFn({ curriedFn: newCurried, newCurriedFn: newCurried });
   return newCurried;
-};
+}
