@@ -32,29 +32,23 @@ export function hasNestedPropertyValue(data, props) {
 
 /**
  * Sets a nested value of an object given an array of nested property names (keys).
- *
  * @param {Object} data JS POJO object.
  * @param {Array} props Array of object nested keys.
  * @param {*} value Leaf value.
  * @return {undefined}
  */
 export function setNestedPropertyValue(data, props, value) {
-  if (!props.length) {
-    return;
-  }
+  if (!props.length) return;
+  
   let root = data;
   let prev = null;
   for (let i = 0; i < props.length; i++) {
     const prop = props[i];
-    if (typeof root[prop] !== "object") {
-      root[prop] = {};
-    }
+    if (typeof root[prop] !== "object") root[prop] = {};
     prev = root;
     root = root[prop];
   }
-  if (prev) {
-    prev[props[props.length - 1]] = value;
-  }
+  if (prev) prev[props[props.length - 1]] = value;
 }
 
 /**
@@ -133,7 +127,6 @@ const treeMapSubtree = Symbol("treeMapSubtree");
 
 /**
  * Sets a nested value on a nested tree map.
- *
  * @param {Map|WeakMap} rootMap A map or weak map to use as the root.
  * @param {Array} keys Array of keys to traverse. Each key will lead to a nested node of the tree map.
  * @param {*} value The value to set at the inner nested key.
@@ -146,11 +139,11 @@ export function nestedTreeMapSet(rootMap, keys, value) {
   while (i < keys.length - 1) {
     const key = keys[i];
     const nested = current.get(key);
-    if (nested) {
+    if (nested) 
       current =
         nested[treeMapSubtree] ||
         (nested[treeMapSubtree] = new MapConstructor());
-    } else {
+    else {
       const newMap = new MapConstructor();
       const node = {
         [treeMapSubtree]: newMap,
