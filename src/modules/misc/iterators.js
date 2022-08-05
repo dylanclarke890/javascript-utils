@@ -32,8 +32,9 @@ export function* generateRange(start, limit, step = 1) {
  * @param {*} thisArg Optional this arg of the called function (defaults to undefined).
  * @yields {*} The next yielded mapped item.
  */
- export function* mapYield(items, func, thisArg = void 0) {
-  items.map();
-  const boundFunc = func.bind(thisArg);
-  for (let i = 0; i < items.length; i++) yield boundFunc(items[i], i, items);
-}
+ export function* mapYield(items, func, thisArg) {
+   const boundFunc = func.bind(thisArg);
+   yield* items.map(function (val, i) {
+     return boundFunc(val, i, items);
+   });
+ }
