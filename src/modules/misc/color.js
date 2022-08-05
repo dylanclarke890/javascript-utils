@@ -61,9 +61,8 @@ export function hexToRGB(hex, options = {}) {
     typeof hex !== "string" ||
     nonHexChars.test(hex) ||
     !validHexSize.test(hex)
-  ) {
+  )
     throw new TypeError("Expected a valid hex string");
-  }
 
   hex = hex.replace(/^#/, "");
   let alphaFromHex = 1;
@@ -76,9 +75,8 @@ export function hexToRGB(hex, options = {}) {
     alphaFromHex = Number.parseInt(hex.slice(3, 4).repeat(2), 16) / 255;
     hex = hex.slice(0, 3);
   }
-  if (hex.length === 3) {
+  if (hex.length === 3)
     hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  }
 
   const number = Number.parseInt(hex, 16);
   const red = number >> 16;
@@ -102,9 +100,7 @@ export function rgbToHex(red, green, blue, alpha) {
     [red, green, blue, alpha] = red
       .match(/(0?\.?\d{1,3})%?\b/g)
       .map((component) => Number(component));
-  } else if (alpha !== undefined) {
-    alpha = Number.parseFloat(alpha);
-  }
+  } else if (alpha !== undefined) alpha = Number.parseFloat(alpha);
 
   if (
     typeof red !== "number" ||
@@ -113,26 +109,21 @@ export function rgbToHex(red, green, blue, alpha) {
     red > 255 ||
     green > 255 ||
     blue > 255
-  ) {
+  )
     throw new TypeError("Expected three numbers below 256");
-  }
 
   if (typeof alpha === "number") {
-    if (!isPercent && alpha >= 0 && alpha <= 1) {
-      alpha = Math.round(255 * alpha);
-    } else if (isPercent && alpha >= 0 && alpha <= 100) {
+    if (!isPercent && alpha >= 0 && alpha <= 1) alpha = Math.round(255 * alpha);
+    else if (isPercent && alpha >= 0 && alpha <= 100)
       alpha = Math.round((255 * alpha) / 100);
-    } else {
+    else
       throw new TypeError(
         `Expected alpha value (${alpha}) as a fraction or percentage`
       );
-    }
 
-    alpha = (alpha | (1 << 8)).toString(16).slice(1); // eslint-disable-line no-mixed-operators
+    alpha = (alpha | (1 << 8)).toString(16).slice(1);
   } else alpha = "";
 
-  // TODO: Remove this ignore comment.
-  // eslint-disable-next-line no-mixed-operators
   return (
     (blue | (green << 8) | (red << 16) | (1 << 24)).toString(16).slice(1) +
     alpha
