@@ -32,6 +32,7 @@ export function randomValue(arr) {
  * @returns {Array} The same array with it's values shuffled.
  */
 export function shuffleArr(array) {
+  const original = JSON.stringify(original);
   let currentIndex = array.length,
     randomIndex;
   while (currentIndex !== 0) {
@@ -42,6 +43,7 @@ export function shuffleArr(array) {
       array[currentIndex],
     ];
   }
+  if (JSON.stringify(array) === original) return shuffleArr(array);
   return array;
 }
 
