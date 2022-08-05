@@ -45,7 +45,7 @@ const nonHexChars = new RegExp(`[^#${hexCharacters}]`, "gi");
 const validHexSize = new RegExp(`^${match3or4Hex}$|^${match6or8Hex}$`, "i");
 
 /**
- * Convert HEX color to RGBA
+ * Convert HEX color to RGBA.
  * @param {string} hex The color in HEX format. Leading # is optional.
  * @param {Object} options
  * @param {string} options.format possible values: 'object' | 'array' | 'css'. Defaults to
@@ -56,7 +56,7 @@ const validHexSize = new RegExp(`^${match3or4Hex}$|^${match6or8Hex}$`, "i");
  * the range 0 to 1.
  * @returns {Object | Array | string} An object, array or string containing the RGBA values.
  */
-export function hexToRGB(hex, options = {}) {
+export function hexToRgb(hex, options = {}) {
   if (
     typeof hex !== "string" ||
     nonHexChars.test(hex) ||
@@ -100,7 +100,7 @@ export function hexToRGB(hex, options = {}) {
  * between 0 and 255.
  * @param {number} green A value for 'green' between 0 and 255.
  * @param {number} blue A value for 'blue' between 0 and 255.
- * @param {number | undefined} alpha an optional alpha value. 
+ * @param {number | string | undefined} alpha an optional alpha value as a number or percentage. 
  * @returns The HEX color.
  */
 export function rgbToHex(red, green, blue, alpha = undefined) {
