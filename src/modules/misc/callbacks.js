@@ -1,11 +1,11 @@
 /**
- * Delays execution of a callback and cancels a previously registered callback if it wasn't executed yet.
+ * Delays execution of a callback and cancels a previously registered callback if it wasn't
+ * executed yet.
  */
 export const delay = (function () {
   let timer = 0;
   /**
    * Inner function.
-   *
    * @param {Function} callback The callback to execute.
    * @param {number} ms Milliseconds to wait before executing the callback.
    * @return {undefined}
@@ -20,7 +20,6 @@ export const delay = (function () {
 
 /**
  * Debounces a function.
- *
  * @param {Function} func A function.
  * @param {number} wait Wait interval in milliseconds.
  * @return {Function} A new function, debounced.
@@ -37,9 +36,7 @@ export function debounce(func, wait) {
 
 /**
  * Throttles a function.
- *
  * @see https://www.sitepoint.com/throttle-scroll-events/
- *
  * @param {Function} func A function.
  * @param {number} wait Wait interval in milliseconds.
  * @return {Function} A new function, throttled.

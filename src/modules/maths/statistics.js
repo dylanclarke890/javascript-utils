@@ -29,7 +29,7 @@ export function median(...numbers) {
  * @return {(...numbers: number[]) => number} A function which takes the numbers
  * to use to compute the minimum deviation from "value".
  */
-export function minDeviationFromExcluding(value) {
+export function minDeviationFrom(value) {
   return function (...numbers) {
     let minAbsDeviation = Infinity;
     numbers.map((num) => {
@@ -50,6 +50,6 @@ export function minDeviationFromExcluding(value) {
  */
 export function minDeviationFromExcluding(value) {
   return function (...numbers) {
-    return minDeviationFromExcluding(value)(...numbers.filter((num) => num !== value));
+    return minDeviationFrom(value)(...numbers.filter((num) => num !== value));
   };
 }
