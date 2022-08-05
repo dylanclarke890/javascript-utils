@@ -6,7 +6,7 @@ import { Buffer } from "node:buffer";
  * and truncates it to 10 characters, which is unique enough for the purpose of file-revving.
  * @see https://blog.risingstack.com/automatic-cache-busting-for-your-css/
  * @param {Buffer | string} data
- * @returns
+ * @returns {string} The truncated hash.
  */
 export function revisionHash(data) {
   if (typeof data !== "string" && !Buffer.isBuffer(data))
@@ -16,13 +16,11 @@ export function revisionHash(data) {
 
 /**
  * Computes a hash of an array of strings (the order of strings does not matter).
- *
  * NOTE: An array with duplicate values given as parameter to this function
- *       may yield to a hash which would collide with other hashes computed
- *       on different arrays with this same function.
- *       Therefore is on behalf of the caller to be sure that "array" contains
- *       unique strings.
- *
+ * may yield to a hash which would collide with other hashes computed
+ * on different arrays with this same function.
+ * Therefore is on behalf of the caller to be sure that "array" contains
+ * unique strings.
  * @param {string[]} array An array of strings.
  * @return {number} A number representing the hash code of the array.
  */
@@ -41,21 +39,16 @@ export function hashArrayOfStrings(arr) {
 
 /**
  * Returns the hash of a string.
- *
  * @see https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript#answer-7616484
- *
  * @param {string} str The string.
  * @return {number} The hash code of the string, represented as a number.
  */
 export function hashString(str) {
-  let hash = 0,
-    i,
-    chr;
-  if (str.length === 0) {
-    return hash;
-  }
-  for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
+  let hash = 0;
+  if (str.length === 0) return hash;
+
+  for (let i = 0; i < str.length; i++) {
+    const chr = str.charCodeAt(i);
     hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32 bit integer.
   }
@@ -64,36 +57,30 @@ export function hashString(str) {
 
 /**
  * A one-pass algorithm to compute the hash of a series of unique strings incrementally.
- *
- * NOTE: Duplicate values given as parameter to this function
- *       may yield to a hash which would collide with other hashes computed
- *       on different string series with this same function.
- *       Therefore is on behalf of the caller to be sure that the series of strings will be unique
- *       while calling this function incrementally.
- *
+ * NOTE: Duplicate values given as parameter to this function may yield to a hash which would
+ * collide with other hashes computed on different string series with this same function.
+ * Therefore is on behalf of the caller to be sure that the series of strings will be unique
+ * while calling this function incrementally.
  * @param {string} str The string.
- * @param {number} [startingHash] The previous hash computed with this same function if this call is the continuation
- *                        of the unique string series.
+ * @param {number} [startingHash] The previous hash computed with this same function if this
+ * call is the continuation of the unique string series.
  * @return {number} The next hash.
  */
 export function hashStringSinglePass(str, startingHash = 0) {
   let hash = startingHash;
   let n = 0;
-  for (let j = 0; j < str.length; j++) {
+  for (let j = 0; j < str.length; j++)
     n = (n * 251) ^ str.charCodeAt(j);
-  }
   hash ^= n;
   return hash;
 }
 
 /**
  * Given a sequence of integers, computes the hash of their sum so that two different sequences
- * will have the same hash if the sum of their integers will be the same (the overall sum of the sequences may be higher than `Number.MAX_SAFE_INTEGER`).
- *
+ * will have the same hash if the sum of their integers will be the same (the overall sum of the
+ * sequences may be higher than `Number.MAX_SAFE_INTEGER`).
  * @see https://stackoverflow.com/questions/69749629/hash-function-that-returns-the-same-hash-for-a-sum-even-if-different-terms-lead/69749873
- *
  * Example:
- *
  * ```
  * hashSumOfIntArray([1, 2, 3, 4, 5, 6]); // 21
  * hashSumOfIntArray([1, 2, 3, 4, 5, 6]) === hashSumOfIntArray([2, 3, 1, 4, 6, 5]); // true
@@ -101,7 +88,6 @@ export function hashStringSinglePass(str, startingHash = 0) {
  * hashSumOfIntArray([1, 2, 3, 4, 5, 6]) === hashSumOfIntArray([21]); // true
  * hashSumOfIntArray([1, 2, 3, 4, 5, 6]) === hashSumOfIntArray([7, 7, 7]); // true
  * ```
- *
  * @param {number[]} seq A sequence of integers (an array).
  * @return {number} The hash of the sum of the sequence of integers.
  */
