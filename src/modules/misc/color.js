@@ -1,21 +1,41 @@
 import { hashString } from "../maths/hash";
+import { round } from "../maths/math";
 
-export function getLuminance(color) {
-  const c = parseInt(color, 16);
+/**
+ * Get the luminance value of a color in HEX format.
+ * @param {string} hexColor a colour in hex format. leading '#' will be removed if present.
+ * @param {number} precision sig figs to round the result to.
+ * @returns {number} the luminance.
+ */
+export function getLuminance(hexColor, precision = 2) {
+  if (!hexColor) return 0;
+  hexColor = hexColor.replace(/^#/, "");
+  const c = parseInt(hexColor, 16);
   const r = (c & 0xff0000) >> 16;
   const g = (c & 0x00ff00) >> 8;
   const b = c & 0x0000ff;
-  return 0.299 * r + 0.587 * g + 0.114 * b;
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return round(luminance, precision);
 }
 
-export function intToRGBHexString(i) {
+/**
+ * Convert a number to a HEX string that can be used as a color.
+ * @param {number} i a number between 0 and Number.MAX_SAFE_INTEGER.
+ * @returns {string} A valid HEX color.
+ */
+export function intToHex(i) {
   const c = (i & 0x00ffffff).toString(16).toUpperCase();
   return "00000".substring(0, 6 - c.length) + c;
 }
 
+/**
+ * Convert a string to a HEX string that can be used as a color.
+ * @param {string} str The string to convert.
+ * @returns {string} A valid HEX color.
+ */
 export function colorFromString(str) {
   const hash = hashString(str);
-  return intToRGBHexString(hash);
+  return intToHex(hash);
 }
 
 const hexCharacters = "a-f\\d";
