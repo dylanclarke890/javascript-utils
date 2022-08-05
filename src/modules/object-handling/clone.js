@@ -12,29 +12,29 @@ import {
   nestedTreeMapGet,
 } from "./nested-properties";
 
-/** @returns a shallow copy of the array. */
+/** 
+ * Shallowly clone an array. If deep cloning is needed, use 'cloneObjDeep'.
+ * @param {Array} arr array to clone.
+ * @returns {Array} a shallow copy of the array. */
 export function cloneArr(arr) {
   return arr.slice(0);
 }
 
 /**
- * Clones an object deeply using JSON. This is fine for simple objects and arrays,
- * but should use a more complex implementation for custom data types.
+ * Clones an object deeply, using either JSON or reflection, depending on whether
+ * complex: true is passed in the options.
  * @param {Object} obj The object to clone.
+ * @param {Object} [options] Optional extra options.
+ * @param {boolean} [options.complex] Flag to say whether the value is a complex object (i.e 
+ * a custom data type rather than simple nested objects and arrays). Defaults to false (will
+ * use JSON to clone the object. This is usually faster and cheaper.)
  * @return {Object} The cloned object.
  */
-export function cloneDeepJSON(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-/**
- * Clones an object deeply and returns the clone.
- * @param {Object} object The object to clone.
- * @return {Object} The clone.
- * @throws {Error} if circular ref detected or type is unable to be determined.
- */
-export function cloneObjDeep(object) {
-  const newObject = new object.constructor();
+export function cloneDeep(obj, options = { complex: false }) {
+  if (!(options && options.complex))
+    return JSON.parse(JSON.stringify(obj));
+  
+  const newObject = new obj.constructor();
   const error = (msg, prop, property) => {
     throw new Error(
       msg +
@@ -42,21 +42,21 @@ export function cloneObjDeep(object) {
         "' (" +
         typeToStr(property) +
         ") in object (" +
-        typeToStr(object) +
+        typeToStr(obj) +
         ")"
     );
   };
-  for (const prop in object) {
+  for (const prop in obj) {
     // If the property is defined on the prototype, ignore it.
     // We don't want to assign it for each clone instance.
-    if (!Object.prototype.hasOwnProperty.call(object, prop)) continue;
-    const property = object[prop];
+    if (!Object.prototype.hasOwnProperty.call(obj, prop)) continue;
+    const property = obj[prop];
     if (isPrimitiveType(property)) newObject[prop] = property;
     else if (isReferenceType(property)) {
       if (hasCyclicReference(property))
         error("Circular reference detected '", prop, property);
       else {
-        const clone = cloneObjDeep(property);
+        const clone = cloneDeep(property);
         newObject[prop] = clone;
       }
     } else error("Unknown type for property '", prop, property);
@@ -65,87 +65,17 @@ export function cloneObjDeep(object) {
 }
 
 /**
- * Deep object extension implementation.
- * Nothing is returned, but the destination object will be modified and merged with the source object
- * so that properties of the source object which are objects will recursively merge with the corresponding
- * destination property while the other properties with all the other types will replace the properties of the
- * destination object.
- * Note: this method should not be used for inheritance via the Prototypal Combination Inheritance pattern.
- * Note: this method doesn't perform a deep object cloning, it just extends the destinationObject by adding
- * properties it doesn't have in a deep way.
- * @param {Object} destinationObject The destination object which will be modified and merged with the
- * source object.
- * @param {Object} sourceObject The source object which will be used to extend the destination object.
- * @param {Object} [extendArrays] True if arrays should also be extended.
- * @return {undefined}
- */
-export function deepObjectExtend(
-  destinationObject,
-  sourceObject,
-  extendArrays = true
-) {
-  for (const property in sourceObject) {
-    if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
-      destinationObject[property] = destinationObject[property] || {};
-      deepObjectExtend(
-        destinationObject[property],
-        sourceObject[property],
-        options
-      );
-    } else if (
-      extendArrays &&
-      sourceObject[property] &&
-      isArray(sourceObject[property])
-    ) {
-      destinationObject[property] = destinationObject[property] || [];
-      deepObjectExtend(
-        destinationObject[property],
-        sourceObject[property],
-        options
-      );
-    } else destinationObject[property] = sourceObject[property];
-  }
-}
-
-/**
- * Deep object cloning extension implementation. If the source objects contain a property with a reference type,
- * a clone object of the same type of that property will be created and then merged with the property object
- * of the destination object.
- * @param {Object} destinationObject The destination object which will be modified and merged with the source
- * object.
- * @param {...Object} sourceObject One or more objects which will be used to extend the destination object.
- * @return {undefined}
- */
-export function deepObjectCloningExtend(...args) {
-  const destinationObject = args[0];
-  let sourceObject;
-  for (let i = 1; args[i]; i++) {
-    sourceObject = args[i];
-    for (const property in sourceObject) {
-      if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
-        destinationObject[property] = destinationObject[property] || {};
-        deepObjectExtend(
-          destinationObject[property],
-          cloneObjDeep(sourceObject[property])
-        );
-      } else {
-        destinationObject[property] = sourceObject[property];
-      }
-    }
-  }
-}
-
-/**
  * Extends a destination object with the provided source objects.
  * @param {Object} destinationObj The destination object.
- * @param {...Object|Array} sourceObjects The source objects. If the last argument is an array containing one
- * single truthy element, it will be treated as an options parameter and its single first truthy element will
- * be treated as object containing the options for the extension.
+ * @param {...Object|Array} sourceObjects The source objects. If the last argument is an array
+ * containing one single truthy element, it will be treated as an options parameter and its
+ * single first truthy element will be treated as object containing the options for the extension.
  * The currently available options are:
- * - extendsArrays (boolean: false): Whether or not to extend nested arrays too (defaults to false);
+ * - extendsArrays (boolean: false): Whether or not to extend nested arrays too (defaults to
+ * false)
  * @return {Object} The destination object "destinationObj" given as parameter after extension.
  */
-export function extend(destinationObj, ...sourceObjects) {
+ export function extend(destinationObj, ...sourceObjects) {
   let options = {};
   if (sourceObjects.length) {
     const last = sourceObjects.pop();
@@ -160,110 +90,154 @@ export function extend(destinationObj, ...sourceObjects) {
 }
 
 /**
+ * Shallowly extends a destination object with the provided source objects (first dimension).
+ * @param {Object} obj The destination object.
+ * @param {...Object} args The source objects.
+ * @return {Object} The destination object "destinationObject" given as parameter after shallow
+ * extension.
+ */
+ export function extendShallow(obj, ...args) {
+  args.map((o) =>
+    Object.keys(o).map((k) => (obj[k] = o[k]))
+  );
+  return obj;
+}
+
+/**
+ * Deep object extension implementation.
+ * Nothing is returned, but the destination object will be modified and merged with the source
+ * object so that properties of the source object which are objects will recursively merge with
+ * the corresponding destination property while the other properties with all the other types
+ * will replace the properties of the destination object. Note: this method should not be used
+ * for inheritance via the Prototypal Combination Inheritance pattern. Note: this method doesn't
+ * perform a deep object cloning, it just extends the destinationObject by adding properties it
+ * doesn't have in a deep way.
+ * @param {Object} obj The destination object which will be modified and merged
+ * with the source object.
+ * @param {Object} fromObj The source object which will be used to extend the destination
+ * object.
+ * @param {Object} [extendArr] True if arrays should also be extended.
+ * @return {undefined}
+ */
+export function deepObjectExtend(obj, fromObj, extendArr = true) {
+  for (const prop in fromObj) {
+    if (fromObj[prop] && isObjectLiteral(fromObj[prop])) {
+      obj[prop] = obj[prop] || {};
+      deepObjectExtend(obj[prop], fromObj[prop], extendArr);
+    } else if (extendArr && fromObj[prop] && isArray(fromObj[prop])) {
+      obj[prop] = obj[prop] || [];
+      deepObjectExtend(obj[prop], fromObj[prop], extendArr);
+    } else obj[prop] = fromObj[prop];
+  }
+}
+
+/**
+ * Deep object cloning extension implementation. If the source objects contain a property with
+ * a reference type, a clone object of the same type of that property will be created and then
+ * merged with the property object of the destination object.
+ * @param {Object} obj The destination object which will be modified and merged
+ * with the source object.
+ * @param {...Object} args One or more objects which will be used to extend the 
+ * destination object.
+ * @return {undefined}
+ */
+export function deepObjectCloningExtend(obj, ...args) {
+  for (let i = 0; i < args.length; i++) {
+  const source = args[i];
+    for (const prop in source) {
+      if (source[prop] && isObjectLiteral(source[prop])) {
+        obj[prop] = obj[prop] || {};
+        deepObjectExtend(obj[prop], cloneDeep(source[prop]));
+      } else obj[prop] = source[prop];
+    }
+  }
+}
+
+/**
  * Extends a destination object with the provided source objects.
- * @param {Object} destinationObject The destination object.
- * @param {...*} rest The source objects with the last parameter being an array of rules,
+ * @param {Object} obj The destination object.
+ * @param {...*} args The source objects with the last parameter being an array of rules,
  * each rule being a tuple array where the first element is an array of "ORed" property names
  * (strings or numbers) or regexes matching property names for which the corresponding values
- * should be decorated (or a single property name or regex matching a property name if the decoration
- * should only happen on a single property), and where the second element is a callback to execute
- * for each value which is a value of a property of a source object.
+ * should be decorated (or a single property name or regex matching a property name if the
+ * decoration should only happen on a single property), and where the second element is a
+ * callback to execute for each value which is a value of a property of a source object.
  * The callback has the following signature:
  * (value: *, prop: string|number, parent: Object) => *|undefined
- * The callback will receive the final value after extension, its associated property and the parent object
- * where that property is set with that value.
- * Its returned value will be used as the final value of the property for that object in "destinationObject".
- *
- * If the last parameter is not an array of rules, it will be treated as the last source object to use for the extension
- * the "extend" function will be simply called under the hood without any decoration logic).
- * @return {Object} The destination object "destinationObject" given as parameter after extension and, if the callback is given
- *                  as the last parameter, after applying the given callback.
+ * The callback will receive the final value after extension, its associated property and 
+ * the parent object where that property is set with that value.
+ * Its returned value will be used as the final value of the property for that object in 
+ * "destinationObject". If the last parameter is not an array of rules, it will be treated as 
+ * the last source object to use for the extension the "extend" function will be simply called 
+ * under the hood without any decoration logic).
+ * @return {Object} The destination object "destinationObject" given as parameter after extension
+ * and, if the callback is given as the last parameter, after applying the given callback.
  */
-export function extendDecorate(destinationObject, ...rest) {
-  const rules = rest[rest.length - 1];
-  if (!isArray(rules)) return extend(destinationObject, ...rest);
+export function extendDecorate(obj, ...args) {
+  const rules = args[args.length - 1];
+  if (!isArray(rules)) return extend(obj, ...args);
 
-  rest.pop();
-  const sourceObjects = rest;
+  args.pop();
+  const sourceObjects = args;
   const initialRetValue = {};
   const matchedRulesMap = new Map();
   const callbacksMap = new Map();
   const paths = [];
-  const mapKeys = (
-    destinationObject,
-    sourceObject,
-    currentStack,
-    currentPath
-  ) => {
-    for (const key in sourceObject)
-      currentStack.push({
-        destinationObject,
-        sourceObject,
-        property: key,
-        path: [...currentPath, key],
+  const mapKeys = (obj, sourceObj, currStack, currPath) => {
+    for (const key in sourceObj)
+      currStack.push({
+        obj,
+        sourceObj,
+        prop: key,
+        path: [...currPath, key],
       });
   };
-  const matchRule = (rule, property) => {
-    if (rule instanceof RegExp && typeof property === "string")
-      return property.match(rule);
-    return rule === property;
+  const matchRule = (rule, prop) => {
+    if (rule instanceof RegExp && typeof prop === "string")
+      return prop.match(rule);
+    return rule === prop;
   };
-  const matchArrayRule = (arrayRule, property) => {
-    for (const rule of arrayRule) if (matchRule(rule, property)) return true;
+  const matchArrayRule = (arrayRule, prop) => {
+    for (const rule of arrayRule) if (matchRule(rule, prop)) return true;
     return false;
   };
-  const ruleMatches = (rule, property) => {
-    if (isArray(rule)) return matchArrayRule(rule, property);
-    return matchRule(rule, property);
+  const ruleMatches = (rule, prop) => {
+    if (isArray(rule)) return matchArrayRule(rule, prop);
+    return matchRule(rule, prop);
   };
-  const matchRules = (property) => {
-    if (!matchedRulesMap.has(property)) {
+  const matchRules = (prop) => {
+    if (!matchedRulesMap.has(prop)) {
       const callbacks = [];
       for (const [rule, callback] of rules)
-        if (ruleMatches(rule, property)) callbacks.push(callback);
-      matchedRulesMap.set(property, callbacks);
+        if (ruleMatches(rule, prop)) callbacks.push(callback);
+      matchedRulesMap.set(prop, callbacks);
     }
-    return matchedRulesMap.get(property);
+    return matchedRulesMap.get(prop);
   };
 
   for (const sourceObject of sourceObjects) {
-    const currentStack = [];
+    const currStack = [];
     const currentPath = [];
-    mapKeys(destinationObject, sourceObject, currentStack, currentPath);
-    while (currentStack.length) {
-      const {
-        destinationObject,
-        sourceObject,
-        property,
-        path: currentPath,
-      } = currentStack.pop();
-      if (sourceObject[property] && isObjectLiteral(sourceObject[property])) {
-        // "sourceObject[property]" is an object of class "Object".
-        destinationObject[property] = isObjectLiteral(
-          destinationObject[property]
-        )
-          ? destinationObject[property]
-          : {};
-        mapKeys(
-          destinationObject[property],
-          sourceObject[property],
-          currentStack,
-          currentPath
-        );
-      } else destinationObject[property] = sourceObject[property];
-      const callbacks = matchRules(property);
+    mapKeys(obj, sourceObject, currStack, currentPath);
+    while (currStack.length) {
+      const { obj, sourceObj, prop, currPath } = currStack.pop();
+      if (sourceObj[prop] && isObjectLiteral(sourceObj[prop])) {
+        obj[prop] = isObjectLiteral(obj[prop]) ? obj[prop] : {};
+        mapKeys(obj[prop], sourceObj[prop], currStack, currPath);
+      } else obj[prop] = sourceObj[prop];
+      const callbacks = matchRules(prop);
       if (callbacks && callbacks.length) {
-        if (!nestedTreeMapHas(callbacksMap, currentPath))
-          paths.push([...currentPath]);
+        if (!nestedTreeMapHas(callbacksMap, currPath))
+          paths.push([...currPath]);
         nestedTreeMapSet(
           callbacksMap,
-          currentPath,
+          currPath,
           callbacks.map((callback) => (retValue) => (path) => {
             const value =
               retValue === initialRetValue
-                ? destinationObject[property]
+                ? obj[prop]
                 : retValue;
-            return callback(value, property, destinationObject, path);
+            return callback(value, prop, obj, path);
           })
         );
       }
@@ -277,24 +251,9 @@ export function extendDecorate(destinationObject, ...rest) {
     let retValue = initialRetValue;
     for (const callback of callbacks) retValue = callback(retValue)(path);
     if (retValue !== initialRetValue)
-      setNestedPropertyValue(destinationObject, path, retValue);
+      setNestedPropertyValue(obj, path, retValue);
   }
-
-  return destinationObject;
-}
-
-/**
- * Shallowly extends a destination object with the provided source objects (first dimension).
- *
- * @param {Object} destinationObject The destination object.
- * @param {...Object} sourceObjects The source objects.
- * @return {Object} The destination object "destinationObject" given as parameter after shallow extension.
- */
-export function shallowExtend(destinationObject, ...sourceObjects) {
-  sourceObjects.map((obj) =>
-    Object.keys(obj).map((key) => (destinationObject[key] = obj[key]))
-  );
-  return destinationObject;
+  return obj;
 }
 
 const regExpFlagMap = {
