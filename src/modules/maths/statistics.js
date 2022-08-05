@@ -25,11 +25,11 @@ export function median(...numbers) {
 
 /**
  * Computes the min deviation from a value.
- * @param {number} value A value.
- * @return {(...numbers: number[]) => number} A function receiving the numbers
+ * @param {number} value The value to deviate from.
+ * @return {(...numbers: number[]) => number} A function which takes the numbers
  * to use to compute the minimum deviation from "value".
  */
-export function minAbsDeviationFromValue(value) {
+export function minDeviationFromExcluding(value) {
   return function (...numbers) {
     let minAbsDeviation = Infinity;
     numbers.map((num) => {
@@ -44,14 +44,12 @@ export function minAbsDeviationFromValue(value) {
 
 /**
  * Computes the min deviation from a value excluding that value from the numbers received.
- * @param {number} value A value.
- * @return {(...numbers: number[]) => number} A function receiving the numbers to use to
- * compute the minimum deviation from "value" exluding "value".
+ * @param {number} value The value to exclude and check deviations from.
+ * @return {(...numbers: number[]) => number} A function which takes the numbers to use to
+ * compute the minimum deviation from value, exluding value.
  */
-export function minAbsDeviationFromExcludedValue(value) {
+export function minDeviationFromExcluding(value) {
   return function (...numbers) {
-    return minAbsDeviationFromValue(value)(
-      ...numbers.filter((num) => num !== value)
-    );
+    return minDeviationFromExcluding(value)(...numbers.filter((num) => num !== value));
   };
 }
