@@ -1,5 +1,10 @@
 import { escapeRegExp } from "./regex";
 
+/** 
+ * Get just the digits from a string.
+ * @param {string} str the string to parse.
+ * @returns {string} the string with all non-digits removed.  
+ */
 export function getDigits(str) {
   const asArr = [...str];
   const res = [];
@@ -11,7 +16,8 @@ export function getDigits(str) {
 }
 
 /**
- * Given an integer, returns a string containing the same integer with additional thousands separators.
+ * Given an integer, returns a string containing the same integer with additional thousands
+ * separators.
  * @param {number} num An integer.
  * @param {string} [sep] The thousands separator to use.
  * @return {string} The same integer with thousands separators.
@@ -30,6 +36,7 @@ export function intSeparateThousands(num, sep = ",") {
 
 /**
  * Casts a value to a string.
+ * @param {string} v the value to cast. 
  * @return {string} The string representation of the value.
  */
 export function str(v) {
@@ -38,53 +45,53 @@ export function str(v) {
 
 /**
  * Trim characters from the beginning and end of a string.
- *
- * @param {string} str
- * @param {string} characterMask
- * @param {Object} options
- * @param {Object.boolean} options.trimLeft defaults to true if omitted
- * @param {Object.boolean} options.trimRight defaults to true if omitted
+ * @param {string} str the value to trim
+ * @param {string} [trim] the character to trim. Defaults to " " (whitespace).
+ * @param {Object} [options] object of options. 
+ * @param {boolean} [options.trimLeft] defaults to true if omitted
+ * @param {boolean} [options.trimRight] defaults to true if omitted
  * @return {string} The trimmed string.
  */
-export function trim(str, characterMask, options = {}) {
-  if (typeof characterMask === "undefined") characterMask = " ";
-  characterMask = escapeRegExp(characterMask);
-  const shouldTrimLeft =
-    typeof options.trimLeft === "undefined" || options.trimLeft;
-  const shouldTrimRight =
-    typeof options.trimRight === "undefined" || options.trimRight;
-  const regexParts = [];
-  if (shouldTrimLeft)
-    regexParts[regexParts.length] = "^[" + characterMask + "]+";
-  if (shouldTrimRight)
-    regexParts[regexParts.length] = "[" + characterMask + "]+$";
-  const regex = new RegExp(regexParts.join("|"), "gm");
-  return str.replace(regex, "");
-}
+export function trim(str, trim, options = {}) {
+  if (typeof trim === "undefined") trim = " ";
+  trim = escapeRegExp(trim);
 
-/**
- * Trim characters from the end of a string.
- * @param {string} str The string.
- * @param {string} characterMask Character mask.
- * @return {string} The trimmed string.
- */
-export function trimEnd(str, characterMask) {
-  return trim(str, characterMask, {
-    shouldTrimLeft: false,
-    shouldTrimRight: true,
-  });
+  const left =
+    typeof options.trimLeft === "undefined" || options.trimLeft;
+  const right =
+    typeof options.trimRight === "undefined" || options.trimRight;
+  const parts = [];
+  if (left)
+    parts[parts.length] = "^[" + trim + "]+";
+  if (right)
+    parts[parts.length] = "[" + trim + "]+$";
+  const regex = new RegExp(parts.join("|"), "gm");
+  return str.replace(regex, "");
 }
 
 /**
  * Trim characters from the start of a string.
  * @param {string} str The string.
- * @param {string} characterMask Character mask.
+ * @param {string} mask Character to trim.
  * @return {string} The trimmed string.
  */
-export function trimStart(str, characterMask) {
+ export function trimStart(str, mask) {
+  return trim(str, mask, {
+    trimLeft: true,
+    trimRight: false,
+  });
+}
+
+/**
+ * Trim characters from the end of a string.
+ * @param {string} str The string.
+ * @param {string} characterMask Character to trim.
+ * @return {string} The trimmed string.
+ */
+export function trimEnd(str, characterMask) {
   return trim(str, characterMask, {
-    shouldTrimLeft: true,
-    shouldTrimRight: false,
+    trimLeft: false,
+    trimRight: true,
   });
 }
 
