@@ -16,17 +16,29 @@ test("delay waits one seconds before calling delayed func", () => {
 });
 
 test("debounce returns a function with a delay", () => {
-  const funcToDelay = jest.fn();
+  const func = jest.fn();
 
-  const debounced = debounce(funcToDelay, 1000);
-  expect(funcToDelay).not.toBeCalled();
+  const debouncedFunc = debounce(func, 1000);
+  expect(func).not.toBeCalled();
   expect(setTimeout).toBeCalled();
 
-  debounced();
+  debouncedFunc();
   expect(setTimeout).toBeCalled();
   expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
-  expect(funcToDelay).not.toBeCalled();
+  expect(func).not.toBeCalled();
 
   jest.runAllTimers();
-  expect(funcToDelay).toHaveBeenCalledTimes(1);
+  expect(func).toHaveBeenCalledTimes(1);
+});
+
+test("throttle limits the amount of calls a function receives", () => {
+  Date.now = jest.fn(() => 3000);
+  const func = jest.fn();
+  const throttledFunc = throttle(func, 1000);
+  for (let i = 0; i < 5; i++) throttledFunc();
+  expect(func).not.toBeCalled();
+
+  Date.now = jest.fn().mockImplementationOnce(() => 10000);
+  throttledFunc();
+  expect(func).toBeCalledTimes(1);
 });
