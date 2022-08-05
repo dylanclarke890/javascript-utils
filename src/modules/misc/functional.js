@@ -182,7 +182,6 @@ export const curry = (
           newNextParameterIndex++;
         }
       }
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return curried.call(
         null,
         curriedFn,
