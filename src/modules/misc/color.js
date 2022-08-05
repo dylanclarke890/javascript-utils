@@ -94,7 +94,16 @@ export function hexToRGB(hex, options = {}) {
   return { red, green, blue, alpha };
 }
 
-export function rgbToHex(red, green, blue, alpha) {
+/**
+ * Convert RBG(A) colors to HEX format.
+ * @param {number | string} red Either the full string in rgba format or a value for 'red'
+ * between 0 and 255.
+ * @param {number} green A value for 'green' between 0 and 255.
+ * @param {number} blue A value for 'blue' between 0 and 255.
+ * @param {number | undefined} alpha an optional alpha value. 
+ * @returns The HEX color.
+ */
+export function rgbToHex(red, green, blue, alpha = undefined) {
   const isPercent = (red + (alpha || "")).toString().includes("%");
   if (typeof red === "string") {
     [red, green, blue, alpha] = red
