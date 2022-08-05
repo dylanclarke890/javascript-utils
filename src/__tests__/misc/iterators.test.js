@@ -10,7 +10,7 @@ test("xRange to yield a range of numbers", () => {
 test("mapYield to yield mapped items", () => {
   const source = [1, 2, 3];
   const res = 1;
-  const func = (val, _, _) => res + val;
+  const func = (val, i, items) => res + val;
   const generator = mapYield(source, func);
   expect(generator.next()).toStrictEqual({ done: false, value: 2 });
   expect(generator.next()).toStrictEqual({ done: false, value: 3 });
