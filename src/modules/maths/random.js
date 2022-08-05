@@ -45,6 +45,12 @@ export function shuffleArr(array) {
   return array;
 }
 
+/**
+ * Generate a random HSL color.
+ * @param {number} saturation The desired saturation.
+ * @param {number} brightness The desired brightness.
+ * @returns {string} A HSL color in the format: `hsl('color', 'saturation'%, 'brightness'%)`.
+ */
 export function randomHSLColor(saturation = 100, brightness = 100) {
   return `hsl(${Math.floor(
     Math.random() * 360
