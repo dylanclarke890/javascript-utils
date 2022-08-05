@@ -1,4 +1,4 @@
-import { getGlobalObject } from "../object-handling/compare";
+import { getGlobalObject } from "./global";
 
 /**
  * Generates a new UUID.
