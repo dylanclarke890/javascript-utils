@@ -96,5 +96,3 @@ test("nestedTreeMapGet", () => {
   );
   expect(nestedMapGet(map, ["whole numbers"])).toStrictEqual([0]);
 });
-
-test.todo("nestedObjectConstructValue");

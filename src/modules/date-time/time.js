@@ -27,7 +27,7 @@ export function time() {
  * @return {string} The time string.
  */
 export function msToTime(ms) {
-  const date = new Date(ms || new Date().getTime());
+  const date = new Date(ms || now());
   const isoDate = new Date(
     date.getTime() - date.getTimezoneOffset() * 60000
   ).toISOString();
