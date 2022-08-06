@@ -10,3 +10,9 @@ export function deepFreeze(obj) {
   }
   return Object.freeze(obj);
 }
+
+export function createEnum(...values) {
+  const enumObj = {};
+  for (let val in values) enumObj[val] = val;
+  return deepFreeze(enumObj);
+}
