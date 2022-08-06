@@ -44,9 +44,8 @@ export function msToTime(ms) {
  * @return {string} The time string.
  */
 export function secsToTimeString(secs, includeHrs = false) {
-  if (!secs || !new RegExp(/^[0-9]+$/).test(secs)) {
+  if (!secs || !new RegExp(/^[0-9]+$/).test(secs))
     return includeHrs ? "00:00:00" : "00:00";
-  }
 
   let hours = "";
   let minutes = integerDivision(secs, 60);
@@ -60,7 +59,11 @@ export function secsToTimeString(secs, includeHrs = false) {
   return `${hours}${minutes}:${seconds}`;
 }
 
-/** Parse milliseconds into an object. */
+/**
+ * Parse milliseconds into an object.
+ * @param {number} milliseconds the milliseconds to parse.
+ * @returns an object containing days, hrs, mins, secs, ms, µs, ns.
+ *  */
 export function parseMilliseconds(milliseconds) {
   if (typeof milliseconds !== "number")
     throw new TypeError("Expected a number");
@@ -77,11 +80,11 @@ export function parseMilliseconds(milliseconds) {
 
 /**
  * Convert milliseconds to a human readable string: 1337000000 → 15d 11h 23m 20s
- * @param {number} milliseconds
+ * @param {number} ms
  * @param {Object} options
- * @param {number} options.secondsDecimalDigits
+ * @param {number} options.secsDecimalDigits
  * Default: 1. Number of digits to appear after the seconds decimal point.
- * @param {number} options.millisecondsDecimalDigits
+ * @param {number} options.msDecimalDigits
  * Default: 0. Number of digits to appear after the milliseconds decimal point.
  * Useful in combination with process.hrtime().
  * @param {boolean} options.keepDecimalsOnWholeSeconds
@@ -107,10 +110,9 @@ export function parseMilliseconds(milliseconds) {
  * false: compact, formatSubMilliseconds, separateMilliseconds, verbose
  * @returns the human readable time.
  */
-export function prettifyMilliseconds(milliseconds, options = {}) {
+export function prettifyMilliseconds(ms, options = {}) {
   const SECOND_ROUNDING_EPSILON = 0.000_000_1;
-  if (!Number.isFinite(milliseconds))
-    throw new TypeError("Expected a finite number");
+  if (!Number.isFinite(ms)) throw new TypeError("Expected a finite number");
 
   if (options.colonNotation) {
     options.compact = false;
@@ -120,8 +122,8 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
   }
 
   if (options.compact) {
-    options.secondsDecimalDigits = 0;
-    options.millisecondsDecimalDigits = 0;
+    options.secsDecimalDigits = 0;
+    options.msDecimalDigits = 0;
   }
 
   const result = [];
@@ -139,9 +141,8 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
       (result.length === 0 || !options.colonNotation) &&
       value === 0 &&
       !(options.colonNotation && short === "m")
-    ) {
+    )
       return;
-    }
 
     valueString = (valueString || value || "0").toString();
     let prefix;
@@ -163,7 +164,7 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
     result.push(prefix + valueString + suffix);
   };
 
-  const parsed = parseMilliseconds(milliseconds);
+  const parsed = parseMilliseconds(ms);
 
   add(Math.trunc(parsed.days / 365), "year", "y");
   add(parsed.days % 365, "day", "d");
@@ -173,7 +174,7 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
   if (
     options.separateMilliseconds ||
     options.formatSubMilliseconds ||
-    (!options.colonNotation && milliseconds < 1000)
+    (!options.colonNotation && ms < 1000)
   ) {
     add(parsed.seconds, "second", "s");
     if (options.formatSubMilliseconds) {
@@ -187,8 +188,8 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
         parsed.nanoseconds / 1e6;
 
       const millisecondsDecimalDigits =
-        typeof options.millisecondsDecimalDigits === "number"
-          ? options.millisecondsDecimalDigits
+        typeof options.msDecimalDigits === "number"
+          ? options.msDecimalDigits
           : 0;
 
       const roundedMiliseconds =
@@ -208,25 +209,22 @@ export function prettifyMilliseconds(milliseconds, options = {}) {
       );
     }
   } else {
-    const seconds = (milliseconds / 1000) % 60;
-    const secondsDecimalDigits =
-      typeof options.secondsDecimalDigits === "number"
-        ? options.secondsDecimalDigits
+    const seconds = (ms / 1000) % 60;
+    const secsDecDigits =
+      typeof options.secsDecimalDigits === "number"
+        ? options.secsDecimalDigits
         : 1;
-    const secondsFixed = floorDecimals(seconds, secondsDecimalDigits);
-    const secondsString = options.keepDecimalsOnWholeSeconds
-      ? secondsFixed
-      : secondsFixed.replace(/\.0+$/, "");
-    add(Number.parseFloat(secondsString), "second", "s", secondsString);
+    const secsFixed = floorDecimals(seconds, secsDecDigits);
+    const secsStr = options.keepDecimalsOnWholeSeconds
+      ? secsFixed
+      : secsFixed.replace(/\.0+$/, "");
+    add(Number.parseFloat(secsStr), "second", "s", secsStr);
   }
 
-  if (result.length === 0) {
+  if (result.length === 0)
     return "0" + (options.verbose ? " milliseconds" : "ms");
-  }
 
-  if (options.compact) {
-    return result[0];
-  }
+  if (options.compact) return result[0];
 
   if (typeof options.unitCount === "number") {
     const separator = options.colonNotation ? "" : " ";
