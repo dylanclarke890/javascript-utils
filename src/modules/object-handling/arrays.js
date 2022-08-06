@@ -53,7 +53,6 @@ export function firstNested(arr) {
  * @param {any[]} arr an array of values.
  * @returns the first nested array or object in the array. */
 export function lastNested(arr) {
-  // TODO: could take a while to reverse a large array.
   return firstNested(arr.reverse());
 }
 

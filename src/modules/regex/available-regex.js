@@ -111,7 +111,7 @@ availableRegex.js_line_comment = new RegexInfo({
   allowChange: false,
   description: "Matches against JS line comments (i.e //).",
   displayName: "JavaScript Line Comment",
-  examples: ["// TODO", "// this is a comment"],
+  examples: ["// something", "// this is a comment"],
   source: /(?:^|\s)\/\/(.+?)$/gms,
 });
 
@@ -119,7 +119,7 @@ availableRegex.js_block_comment = new RegexInfo({
   allowChange: false,
   description: "Matches against JS block comments (i.e /**/).",
   displayName: "JavaScript Block Comment",
-  examples: ["/* TODO */", "/** @returns some stuff. */"],
+  examples: ["/* something */", "/** @returns some stuff. */"],
   source: /\/\*(.*?)\*\//gms,
 });
 

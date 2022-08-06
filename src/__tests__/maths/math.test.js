@@ -35,4 +35,4 @@ test("integerDivision returns expected value", () => {
   expect(integerDivision(21, 5)).toBe(4);
 });
 
-// TODO: add test cases for `proportion()`.
+test.todo("proportion");

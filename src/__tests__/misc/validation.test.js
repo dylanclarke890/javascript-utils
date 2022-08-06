@@ -42,5 +42,3 @@ describe("validatePassword", () => {
     });
   });
 });
-
-// TODO: add more test cases covering individual checks
