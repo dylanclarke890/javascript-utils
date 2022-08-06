@@ -1,9 +1,9 @@
-import { escapeRegExp } from "./regex";
+import { escapeRegExp } from "../regex/regex-collection";
 
-/** 
+/**
  * Get just the digits from a string.
  * @param {string} str the string to parse.
- * @returns {string} the string with all non-digits removed.  
+ * @returns {string} the string with all non-digits removed.
  */
 export function getDigits(str) {
   const asArr = [...str];
@@ -36,7 +36,7 @@ export function intSeparateThousands(num, sep = ",") {
 
 /**
  * Casts a value to a string.
- * @param {string} v the value to cast. 
+ * @param {string} v the value to cast.
  * @return {string} The string representation of the value.
  */
 export function str(v) {
@@ -47,7 +47,7 @@ export function str(v) {
  * Trim characters from the beginning and end of a string.
  * @param {string} str the value to trim
  * @param {string} [trim] the character to trim. Defaults to " " (whitespace).
- * @param {Object} [options] object of options. 
+ * @param {Object} [options] object of options.
  * @param {boolean} [options.trimLeft] defaults to true if omitted
  * @param {boolean} [options.trimRight] defaults to true if omitted
  * @return {string} The trimmed string.
@@ -56,15 +56,11 @@ export function trim(str, trim, options = {}) {
   if (typeof trim === "undefined") trim = " ";
   trim = escapeRegExp(trim);
 
-  const left =
-    typeof options.trimLeft === "undefined" || options.trimLeft;
-  const right =
-    typeof options.trimRight === "undefined" || options.trimRight;
+  const left = typeof options.trimLeft === "undefined" || options.trimLeft;
+  const right = typeof options.trimRight === "undefined" || options.trimRight;
   const parts = [];
-  if (left)
-    parts[parts.length] = "^[" + trim + "]+";
-  if (right)
-    parts[parts.length] = "[" + trim + "]+$";
+  if (left) parts[parts.length] = "^[" + trim + "]+";
+  if (right) parts[parts.length] = "[" + trim + "]+$";
   const regex = new RegExp(parts.join("|"), "gm");
   return str.replace(regex, "");
 }
@@ -75,7 +71,7 @@ export function trim(str, trim, options = {}) {
  * @param {string} mask Character to trim.
  * @return {string} The trimmed string.
  */
- export function trimStart(str, mask) {
+export function trimStart(str, mask) {
   return trim(str, mask, {
     trimLeft: true,
     trimRight: false,

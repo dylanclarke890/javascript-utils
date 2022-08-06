@@ -36,21 +36,45 @@ export default class RegExpHelper {
    * Common RegExp's include email and password. See `getAvailableRegExp()` for the full list.
    * @param {string} name The name of the RegExp.
    * @param {Object} options Extra options used for configuring the RegExp.
-   * @param {boolean} [options.exact] If true, will apply the 'i' flag to the RegExp. Overrides
-   * the 'flags' property if provided.
-   * @param {string} [options.flags] Optional flags to pass to the new RegExp. If no flags
-   * provided, supplies 'gi'.
+   * @param {string} [options.flags] Optional flags to pass to the new RegExp. If the built-in
+   * RegExp does not support additional flags being passed, they will be ignored.
    * @returns {RegExp | null} The new instance, or null if the name was not valid.
    */
   static useCommonRegExp(name, options) {
     options = options || {};
-    let regStr;
-    if (name in availableRegex) regStr = availableRegex[name];
-    if (!regStr) return null;
-    return new RegExp(regStr, options.exact ? "i" : options.flags || "gi");
+    let regInfo;
+    if (name in availableRegex) regInfo = availableRegex[name];
+    else return null;
+    if (!regInfo.allowChange) return new RegExp(regInfo.source);
+    return new RegExp(regInfo.source, options.flags);
   }
 
+  /**
+   * Get info on a built-in RegExp.
+   * @param {string} name
+   * @returns {Object} an object containing name, description, whether flags can be passed when
+   * creating a new instance and possible examples for ease of use.
+   */
+  static getCommonRegExpInfo(name) {
+    let regInfo;
+    if (name in availableRegex) regInfo = availableRegex[name];
+    else return null;
+    const { allowChange, description, displayName, examples } = regInfo;
+    return {
+      displayName,
+      description,
+      allowChange,
+      examples,
+    };
+  }
+
+  /** Get a list of the currently available built-in RegExp.
+   * @returns An array of tuples, with the first value being the property name and the
+   * second being the info about the RegExp.
+   */
   static getAvailableRegExp() {
-    return availableRegex.keys();
+    const infoList = [];
+    for (let key of availableRegex) infoList.push([key, availableRegex[key]]);
+    return infoList;
   }
 }
