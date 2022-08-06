@@ -172,5 +172,14 @@ availableRegex.map_code = new RegexInfo({
   source: mapCodeRegex,
 });
 
+availableRegex.iso_date = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "ISO8601 date string",
+  examples: ["2020-03-12T13:34:56.123Z"],
+  source:
+    /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?/,
+});
+
 Object.freeze(availableRegex);
 export default availableRegex;
