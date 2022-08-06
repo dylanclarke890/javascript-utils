@@ -1,8 +1,6 @@
 import mapCodeRegex from "./mapcode-regex";
 const availableRegex = {};
 
-// TODO: Review which RegExp's need 'allowChange' setting to false.
-
 class RegexInfo {
   /**
    *
