@@ -3,7 +3,7 @@ import { isArray } from "../object-handling/introspection";
 /**
  * A function to easily create interchangeable factories switching them
  * in a declarative way based on the given runtime parameters.
- * @param {Function} tuples An array of tuples, each tuple being an array of two elements:
+ * @param {Array<[Function, *]>} tuples An array of tuples, each tuple being an array of two elements:
  *  - testCondition: A boolean value or a function returning a boolean value which, if true,
  * instructs this function to return the factory bound to the test condition.
  * Note: the first factory for which the test condition is truthy will be returned and further
@@ -20,29 +20,23 @@ import { isArray } from "../object-handling/introspection";
  * value, a default factory value, or null.
  */
 export default function declarativeFactory(tuples) {
-  const testConditionFunc = (testCondition) =>
+  const isConditionMet = (condition) =>
     Boolean(
-      typeof testCondition === "function" ? testCondition() : testCondition
+      typeof condition === "function" ? condition() : condition
     );
   const factoryValue = (() => {
     let i = 0;
-    // Loop through all the tuples except the last one (handled after this loop).
-    for (; i < tuples.length - 1; i++) {
+    for (; i < tuples.length - 1; i++) { // handle all tuples except the last
       const tuple = tuples[i];
-      const [testCondition, factoryValue] = tuple;
-      // Test condition for factory value is satisfied.
-      if (testConditionFunc(testCondition)) return factoryValue;
+      const [condition, factoryVal] = tuple;
+      if (isConditionMet(condition)) return factoryVal; // is condition satified?
     }
     const lastTuple = tuples[i];
-    if (isArray(lastTuple) && lastTuple.length === 2) {
-      const [testCondition, factoryValue] = lastTuple;
-      // Test condition for last factory value is satisfied.
-      if (testConditionFunc(testCondition)) return factoryValue;
-      // No default and no factory value satisfying a test condition.
-      return null;
-      // Default factory value.
-    } else return lastTuple;
+    if (isArray(lastTuple) && lastTuple.length === 2) { // handle last
+      const [condition, factoryVal] = lastTuple;
+      if (isConditionMet(condition)) return factoryVal; // is last condition satified?
+      return null; // No default and no factory value satisfying a test condition.
+    } else return lastTuple; // Default factory value.
   })();
-
   return factoryValue;
 }
