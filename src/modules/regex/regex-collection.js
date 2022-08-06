@@ -1,39 +1,4 @@
 /**********************************************************************************************
- *                          C O M M O N
- */
-
-export const emailRegex =
-  /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/;
-export function newEmailRegex(exact) {
-  return exact
-    ? new RegExp(`^${scopedNpmRegex}$`)
-    : new RegExp(scopedNpmRegex, "g");
-}
-
-const scopedNpmRegex = /@[a-z\\d][\\w-.]+\/[a-z\\d][\\w-.]*/;
-/**
- * Regular expression for matching scoped npm package names.
- * @param {boolean} exact only match exact strings.
- * @returns {RegExp} a RegExp for matching scoped package names.
- */
-export function newScopedNpmRegex(exact) {
-  return exact
-    ? new RegExp(`^${scopedNpmRegex}$`, "i")
-    : new RegExp(scopedNpmRegex, "gi");
-}
-
-// TODO: update below to JS RegExp
-
-/**********************************************************************************************
- *                            A W S
- */
-//from http://blogs.aws.amazon.com/security/blog/tag/key+rotation
-export const AWS_access_key = "(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])";
-export const AWS_host_ip = "\\bip-\\d+-\\d+-\\d+-\\d+\\b";
-export const AWS_secret_key =
-  "(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])";
-
-/**********************************************************************************************
  *                      I P  A N D  W E B  S E R V I C E S
  */
 export const ip_prefix =
@@ -64,8 +29,6 @@ export const threshold_simple = "^(-?\\d+(?:\\.\\d+)?)$";
 export const label = "\\s*[\\%\\(\\)\\/\\*\\w-][\\%\\(\\)\\/\\*\\w\\s-]*";
 export const version = "\\d(\\.\\d+)*";
 export const version_lax = version + "-?.*";
-export const http_url =
-  /^(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 
 /**********************************************************************************************
  *                      F I L T E R  M E T H O D S
@@ -97,14 +60,6 @@ export function filterFloat(str) {
   return filtered;
 }
 
-/**********************************************************************************************
- *                      M I S C  R E G E X
- */
-
-export const hslColorRegex = /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/g;
-
-export const uuidRegex =
-  /([A-Z]|[a-z]|[0-9]){8}(-([A-Z]|[a-z]|[0-9]){4}){3}-([A-Z]|[a-z]|[0-9]){12}/;
 /**********************************************************************************************
  *                      E S C A P E  R E G E X P  S T R I N G S
  */

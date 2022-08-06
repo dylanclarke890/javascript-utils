@@ -1,10 +1,157 @@
-const availableRegex = Object.freeze({
-  email:
-    /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/,
-  strong_password: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
-  scoped_npm_package: /@[a-z\\d][\\w-.]+\/[a-z\\d][\\w-.]*/,
-  js_comment: /(?:(?:^|\s)\/\/(.+?))|(?:\/\*(.*?)\*\/)/,
-  map_code: mapcodeRegex,
+import mapCodeRegex from "./mapcode-regex";
+const availableRegex = {};
+
+// TODO: Review which RegExp's need 'allowChange' setting to false.
+
+class RegexInfo {
+  /**
+   *
+   * @param {Object} data
+   * @param {RegExp} data.source The RegExp literal.
+   * @param {description} [data.description] Optional description string.
+   * @param {Array<string>} [data.examples] Optional examples array.
+   * @param {boolean} [data.allowChange] Flag for if RegExp flags can be added.
+   * Set to false for RegExp that already include flags. Defaults to true.
+   */
+  constructor(data = { source, description, examples, allowChange }) {
+    if (!data || !data.source) throw new Error("Expected a source value");
+    this.source = data.source;
+    this.description = data.description;
+    this.examples = data.examples;
+    this.allowChange =
+      data.allowChange !== undefined && data.allowChange !== null
+        ? data.allowChange
+        : true;
+  }
+}
+
+/********************************************************************************************
+ *                                      A W S
+ */
+
+availableRegex.aws_access_key = new RegexInfo({
+  allowChange: true,
+  description:
+    "Looks for 20-character, uppercase, alphanumeric strings that don't have any uppercase, alphanumeric characters immediately before or after.",
+  examples: ["AKIAIOSFODNN7EXAMPLE"],
+  source: /(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])/,
 });
 
+availableRegex.aws_host_ip = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: [],
+  source: /\\bip-\\d+-\\d+-\\d+-\\d+\\b/,
+});
+
+availableRegex.aws_secret_key = new RegexInfo({
+  allowChange: true,
+  description:
+    "Looks for 40-character, base-64 strings that don't have any base 64 characters immediately before or after",
+  examples: ["wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"],
+  source: /(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])/,
+});
+
+availableRegex.aws_default_private_hostname = new RegexInfo({
+  allowChange: true,
+  description: "Format is usually 'ip-xxx-xxx-xxx-xxx'.",
+  examples: ["ip-10-96-2-123"],
+  source: /ip(-[0-9]{1,3}){4}/,
+});
+
+/********************************************************************************************
+ *                                 I N T E R N E T
+ */
+
+availableRegex.ipv4 = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["257.120.223.13"],
+  source:
+    /((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])/,
+});
+
+availableRegex.ipv6 = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["fffe:3465:efab:23fe:2235:6565:aaab:0001"],
+  source: /((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}/,
+});
+
+availableRegex.http_url = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["www.example.com"],
+  source:
+    /(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?/,
+});
+
+/********************************************************************************************
+ *                                    M I S C
+ */
+
+availableRegex.scoped_npm_package = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: [],
+  source: /@[a-z\\d][\\w-.]+\/[a-z\\d][\\w-.]*/,
+});
+
+availableRegex.js_line_comment = new RegexInfo({
+  allowChange: false,
+  description: "Matches against JS line comments (i.e //).",
+  examples: ["// TODO", "// this is a comment"],
+  source: /(?:^|\s)\/\/(.+?)$/gms,
+});
+
+availableRegex.js_block_comment = new RegexInfo({
+  allowChange: false,
+  description: "Matches against JS block comments (i.e /**/).",
+  examples: ["/* TODO */", "/** @returns some stuff. */"],
+  source: /\/\*(.*?)\*\//gms,
+});
+
+availableRegex.hsl_color = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["hsl(227, 100%, 100%)"],
+  source: /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/,
+});
+
+availableRegex.uuid = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["123e4567-e89b-12d3-a456-426655440000"],
+  source:
+    /([A-Z]|[a-z]|[0-9]){8}(-([A-Z]|[a-z]|[0-9]){4}){3}-([A-Z]|[a-z]|[0-9]){12}/,
+});
+
+/********************************************************************************************
+ *                               V A L I D A T I O N
+ */
+
+availableRegex.email = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["testemail@test.com"],
+  source:
+    /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/,
+});
+
+availableRegex.strong_password = new RegexInfo({
+  allowChange: true,
+  description:
+    "Look for an upper and lower case character, a number and a special character.",
+  examples: ["AStrongPassword123!"],
+  source: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
+});
+
+availableRegex.map_code = new RegexInfo({
+  allowChange: true,
+  description: "",
+  examples: ["TOM", "Saint Martin, Collectivity of", "Wyoming"],
+  source: mapCodeRegex,
+});
+
+Object.freeze(availableRegex);
 export default availableRegex;
