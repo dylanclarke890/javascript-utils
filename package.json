@@ -27,9 +27,7 @@
   "homepage": "https://github.com/dylanclarke890/javascript-utils#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.18.10",
+    "@types/jest": "^28.1.6",
     "jest": "^28.1.3"
-  },
-  "dependencies": {
-    "@types/jest": "^28.1.6"
   }
 }
