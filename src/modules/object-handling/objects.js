@@ -41,11 +41,9 @@ export function arrToObject(arr, func) {
  * @return {Object} An object having only the properties which return true for
  * the callback function.
  */
-export function selectPropertiesWhere(obj, func) {
+export function selectWhere(obj, func) {
   return Object.keys(obj).reduce((carry, key) => {
-    if (func(obj[key], key)) {
-      carry[key] = obj[key];
-    }
+    if (func(obj[key], key)) carry[key] = obj[key];
     return carry;
   }, {});
 }
@@ -62,20 +60,20 @@ export function selectPropertiesWhere(obj, func) {
  * at which to stop will be included in the returned array.
  * @return {string[]} An array of containing the names of the properties.
  */
-export function prototypeChainProperties(
-  obj,
-  { stopAt = null, includeStop = true } = {}
-) {
+export function getPrototypes(obj, { stopAt = null, includeStop = true } = {}) {
   let current = obj;
   const map = {};
-  let isStopPrototype = false;
-  let stop = false;
-  while (!stop && current && (!isStopPrototype || includeStop)) {
-    if (isStopPrototype) stop = true;
+  let stopAtFound = false;
+  while (current && (!stopAtFound || includeStop)) {
     const properties = Object.getOwnPropertyNames(current);
-    properties.map((property) => (map[property] = true));
+    properties.map((property) => {
+      if (stopAtFound) return;
+      if (stopAt !== property || includeStop) map[property] = true;
+      if (stopAt === property) stopAtFound = true;
+    });
+    if (stopAtFound) break;
     current = Object.getPrototypeOf(current);
-    if (stopAt) isStopPrototype = current === stopAt;
+    stopAtFound = stopAt && current === stopAt;
   }
   const properties = Object.keys(map);
   return properties;
@@ -108,12 +106,7 @@ export function prop(obj, propName, getFunc, setFunc = void 0) {
  * @return {Object} The object that was passed to the function.
  */
 export function defineProperty(o, p, descriptor = {}) {
-  return Object.defineProperty(o, p, {
-    configurable: false,
-    enumerable: false,
-    writable: true,
-    ...descriptor,
-  });
+  return Object.defineProperty(o, p, { ...descriptor });
 }
 
 /**
