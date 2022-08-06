@@ -1,4 +1,4 @@
-# javascript-utils (WORK IN PROGRESS)
+# javascript-utils NOTE TO SELF - DOCS NEEDED 
 
 Utility functions/classes for JavaScript with no external dependencies.
 
