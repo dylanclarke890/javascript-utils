@@ -83,7 +83,6 @@ export function isTrue(value) {
  * @return {boolean} True if the val is truthy.
  */
 export function isTruthy(value) {
-  console.log(!!value);
   return !!value;
 }
 

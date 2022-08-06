@@ -27,7 +27,6 @@ test("chain returns a chained function", () => {
       equalToTen: () => {
         return x === 10;
       },
-      print: () => console.log(x),
     };
   }
 

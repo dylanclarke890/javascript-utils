@@ -41,4 +41,22 @@ describe("isValidDateTimeStr", () => {
   });
 });
 
-// TODO: Test cases for utcDate.
+test("utcDate returns expected date", () => {
+  const source = {
+    Y: true,
+    m: true,
+    d: true,
+    H: true,
+    i: true,
+    s: true,
+    date: null,
+  };
+  const args = [
+    [new Date(2000, 0, 1, 1, 1), "2000-01-01 01:01:00"],
+    [new Date(2000, 0, 1, 12), "2000-01-01 12:00:00"],
+  ];
+  for (let [date, expected] of args) {
+    source.date = date;
+    expect(utcDate(source)).toBe(expected);
+  }
+});

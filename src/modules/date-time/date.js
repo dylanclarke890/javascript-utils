@@ -67,7 +67,6 @@ export function utcDate({
     " "
   );
 
-  let finalUTCDate = UTCDate.replace("--", "-");
-  finalUTCDate = finalUTCDate.replace("::", ":");
+  let finalUTCDate = UTCDate.replace("--", "-").replace("::", ":");
   return finalUTCDate;
 }
