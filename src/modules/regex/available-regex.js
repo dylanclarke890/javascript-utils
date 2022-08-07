@@ -115,6 +115,15 @@ availableRegex.http_url = new RegexInfo({
     /(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?/,
 });
 
+availableRegex.url = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "Generic Url",
+  examples: ["www.example.com"],
+  source:
+    /(?:http|https|ftp|mailto|file|data|irc):\/\/[A-Za-z0-9\-]{0,63}(\.[A-Za-z0-9\-]{0,63})+(:\d{1,4})?\/*(\/*[A-Za-z0-9\-._]+\/*)*(\?.*)?(#.*)?/,
+});
+
 /********************************************************************************************
  *                                    M I S C
  */
@@ -164,6 +173,30 @@ availableRegex.uuid = new RegexInfo({
  *                               V A L I D A T I O N
  */
 
+availableRegex.address = new RegexInfo({
+  allowChange: true,
+  description: "Matches against physical addresses",
+  displayName: "Address",
+  examples: [],
+  source: /[A-Za-z0-9\.\s,\-:\n]+/,
+});
+
+availableRegex.alphanumberic = new RegexInfo({
+  allowChange: true,
+  description: "Check a string only contains numbers or letters",
+  displayName: "Alphanumeric",
+  examples: [],
+  source: /[A-Za-z0-9]/,
+});
+
+availableRegex.credit_card_amex = new RegExp({
+  allowChange: true,
+  description: "Does not account for whitespace.",
+  displayName: "American Express Credit Card",
+  examples: ["376418333333333"],
+  source: /(3[47][0-9]{13})/,
+});
+
 availableRegex.email = new RegexInfo({
   allowChange: true,
   description: "",
@@ -180,6 +213,14 @@ availableRegex.strong_password = new RegexInfo({
   displayName: "Strong Password",
   examples: ["AStrongPassword123!"],
   source: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
+});
+
+availableRegex.phone_nanp = new RegexInfo({
+  allowChange: true,
+  description: "Ensures a phone number is in the NANP format (XXX-NXX-XXXX).",
+  displayName: "NANP Phone Number",
+  examples: ["123-456-7890"],
+  source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
 });
 
 availableRegex.map_code = new RegexInfo({
