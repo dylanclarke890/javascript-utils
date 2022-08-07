@@ -165,6 +165,13 @@ availableRegex.hsl_color = new RegexInfo({
   source: /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/,
 });
 
+availableRegex.html = new RegexInfo({
+  allowChange: true,
+  description: "Matches any HTML tag along with the content inside.",
+  displayName: "HTML Tags",
+  source: /<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)/,
+});
+
 availableRegex.js_block_comment = new RegexInfo({
   allowChange: false,
   description: "Matches against JS block comments (i.e /**/).",
