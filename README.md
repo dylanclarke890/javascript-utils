@@ -86,44 +86,46 @@ Maps and coordinate-related utilities.
 
 ## Maths
 
+Various maths utilities.
+
 ### Bitwise
 
+- checkNthBitOn: Check a bit is on in a number.
+- toggleNthBit: Toggle a bit of a number.
 - turnNthBitOff: Turn a bit of a number off.
 - turnNthBitOn: Turn a bit of a number on.
-- toggleNthBit: Toggle a bit of a number.
-- checkNthBitOn: Check a bit is on in a number.
 
 ### Conversions
 
 - binaryToDecimal: Convert binary to decimal.
-- decimalToBinary: Convert decimal to binary.
 - convertBytes: Convert bytes to a human readable string (i.e 1337 = 1.34kB).
+- decimalToBinary: Convert decimal to binary.
 
 ### Hash
 
-- revisionHash: Create a hash for file revving.
 - hashArrayOfStrings: Compute the hash of an array of strings.
 - hashString: Compute the hash of a string.
 - hashStringSinglePass: A one-pass algorithm to compute the hash of a series of unique strings incrementally.
 - hashSumOfIntArray: Compute the hash of an array of ints.
 - md5Hex: Create a MD5 hash with hex encoding. Suitable for use in the browser when used with a bundler.
+- revisionHash: Create a hash for file revving.
 
 ### Math
 
-- round: Rounds a number.
-- sum: Sum two or more numbers.
 - integerDivision: Integer division (without remainder).
 - isEven: Check if a value is even.
 - isOdd: Check if a value is odd.
 - proportion: Convert a source value of a source range to a value that is proportional in another destination range.
+- round: Rounds a number.
+- sum: Sum two or more numbers.
 
 ### Random
 
-- randomNumber: Get a random number up to a value.
 - randomFromRange: Get a random number between two values.
+- randomHslColor: Generate a random HSL color.
+- randomNumber: Get a random number up to a value.
 - randomValue: Get a random value from an array.
 - shuffleArr: Shuffle an array. Ensures the array has been shuffled before returning.
-- randomHslColor: Generate a random HSL color.
 - uniqueRandom: Generate consecutively unique numbers.
 - uniqueRandomFromArray: Get consecutively unique values from an array.
 
@@ -137,6 +139,67 @@ Maps and coordinate-related utilities.
 ## Misc
 
 A variety of different utilities such as uuid generation, validating passwords and currying functions.
+
+### Callbacks
+
+- debounce: Debounces a function.
+- delay: Delay execution of a callback and cancels a previously registered callback if it wasn't executed yet.
+- throttle: Throttle a function.
+
+### Color
+
+- getLuminance: Get the luminance value of a color in HEX format.
+- intToHex: Convert a number to a HEX string that can be used as a color.
+- colorFromString: Convert a string to a HEX string that can be used as a color.
+- hexToRgb: Convert a HEX color to RGB.
+- rgbToHex: Convert an RBG color to HEX.
+
+### Functional
+
+- chain: A higher-order function to create a chain of functions following the Chain of Responsibility design pattern.
+- noActionFunc: Simple function that does nothing (but return null).
+- pick: Get a function which lets picking the properties of an object.
+- curry: Curries a function.
+
+### Global
+
+- getGlobalObject: Get a reference to the global object.
+
+### Iterators
+
+- generateRange: Get a generator which yields all of the values of a given range.
+- mapYield: Yields values of an array mapping the yielded value.
+
+### Path
+
+- basename: Get the basename of a path.
+- getPathExtension: Get the extension of a path.
+- pathInfo: Get info about a path.
+- filenameExtension: Get the extension of a file.
+- dirname: Get the dirname of a path.
+
+### Strings
+
+- getDigits: Get just the digits from a string.
+- intSeparateThousands: return a number with thousand delimiters.
+- str: Cast a value to a string.
+- trim: Trim characters from a string.
+- trimStart: Trim characters from the start of a string.
+- trimEnd: Trim characters from the start of a string.
+- typeToStr: Convert a type to it's string representation.
+- pluralize: Basic function for pluralizing words.
+- splitOnFirst: Split a string on the first occurrence of a given separator.
+- toSingleQuotes: Convert matching double-quotes to single-quotes.
+- toDoubleQuotes: Convert matching single-quotes to double-quotes.
+
+### UUID
+
+- uuid: Generate a new typical UUID.
+- NonCanonicalUUID: A class for generating UUIDs with the total count of ids suffixed.
+
+### Validation
+
+- validatePassword: Detailed check for a strong password. Returns info about the password strength as well as whether it passed the check.
 
 ## Object Handling
 
