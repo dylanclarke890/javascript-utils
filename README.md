@@ -255,25 +255,25 @@ Utilities for working with objects and arrays, such as cloning and extending.
 
 ### Introspection
 
-isPrimitiveType: Check if a value is a primitive type.
-isInt: Check if a value is a number.
-isIntString: Check if a value is a number in string form.
-isIntOrIntString: Check if a value is a number or number in string form.
-isNullOrEmpty: Check if a string is null or empty.
-isNullOrWhiteSpace: Check if a value is a null or just whitespace (e.g " ").
-isJSONString: Check if a string is a JSON string.
-isTrue: Check if a value is true.
-isTruthy: Check if a value is truthy.
-allTruthy: Check if all values in an array are truthy.
-isUndefined: Check if a value is undefined.
-isReferenceType: Check if a value is a reference type.
-isObject: Check if a value is an object.
-isObjectLiteral: Check if a value is an object literal.
-isObjectEmpty: Check if a value is an empty object (i.e {}).
-isArray: Check if a value is an array.
-isCallable: Check if a value is a function.
-safeHasOwnProperty: Safe implementation of `Object.prototype.hasOwnProperty()`.
-hasCyclicReference: Detect if an object has a cyclic reference.
+- isPrimitiveType: Check if a value is a primitive type.
+- isInt: Check if a value is a number.
+- isIntString: Check if a value is a number in string form.
+- isIntOrIntString: Check if a value is a number or number in string form.
+- isNullOrEmpty: Check if a string is null or empty.
+- isNullOrWhiteSpace: Check if a value is a null or just whitespace (e.g " ").
+- isJSONString: Check if a string is a JSON string.
+- isTrue: Check if a value is true.
+- isTruthy: Check if a value is truthy.
+- allTruthy: Check if all values in an array are truthy.
+- isUndefined: Check if a value is undefined.
+- isReferenceType: Check if a value is a reference type.
+- isObject: Check if a value is an object.
+- isObjectLiteral: Check if a value is an object literal.
+- isObjectEmpty: Check if a value is an empty object (i.e {}).
+- isArray: Check if a value is an array.
+- isCallable: Check if a value is a function.
+- safeHasOwnProperty: Safe implementation of `Object.prototype.hasOwnProperty()`.
+- hasCyclicReference: Detect if an object has a cyclic reference.
 
 ### Nested Properties
 
