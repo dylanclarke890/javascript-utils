@@ -54,9 +54,7 @@ export function filterFloat(str) {
   filtered === "." ? (filtered = "0.") : filtered;
   filtered = filtered.replace(/^[0]+([1-9])/, "$1");
   filtered = filtered.replace(/^[0]+($|\.)/, "0$1");
-  if (str && filtered.length && str[0] === "-") {
-    filtered = `-${filtered}`;
-  }
+  if (str && filtered.length && str[0] === "-") filtered = `-${filtered}`;
   return filtered;
 }
 
@@ -84,16 +82,4 @@ export function escapeStringRegexp(string) {
  */
 export function escapeRegExp(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
-/**********************************************************************************************
- *                          J S  C O M M E N T S  R E G E X
- */
-
-export const lineCommentRegex = /(?:^|\s)\/\/(.+?)$/gms;
-export const blockCommentRegex = /\/\*(.*?)\*\//gms;
-export function commentRegex() {
-  return new RegExp(
-    `(?:${lineCommentRegex().source})|(?:${blockCommentRegex().source})`,
-    "gms"
-  );
 }

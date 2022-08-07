@@ -8,6 +8,40 @@ import availableRegex from "./available-regex";
  */
 export default class RegExpHelper {
   /**
+   * Filter numbers from a string.
+   * @param {string} str the string to filter.
+   * @returns The modified string.
+   */
+  static filterInt(str) {
+    let filtered = str.replace(/[^0-9]/g, "");
+    filtered = filtered.replace(/^[0]+([1-9])/, "$1");
+    filtered = filtered.replace(/^[0]+$/, "0");
+    if (str && filtered.length && str[0] === "-") {
+      filtered = `-${filtered}`;
+    }
+    return filtered;
+  }
+
+  /**
+   * Filter decimal numbers from a string.
+   * @param {string} str the string to filter.
+   * @returns The modified string.
+   */
+  static filterFloat(str) {
+    let filtered = str.replace(/[^0-9.]/g, "");
+    const regex = /(\..*)\./g;
+    const replace = "$1";
+    do {
+      filtered = filtered.replace(regex, replace);
+    } while (filtered != filtered.replace(regex, replace));
+    filtered === "." ? (filtered = "0.") : filtered;
+    filtered = filtered.replace(/^[0]+([1-9])/, "$1");
+    filtered = filtered.replace(/^[0]+($|\.)/, "0$1");
+    if (str && filtered.length && str[0] === "-") filtered = `-${filtered}`;
+    return filtered;
+  }
+
+  /**
    * Create a new RegEx from a string. Escapes the RegExp string before converting.
    * @param {string} value The value to escape and convert to a RegExp.
    * @param {string} [flags] Optional flags to pass to the RegExp.
