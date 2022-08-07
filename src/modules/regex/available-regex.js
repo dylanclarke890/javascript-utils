@@ -235,6 +235,35 @@ availableRegex.credit_card_visa = new RegExp({
   source: /(4[0-9]{12}(?:[0-9]{3})?)/,
 });
 
+availableRegex.date_dmy = new RegexInfo({
+  allowChange: true,
+  description:
+    "Optional separators are spaces, hyphens, forward slashes, and periods. The year is limited between 1900 and 2099.",
+  displayName: "DD/MM/YYYY Date",
+  examples: ["31/12/2000"],
+  source:
+    /(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2}/,
+});
+
+availableRegex.date_iso = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "ISO8601 date string",
+  examples: ["2020-03-12T13:34:56.123Z"],
+  source:
+    /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?/,
+});
+
+availableRegex.date_mdy = new RegexInfo({
+  allowChange: true,
+  description:
+    "Commonly used in the US, CAD and Phillipines. Optional separators are spaces, hyphens, forward slashes, and periods. The year is limited between 1900 and 2099.",
+  displayName: "MM/DD/YYYY Date",
+  examples: ["12/31/2000"],
+  source:
+    /(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2}/,
+});
+
 availableRegex.email = new RegexInfo({
   allowChange: true,
   description: "",
@@ -242,15 +271,6 @@ availableRegex.email = new RegexInfo({
   examples: ["testemail@test.com"],
   source:
     /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/,
-});
-
-availableRegex.iso_date = new RegexInfo({
-  allowChange: true,
-  description: "",
-  displayName: "ISO8601 date string",
-  examples: ["2020-03-12T13:34:56.123Z"],
-  source:
-    /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?/,
 });
 
 availableRegex.phone_na = new RegexInfo({
