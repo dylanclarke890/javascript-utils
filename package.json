@@ -1,7 +1,8 @@
 {
   "name": "dc-javascript-utils",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A collection of utility functions for JS.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "jest",
