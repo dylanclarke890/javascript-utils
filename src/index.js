@@ -1,29 +1,29 @@
-export * from "./src/modules/data-types/index";
-export * from "./src/modules/date-time/index";
-export * from "./src/modules/maps/index";
-export * from "./src/modules/maths/index";
-export * from "./src/modules/misc/index";
-export * from "./src/modules/object-handling/index";
-export * from "./src/modules/web/index";
+export * from "./modules/data-types/index";
+export * from "./modules/date-time/index";
+export * from "./modules/maps/index";
+export * from "./modules/maths/index";
+export * from "./modules/misc/index";
+export * from "./modules/object-handling/index";
+export * from "./modules/web/index";
 
 /******************************************************************
  |                  A O P  P R O X Y
 */
 
-import AOPProxy, { EFFECTIVE_TARGET_PROP } from "./src/modules/aop/AOPProxy";
-import applyRule from "./src/modules/aop/rules/applyRule";
-import constructRule from "./src/modules/aop/rules/constructRule";
+import AOPProxy, { EFFECTIVE_TARGET_PROP } from "./modules/aop/AOPProxy";
+import applyRule from "./modules/aop/rules/applyRule";
+import constructRule from "./modules/aop/rules/constructRule";
 import {
   call,
   get,
   set,
   apply,
   construct,
-} from "./src/modules/aop/pointcuts/pointcuts";
-import lazyObject from "./src/modules/aop/builtins/lazyObject";
-import throwErrorForUnknownProperty from "./src/modules/aop/builtins/throwErrorForUnknownProperty";
-import POJOPromiser from "./src/modules/aop/builtins/POJOPromiser";
-import arrayWithNegativeIndices from "./src/modules/object-handling/arrays";
+} from "./modules/aop/pointcuts/pointcuts";
+import lazyObject from "./modules/aop/builtins/lazyObject";
+import throwErrorForUnknownProperty from "./modules/aop/builtins/throwErrorForUnknownProperty";
+import POJOPromiser from "./modules/aop/builtins/POJOPromiser";
+import arrayWithNegativeIndices from "./modules/object-handling/arrays";
 
 /*
  * Mapping the API properties to the proxy function.
