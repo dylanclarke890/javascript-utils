@@ -3,7 +3,7 @@
   "version": "2.0.2",
   "description": "A collection of utility functions for JS.",
   "type": "module",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
