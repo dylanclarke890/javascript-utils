@@ -115,6 +115,18 @@ availableRegex.ipv6 = new RegexInfo({
   source: /((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}/,
 });
 
+availableRegex.ldap_dn = new RegexInfo({
+  allowChange: true,
+  description:
+    "A DN is a sequence of relative distinguished names (RDN) connected by commas.",
+  displayName: "LDAP Distinguished Names",
+  examples: [
+    "DC=gr-u,DC=it",
+    "CN=View-Only Organization Management,OU=Microsoft Exchange Security Groups,DC=gr-u,DC=it",
+  ],
+  source: /((CN=([^,]*)),)?((((?:CN|OU)=[^,]+,?)+),)?((DC=[^,]+,?)+)/,
+});
+
 availableRegex.url = new RegexInfo({
   allowChange: true,
   description: "",

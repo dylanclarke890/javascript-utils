@@ -19,7 +19,6 @@ export const process_name = "\\s*[\\w./<>-][\\w\\s./<>-]+";
 export const url_path_suffix = "/(?:[\\w.,:/%&?#!=*|\\[\\]~+-]+)?"; // there is an RFC3987 regex but it's gigantic, this is easier to reason about and serves most needs
 export const user = "\\b[A-Za-z0-9][A-Za-z0-9\\._-]*[A-Za-z0-9]\\b";
 export const column = "\\b[\\w:]+\\b";
-export const ldap_dn = "\\b\\w+=[\\w\\s-]+(?:,\\w+=[\\w\\s-]+)*\\b";
 export const threshold_range =
   "^(@)?(-?\\d+(?:\\.\\d+)?)(:)(-?\\d+(?:\\.\\d+)?)?$";
 export const threshold_simple = "^(-?\\d+(?:\\.\\d+)?)$";
