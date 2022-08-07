@@ -135,6 +135,15 @@ availableRegex.mac_address = new RegexInfo({
   source: /(?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2})/,
 });
 
+availableRegex.subnet_mask = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "Subnet Mask",
+  examples: ["255.255.255.255", "224.0.0.0"],
+  source:
+    /(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))/,
+});
+
 availableRegex.url = new RegexInfo({
   allowChange: true,
   description: "Will match most common url formats.",
