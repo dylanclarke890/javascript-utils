@@ -129,7 +129,7 @@ availableRegex.ldap_dn = new RegexInfo({
 availableRegex.mac_address = new RegexInfo({
   allowChange: true,
   description:
-    "Mac address is a unique identifier assigned to network interface controllers like WiFi routers, Ethernet controllers, etc. It has a format of six groups of 2 hexadecimal digits separated by dash or colon",
+    "Mac address is a unique identifier assigned to network interface controllers like WiFi routers, Ethernet controllers, etc. It has a format of six groups of 2 hexadecimal digits separated by dash or colon.",
   displayName: "IEEE 802 MAC Address",
   examples: ["00:00:5e:00:53:af"],
   source: /(?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2})/,
