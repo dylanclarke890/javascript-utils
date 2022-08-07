@@ -303,5 +303,23 @@ availableRegex.strong_password = new RegexInfo({
   source: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
 });
 
+availableRegex.us_state = new RegexInfo({
+  allowChange: true,
+  description: "Validates abbreviated state names.",
+  displayName: "US State",
+  examples: [""],
+  source:
+    /(?:A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/,
+});
+
+availableRegex.us_state = new RegexInfo({
+  allowChange: true,
+  description:
+    "Validates US ZIP Codes, with an optional 4 number ZIP code extension.",
+  displayName: "US State",
+  examples: [""],
+  source: /([0-9]{5}(?:-[0-9]{4})?)/,
+});
+
 Object.freeze(availableRegex);
 export default availableRegex;
