@@ -8,8 +8,6 @@ export const ip =
 export const hostname =
   "\\b[A-Za-z0-9](?:[A-Za-z0-9_\\-]{0,61}[a-zA-Z0-9])?\\b";
 export const domain = "\\b[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\b";
-export const directoryName = "[/\\w\\s\\\\.:,*()=%?+-]+";
-export const filename = directoryName + "[^/]";
 export const rwxt = "[r-][w-][x-][r-][w-][x-][r-][w-][xt-]";
 export const subnet =
   "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9]|[01]?0[1-9]|[12]00|[0-9])\\b";
