@@ -1,4 +1,4 @@
-import { escapeRegExp } from "../regex/regex-collection";
+import RegExpHelper from "../regex/RegExpHelper";
 
 /**
  * Get just the digits from a string.
@@ -54,7 +54,7 @@ export function str(v) {
  */
 export function trim(str, trim, options = {}) {
   if (typeof trim === "undefined") trim = " ";
-  trim = escapeRegExp(trim);
+  trim = RegExpHelper.escapeString(trim);
 
   const left = typeof options.trimLeft === "undefined" || options.trimLeft;
   const right = typeof options.trimRight === "undefined" || options.trimRight;

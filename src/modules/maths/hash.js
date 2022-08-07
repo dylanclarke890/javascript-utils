@@ -1,6 +1,3 @@
-import crypto from "node:crypto";
-import { Buffer } from "node:buffer";
-
 /**
  * Create a hash for file revving. Creates an md5 hash from an input buffer or string,
  * and truncates it to 10 characters, which is unique enough for the purpose of file-revving.
@@ -8,11 +5,11 @@ import { Buffer } from "node:buffer";
  * @param {Buffer | string} data
  * @returns {string} The truncated hash.
  */
-export function revisionHash(data) {
-  if (typeof data !== "string" && !Buffer.isBuffer(data))
-    throw new TypeError("Expected a Buffer or string");
-  return crypto.createHash("md5").update(data).digest("hex").slice(0, 10);
-}
+// export function revisionHash(data) {
+//   if (typeof data !== "string" && !Buffer.isBuffer(data))
+//     throw new TypeError("Expected a Buffer or string");
+//   return crypto.createHash("md5").update(data).digest("hex").slice(0, 10);
+// }
 
 /**
  * Computes a hash of an array of strings (the order of strings does not matter).
@@ -69,8 +66,7 @@ export function hashString(str) {
 export function hashStringSinglePass(str, startingHash = 0) {
   let hash = startingHash;
   let n = 0;
-  for (let j = 0; j < str.length; j++)
-    n = (n * 251) ^ str.charCodeAt(j);
+  for (let j = 0; j < str.length; j++) n = (n * 251) ^ str.charCodeAt(j);
   hash ^= n;
   return hash;
 }
@@ -108,13 +104,13 @@ export function hashSumOfIntArray(seq) {
  * small things. Pass an array instead of concatenating strings and/or buffers. The output
  * is the same, but arrays do not incur the overhead of concatenation.
  */
-export function md5Hex(data) {
-  const hash = crypto.createHash("md5");
-  const update = (buffer) => {
-    const inputEncoding = typeof buffer === "string" ? "utf8" : undefined;
-    hash.update(buffer, inputEncoding);
-  };
-  if (Array.isArray(data)) for (const element of data) update(element);
-  else update(data);
-  return hash.digest("hex");
-}
+// export function md5Hex(data) {
+//   const hash = crypto.createHash("md5");
+//   const update = (buffer) => {
+//     const inputEncoding = typeof buffer === "string" ? "utf8" : undefined;
+//     hash.update(buffer, inputEncoding);
+//   };
+//   if (Array.isArray(data)) for (const element of data) update(element);
+//   else update(data);
+//   return hash.digest("hex");
+// }
