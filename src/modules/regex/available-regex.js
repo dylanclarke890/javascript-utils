@@ -380,7 +380,7 @@ availableRegex.us_zipcode = new RegexInfo({
   allowChange: true,
   description:
     "Validates US ZIP Codes, with an optional 4 number ZIP code extension.",
-  displayName: "US State",
+  displayName: "US Zip Code",
   examples: [""],
   source: /([0-9]{5}(?:-[0-9]{4})?)/,
 });
