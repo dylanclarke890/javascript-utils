@@ -307,6 +307,72 @@ hasCyclicReference: Detect if an object has a cyclic reference.
 
 Utilities that work specifically in/with the browser.
 
+### Animation
+
+- rAFLooper: Asynchronously invoke a callback multiple times, each in its own animation frame.
+- nestedRAF: Request a predefined number of animation frames and executes a callback after.
+
+### Clipboard
+
+- copyTextToClipboard: Copies text to the clipboard.
+- fallbackCopyTextToClipboard: Fallback method for copyTextToClipboard.
+
+### Cookie
+
+- getCookie: Get a cookie value.
+- setCookie: Set a cookie value.
+- clearCookie: Unset a cookie.
+
+### DOM
+
+- isInViewport: Check if the element is in viewport.
+- isScrolledIntoView: Check if a DOM element is scrolled into the scrollable view of it's parent scrollable container.
+- hasHorizontalScrollbar: Check if a DOM element has a vertical scrollbar.
+- hasVerticalScrollbar: Check if a DOM element has a horizontal scrollbar.
+- uniqueElemId: Generate a unique ID which can be used for an element.
+- getElementComputedStyle: Get the computed style of an element.
+- elementInnerDimensions: Get an element's inner dimensions (height and width without padding).
+- countTextareaLines: Get the number of lines in a textarea, including wrapped lines.
+- isScrollOnBottom: Check if the scroll of an element is on the bottom.
+- getVerticalScrollBarWidth: Get the default browser's vertical scrollbar width.
+- isEllipsisActive: Checks if an element with "text-overflow: ellipsis;" has the ellipsis active and therefore has it's text truncated.
+- cursorFocus: Focuses an input without scrolling.
+- detectWrapped: Detect wrapped elements.
+- maxNestingLevel: Gets the maximum nesting level of an element (or of the whole DOM if "document.body" is given).
+- getScrollableAncestor: Get the first scrollable ancestor of an element.
+- scrollToTop: Smoothly scrolls to the top of a scrollable element or the browser's window.
+- downloadFile: Download a file without opening a new tab.
+- isApiSupported: Check if a browser API is supported.
+- isClient: Check if a function is called from client-side.
+
+### Form Data
+
+- buildFormData: Build a form data instance or object recursively.
+- objToformData: Convert an object (array or JS POJO object) to a form data instance.
+
+### Network
+
+- newXHR: Get a new XMLHttpRequest or ActiveXObject object.
+- checkNetwork: Check whether the network is reachable or not.
+- waitForNetwork: Get a promise which resolves when the network is available. Will resolve immediately if the network is available.
+
+### Query Strings
+
+- buildQueryString: Construct a query string from an object or array.
+- getRawURIFragment: Get the raw contents of the URI fragment (i.e. everything after the hash ("#") character).
+- getDecodedURIFragment: Get the decoded contents of a URI fragment (i.e. everything after the hash ("#") character).
+- appendEncodedJSONFragmentToURI: Appends an encoded JSON fragment to a URI.
+- getDecodedJSONFromFragmentURI: Get the decoded JSON data stored in the URI fragment.
+- parseMultiDimQueryStrings: Parse a multidimensional query string and returns an object with the parsed args.
+- getMultiDimQueryStrings: Get the query string arguments of the current location in a multidimensional fashion.
+
+### Swipe
+
+- getPointerCoordinates: Get clientX and clientY values from a touch or mouse event.
+- getDirection: Get the direction of a movement.
+- getHorizontalDirection: Get the direction of a horizontal movement.
+- getVerticalDirection: Get the direction of a vertical movement.
+
 ## Coming Soon
 
 - RegExpHelper: a helper class for regular expressions that also provides RegExp for a lot of common situations, i.e validating a password, matching against IP addresses etc.

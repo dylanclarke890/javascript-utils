@@ -237,7 +237,7 @@ export function detectWrapped(classNameOrElements) {
 
 /**
  * Gets the maximum nesting level of an element (or of the whole DOM if "document.body" is given
- * as parameter).abs
+ * as parameter).
  * @param {Element} elem The DOM element from which to start identifying the maximum nesting level.
  * @return {number} The maximum nesting level, starting from 0 if the given element has no children.
  */
