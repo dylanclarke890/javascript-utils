@@ -265,11 +265,10 @@ availableRegex.date_mdy = new RegexInfo({
 
 availableRegex.email = new RegexInfo({
   allowChange: true,
-  description: "",
+  description: "Will match most common formats.",
   displayName: "Email Address",
   examples: ["testemail@test.com"],
-  source:
-    /[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
+  source: /[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
 });
 
 availableRegex.phone_na = new RegexInfo({
