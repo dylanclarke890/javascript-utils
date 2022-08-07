@@ -37,12 +37,10 @@ export {
   toLocaleString,
 } from "./modules/maths/conversions";
 export {
-  revisionHash,
   hashString,
   hashArrayOfStrings,
   hashStringSinglePass,
   hashSumOfIntArray,
-  md5Hex,
 } from "./modules/maths/hash";
 export {
   round,

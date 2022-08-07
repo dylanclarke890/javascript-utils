@@ -1,5 +1,3 @@
-import RegExpHelper from "../regex/RegExpHelper";
-
 /**
  * Get just the digits from a string.
  * @param {string} str the string to parse.
@@ -54,7 +52,7 @@ export function str(v) {
  */
 export function trim(str, trim, options = {}) {
   if (typeof trim === "undefined") trim = " ";
-  trim = RegExpHelper.escapeString(trim);
+  trim = trim.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
 
   const left = typeof options.trimLeft === "undefined" || options.trimLeft;
   const right = typeof options.trimRight === "undefined" || options.trimRight;

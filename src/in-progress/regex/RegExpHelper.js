@@ -1,4 +1,4 @@
-import CTypeError from "../errors/CTypeError";
+import CTypeError from "../../modules/errors/CTypeError";
 import availableRegex from "./available-regex";
 
 /**
