@@ -5,7 +5,7 @@ class RegexInfo {
   /**
    *
    * @param {Object} data
-   * @param {RegExp} data.displayName The display name when returning info. Required.
+   * @param {RegExp} data.displayName The display name when returning info to the user. Required.
    * @param {RegExp} data.source The RegExp literal. Required.
    * @param {description} [data.description] Optional description string.
    * @param {Array<string>} [data.examples] Optional examples array.
@@ -35,8 +35,8 @@ availableRegex.aws_access_key = new RegexInfo({
   allowChange: true,
   description:
     "Looks for 20-character, uppercase, alphanumeric strings that don't have any uppercase, alphanumeric characters immediately before or after.",
-  examples: ["AKIAIOSFODNN7EXAMPLE"],
   displayName: "AWS Access Key",
+  examples: ["AKIAIOSFODNN7EXAMPLE"],
   source: /(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])/,
 });
 
@@ -51,7 +51,7 @@ availableRegex.aws_host_ip = new RegexInfo({
 availableRegex.aws_secret_key = new RegexInfo({
   allowChange: true,
   description:
-    "Looks for 40-character, base-64 strings that don't have any base 64 characters immediately before or after",
+    "Looks for 40-character, base-64 strings that don't have any base 64 characters immediately before or after.",
   displayName: "AWS Secret Key",
   examples: ["wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"],
   source: /(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])/,
@@ -69,7 +69,7 @@ availableRegex.aws_default_private_hostname = new RegexInfo({
  *                                 F I L E  S Y S T E M
  */
 
- availableRegex.directory = new RegexInfo({
+availableRegex.directory = new RegexInfo({
   allowChange: true,
   description: "",
   displayName: "Directory",
@@ -249,9 +249,18 @@ availableRegex.phone_nanp = new RegexInfo({
   source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
 });
 
+availableRegex.phone_na = new RegexInfo({
+  allowChange: true,
+  description:
+    "Will validate a 10-digit North American telephone number. Separators are not required, but can include spaces, hyphens, or periods. Parentheses around the area code are also optional.",
+  displayName: "North American Phone Number",
+  examples: [],
+  source: /(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+/,
+});
+
 availableRegex.map_code = new RegexInfo({
   allowChange: true,
-  description: "",
+  description: "Looks for any valid map code.",
   displayName: "Map Code",
   examples: ["TOM", "Saint Martin, Collectivity of", "Wyoming"],
   source: mapCodeRegex,
