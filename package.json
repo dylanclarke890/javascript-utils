@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "compile": "babel --source-maps -d lib/ src/"
   },
   "jest": {
     "transform": {
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.18.10",
     "@types/jest": "^28.1.6",
+    "babel-cli": "^6.26.0",
     "jest": "^28.1.3"
   }
 }
