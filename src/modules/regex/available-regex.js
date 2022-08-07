@@ -3,7 +3,6 @@ const availableRegex = {};
 
 class RegexInfo {
   /**
-   *
    * @param {Object} data
    * @param {RegExp} data.displayName The display name when returning info to the user. Required.
    * @param {RegExp} data.source The RegExp literal. Required.
@@ -270,7 +269,7 @@ availableRegex.email = new RegexInfo({
   displayName: "Email Address",
   examples: ["testemail@test.com"],
   source:
-    /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/,
+    /[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
 });
 
 availableRegex.phone_na = new RegexInfo({
