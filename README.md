@@ -5,7 +5,7 @@ Utility functions/classes for JavaScript with no external dependencies.
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Date Types](#data-types)
+2. [Custom Data Types](#custom-data-types)
 3. [Date and Time](#date-and-time)
 4. [Maps](#maps)
 5. [Maths](#maths)
@@ -22,9 +22,7 @@ To install (using NPM):
 npm install dc-javascript-utils --save
 ```
 
-## Data Types
-
-Custom data types.
+## Custom Data Types
 
 ### StringBuilder
 
