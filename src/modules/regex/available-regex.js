@@ -270,6 +270,14 @@ availableRegex.phone_nanp = new RegexInfo({
   source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
 });
 
+availableRegex.postcode = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "UK PostCode",
+  examples: ["M30 7DP"],
+  source: /([A-Z]{1,2}[0-9][A-Z0-9]? [0-9][ABD-HJLNP-UW-Z]{2})/,
+});
+
 availableRegex.map_code = new RegexInfo({
   allowChange: true,
   description: "Looks for any valid map code.",
