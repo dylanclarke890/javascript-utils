@@ -197,6 +197,32 @@ availableRegex.credit_card_amex = new RegExp({
   source: /(3[47][0-9]{13})/,
 });
 
+availableRegex.credit_card_mastercard = new RegExp({
+  allowChange: true,
+  description: "",
+  displayName: "MasterCard Credit Card",
+  examples: [],
+  source: /(5[1-5][0-9]{14})/,
+});
+
+availableRegex.credit_card_visa = new RegExp({
+  allowChange: true,
+  description: "",
+  displayName: "Visa Credit Card",
+  examples: [],
+  source: /(4[0-9]{12}(?:[0-9]{3})?)/,
+});
+
+availableRegex.credit_card_general = new RegExp({
+  allowChange: true,
+  description:
+    "Will validate all major credit cards: American Express (Amex), Discover, Mastercard, and Visa.",
+  displayName: "General Credit Card",
+  examples: [],
+  source:
+    /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})/,
+});
+
 availableRegex.email = new RegexInfo({
   allowChange: true,
   description: "",
