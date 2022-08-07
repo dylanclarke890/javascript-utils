@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/dylanclarke890/javascript-utils#readme",
   "devDependencies": {
+    "@babel/cli": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
     "@types/jest": "^28.1.6",
-    "babel-cli": "^6.26.0",
     "jest": "^28.1.3"
   }
 }
