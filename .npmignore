@@ -3,5 +3,8 @@ tests/
 src/__tests__/
 src/in-progress/
 src/in-progress
-lib
+lib/__tests__
+lib/in-progress/
+lib/in-progress
 .babelrc
+src
