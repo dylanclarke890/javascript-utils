@@ -275,5 +275,13 @@ availableRegex.iso_date = new RegexInfo({
     /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?/,
 });
 
+availableRegex.social_security = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "US Social Security Numbers",
+  examples: ["2020-03-12T13:34:56.123Z"],
+  source: /([0-9]{3}[-]*[0-9]{2}[-]*[0-9]{4})*/,
+});
+
 Object.freeze(availableRegex);
 export default availableRegex;
