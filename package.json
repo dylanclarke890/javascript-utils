@@ -7,7 +7,8 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "compile": "babel --source-maps -d lib/ src/"
+    "compile": "babel --source-maps -d lib/ src/",
+    "prepublish": "npm run compile"
   },
   "jest": {
     "transform": {
