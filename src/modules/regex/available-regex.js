@@ -270,7 +270,15 @@ availableRegex.phone_nanp = new RegexInfo({
   source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
 });
 
-availableRegex.postcode = new RegexInfo({
+availableRegex.postcode_cad = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "Canadian PostCode",
+  examples: [""],
+  source: /[ABCEGHJKLMNPRSTVXY][0-9][A-Z] [0-9][A-Z][0-9]/,
+});
+
+availableRegex.postcode_uk = new RegexInfo({
   allowChange: true,
   description: "",
   displayName: "UK PostCode",
