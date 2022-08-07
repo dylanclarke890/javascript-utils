@@ -1,7 +1,7 @@
 import { trim } from "../misc/strings";
 
 /**
- * Check if a value is date.
+ * Check if a value is a date.
  * @param {*} value The value to test.
  * @return {boolean} True if it is a valid date.
  */
