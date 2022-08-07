@@ -43,7 +43,7 @@ export function buildFormData(formData, data, encodeParams, parentKey) {
  * @param {Array|Object} data The data (array or POJO object).
  * @return {FormData} A form data instance.
  */
-export function objToformData(data) {
+export function objToFormData(data) {
   const formData = new FormData();
   buildFormData(formData, data);
   return formData;
