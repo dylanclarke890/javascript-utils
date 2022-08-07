@@ -66,6 +66,26 @@ availableRegex.aws_default_private_hostname = new RegexInfo({
 });
 
 /********************************************************************************************
+ *                                 F I L E  S Y S T E M
+ */
+
+ availableRegex.directory = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "Directory",
+  examples: [""],
+  source: /[\w+\/]+/,
+});
+
+availableRegex.file_path = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "File Path",
+  examples: [""],
+  source: /(.+)\/([^\/]+)/,
+});
+
+/********************************************************************************************
  *                                 I N T E R N E T
  */
 
