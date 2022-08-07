@@ -205,6 +205,104 @@ A variety of different utilities such as uuid generation, validating passwords a
 
 Utilities for working with objects and arrays, such as cloning and extending.
 
+### Arrays
+
+- distinct: Get unique elements from an array.
+- sumOf: Sum an array of numbers.
+- isArrayOfNumber: Check an array is all numbers.
+- firstItem: Get the first item of an array.
+- lastItem: Get the last item of an array.
+- firstNested: Get the first nested item of an array.
+- lastNested: Get the last nested item of an array.
+- minOf: Get the largest value of an array.
+- maxOf: Get the smallest value of an array.
+- sortNums: Order an array of numbers.
+- removeNulls: Remove null values from a list.
+- unshift: "unshift" an array.
+- indexWrappedArray: reate an array which allows the usage of negative indices to retrieve its data.
+- arrayMoveMutable: Move an item to a new position in the same array.
+- arrayMoveImmutable: Create a new array with an item in a new place.
+
+### Clone
+
+- cloneArr: Shallowly clone an array.
+- cloneDeep: Clones an object deeply, using either JSON or reflection.
+- extend: Extends a destination object with the provided source objects.
+- extendShallow: Shallowly extends a destination object with the provided source objects (first dimension).
+- deepObjectExtend: Deep object extension.
+- deepObjectCloningExtend: Deep object cloning extension implementation. If the source objects contain a property with a reference type, a clone object of the same type of that property will be created and then merged into the destination object.
+- extendDecorate: Extends a destination object with the provided source objects.
+- cloneRegExp: Clone a RegExp.
+
+### Compare
+
+- is: Function implementing `Object.is` behaviour.
+- isObjPropEqual: Check if the properties of two objects compare equal.
+- isEqualShallow: Check if two values compare equal shallowly.
+- isArrEqualDeep: Check if two arrays compare equal deeply.
+- isObjEqualDeep: Check if two objects compare equal deeply.
+- partialShallowEqual: Check if a partial object is a subset of another object.
+- objDiffShallow: Get an object which contains the differences between two objects.
+
+### Factories
+
+- declarativeFactory: A function to easily create interchangeable factories switching them in a declarative way based on the given runtime parameters.
+
+### Immutability
+
+- deepFreeze: Deep freezes an object.
+- createEnum: Create an enum-like object that can't be modified.
+
+### Introspection
+
+isPrimitiveType: Check if a value is a primitive type.
+isInt: Check if a value is a number.
+isIntString: Check if a value is a number in string form.
+isIntOrIntString: Check if a value is a number or number in string form.
+isNullOrEmpty: Check if a string is null or empty.
+isNullOrWhiteSpace: Check if a value is a null or just whitespace (e.g " ").
+isJSONString: Check if a string is a JSON string.
+isTrue: Check if a value is true.
+isTruthy: Check if a value is truthy.
+allTruthy: Check if all values in an array are truthy.
+isUndefined: Check if a value is undefined.
+isReferenceType: Check if a value is a reference type.
+isObject: Check if a value is an object.
+isObjectLiteral: Check if a value is an object literal.
+isObjectEmpty: Check if a value is an empty object (i.e {}).
+isArray: Check if a value is an array.
+isCallable: Check if a value is a function.
+safeHasOwnProperty: Safe implementation of `Object.prototype.hasOwnProperty()`.
+hasCyclicReference: Detect if an object has a cyclic reference.
+
+### Nested Properties
+
+- getNestedPropertyValue: Get a property value from a nested object.
+- hasNestedPropertyValue: Check if a nested object has a property.
+- setNestedPropertyValue: Set the value for a property in a nested object.
+- nestedMapGet: Get a value from a nested map.
+- nestedMapHas: Check if a nested map has a value.
+- nestedMapSet: Set a value in a nested map.
+- nestedTreeMapGet: Get a value from a nested tree map.
+- nestedTreeMapHas: Check if a nested tree map has a value.
+- nestedTreeMapSet: Set a value in a nested tree map.
+- nestedObjectConstructValue: Nest the properties of an object using an array of props definitions and defaults.
+
+### Objects
+
+- mapObject: Map an object, executing a function on each of its properties and returning a new mapped object.
+- arrToObject: Map an array to an object.
+- selectWhere: Select the properties of an object which return true for a supplied callback function.
+- getPrototypes: Return all the properties of a given object traversing it's prototype chain.
+- prop: Define an object's property with a getter and an optional setter.
+- defineProperty: Shorthand for `Object.defineProperty()`.
+- completeObjectAssign: Assign the properties of a given source objects to the target object.
+
+### Weak Equality Functions
+
+- includes: Like `Array.prototype.includes`, but with type coercion.
+- findIndex: Finds the index of a value in an array, using type coercion.
+
 ## Web
 
 Utilities that work specifically in/with the browser.

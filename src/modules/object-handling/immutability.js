@@ -11,6 +11,12 @@ export function deepFreeze(obj) {
   return Object.freeze(obj);
 }
 
+/**
+ * Create an enum-like object from a list of values. The enum will be frozen to prevent
+ * further modification.
+ * @param  {...any} values 
+ * @returns The enum.
+ */
 export function createEnum(...values) {
   const enumObj = {};
   for (let val in values) enumObj[val] = val;

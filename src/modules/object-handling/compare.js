@@ -1,5 +1,3 @@
-import { isObjectLiteral } from "./introspection";
-
 /**
  * Function implementing "Object.is" behaviour.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is

@@ -1,5 +1,3 @@
-import { roundToNearestMinutes } from "date-fns";
-
 /**
  * @param {any[]} arr an array of values.
  * @returns the distinct elements from the array. */
@@ -103,7 +101,7 @@ export function removeNulls(arr) {
   return returnArr;
 }
 
-/**  
+/**
  * 'Unshift' an item to an array (will become the new first item).
  * @param {any[]} arr The array to unshift.
  * @param {*} item the item to "prepend" to the array. */
