@@ -197,6 +197,16 @@ availableRegex.credit_card_amex = new RegExp({
   source: /(3[47][0-9]{13})/,
 });
 
+availableRegex.credit_card_general = new RegExp({
+  allowChange: true,
+  description:
+    "Will validate all major credit cards: American Express (Amex), Discover, Mastercard, and Visa.",
+  displayName: "General Credit Card",
+  examples: [],
+  source:
+    /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})/,
+});
+
 availableRegex.credit_card_mastercard = new RegExp({
   allowChange: true,
   description: "",
@@ -213,16 +223,6 @@ availableRegex.credit_card_visa = new RegExp({
   source: /(4[0-9]{12}(?:[0-9]{3})?)/,
 });
 
-availableRegex.credit_card_general = new RegExp({
-  allowChange: true,
-  description:
-    "Will validate all major credit cards: American Express (Amex), Discover, Mastercard, and Visa.",
-  displayName: "General Credit Card",
-  examples: [],
-  source:
-    /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})/,
-});
-
 availableRegex.email = new RegexInfo({
   allowChange: true,
   description: "",
@@ -230,40 +230,6 @@ availableRegex.email = new RegexInfo({
   examples: ["testemail@test.com"],
   source:
     /[^\\.\\s@:](?:[^\\s@:]*[^\\s@:\\.])?@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*.(?:\w|.){2,}/,
-});
-
-availableRegex.strong_password = new RegexInfo({
-  allowChange: true,
-  description:
-    "Look for an upper and lower case character, a number and a special character.",
-  displayName: "Strong Password",
-  examples: ["AStrongPassword123!"],
-  source: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
-});
-
-availableRegex.phone_nanp = new RegexInfo({
-  allowChange: true,
-  description: "Ensures a phone number is in the NANP format (XXX-NXX-XXXX).",
-  displayName: "NANP Phone Number",
-  examples: ["123-456-7890"],
-  source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
-});
-
-availableRegex.phone_na = new RegexInfo({
-  allowChange: true,
-  description:
-    "Will validate a 10-digit North American telephone number. Separators are not required, but can include spaces, hyphens, or periods. Parentheses around the area code are also optional.",
-  displayName: "North American Phone Number",
-  examples: [],
-  source: /(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+/,
-});
-
-availableRegex.map_code = new RegexInfo({
-  allowChange: true,
-  description: "Looks for any valid map code.",
-  displayName: "Map Code",
-  examples: ["TOM", "Saint Martin, Collectivity of", "Wyoming"],
-  source: mapCodeRegex,
 });
 
 availableRegex.iso_date = new RegexInfo({
@@ -275,12 +241,46 @@ availableRegex.iso_date = new RegexInfo({
     /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?/,
 });
 
+availableRegex.phone_na = new RegexInfo({
+  allowChange: true,
+  description:
+    "Will validate a 10-digit North American telephone number. Separators are not required, but can include spaces, hyphens, or periods. Parentheses around the area code are also optional.",
+  displayName: "North American Phone Number",
+  examples: [],
+  source: /(([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+/,
+});
+
+availableRegex.phone_nanp = new RegexInfo({
+  allowChange: true,
+  description: "Ensures a phone number is in the NANP format (XXX-NXX-XXXX).",
+  displayName: "NANP Phone Number",
+  examples: ["123-456-7890"],
+  source: /(?:\(?\d{3})?\)?[- ]?[2-9]\d{2}[- ]?\d{4}/,
+});
+
+availableRegex.map_code = new RegexInfo({
+  allowChange: true,
+  description: "Looks for any valid map code.",
+  displayName: "Map Code",
+  examples: ["TOM", "Saint Martin, Collectivity of", "Wyoming"],
+  source: mapCodeRegex,
+});
+
 availableRegex.social_security = new RegexInfo({
   allowChange: true,
   description: "",
   displayName: "US Social Security Numbers",
   examples: ["2020-03-12T13:34:56.123Z"],
   source: /([0-9]{3}[-]*[0-9]{2}[-]*[0-9]{4})*/,
+});
+
+availableRegex.strong_password = new RegexInfo({
+  allowChange: true,
+  description:
+    "Look for an upper and lower case character, a number and a special character.",
+  displayName: "Strong Password",
+  examples: ["AStrongPassword123!"],
+  source: /(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*]){8,64}/,
 });
 
 Object.freeze(availableRegex);
