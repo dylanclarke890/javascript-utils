@@ -88,6 +88,19 @@ availableRegex.file_path = new RegexInfo({
  *                                 I N T E R N E T
  */
 
+availableRegex.domain = new RegexInfo({
+  allowChange: true,
+  description: "Note: will NOT match localhost.",
+  displayName: "Domain Name",
+  examples: [
+    "google.com",
+    "db.my-website.co.us",
+    "ftp://container-617.databases.online",
+  ],
+  source:
+    /(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?/,
+});
+
 availableRegex.http_url = new RegexInfo({
   allowChange: true,
   description: "",
