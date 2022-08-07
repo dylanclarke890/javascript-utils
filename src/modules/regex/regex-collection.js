@@ -5,9 +5,6 @@ export const rwxt = "[r-][w-][x-][r-][w-][x-][r-][w-][xt-]";
 export const process_name = "\\s*[\\w./<>-][\\w\\s./<>-]+";
 export const user = "\\b[A-Za-z0-9][A-Za-z0-9\\._-]*[A-Za-z0-9]\\b";
 export const column = "\\b[\\w:]+\\b";
-export const threshold_range =
-  "^(@)?(-?\\d+(?:\\.\\d+)?)(:)(-?\\d+(?:\\.\\d+)?)?$";
-export const threshold_simple = "^(-?\\d+(?:\\.\\d+)?)$";
 export const label = "\\s*[\\%\\(\\)\\/\\*\\w-][\\%\\(\\)\\/\\*\\w\\s-]*";
 export const version = "\\d(\\.\\d+)*";
 export const version_lax = version + "-?.*";
