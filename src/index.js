@@ -30,7 +30,6 @@ export {
   checkNthBitOn,
   toggleNthBit,
 } from "./modules/maths/bitwise";
-export { bestZoomForBounds } from "./modules/maps/google-maps";
 export {
   binaryToDecimal,
   convertBytes,
