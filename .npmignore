@@ -1,5 +1,7 @@
 node_modules/
 tests/
 src/__tests__/
+src/in-progress/
+src/in-progress
 lib
 .babelrc
