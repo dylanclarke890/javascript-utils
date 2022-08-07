@@ -74,11 +74,24 @@ Date and time utilities.
 
 ## Maps
 
-Google maps and coordinate-related utilities.
+Maps and coordinate-related utilities.
+
+- bestZoomForBounds: Determines the best zoom level for a Google map.
+- clampLatitude: Clamps a latitude value so that it is within the range -90-90.
+- wrapLongitude: Wraps a longitude value so that it is within the range -180-180.
+- normalizeLatitude: Normalizes a latitude so that it is within the range 0-180.
+- normalizeLongitude: Normalizes a longitude so that it is within the range 0-360.
+- isSamePosition: Checks if two position objects are equal.
+- makePositionObj: Given a object with coords properties returns only its timestamp and coord properties.
 
 ## Maths
 
-Maths utilities.
+### Bitwise
+
+- turnNthBitOff: Turn a bit of a number off.
+- turnNthBitOn: Turn a bit of a number on.
+- toggleNthBit: Toggle a bit of a number.
+- checkNthBitOn: Check a bit is on in a number.
 
 ## Misc
 
