@@ -1,6 +1,3 @@
-/**********************************************************************************************
- *                      I P  A N D  W E B  S E R V I C E S
- */
 export const ip_prefix =
   "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}";
 // allows 0 or 255 as the final octet due to CIDR
@@ -29,57 +26,3 @@ export const threshold_simple = "^(-?\\d+(?:\\.\\d+)?)$";
 export const label = "\\s*[\\%\\(\\)\\/\\*\\w-][\\%\\(\\)\\/\\*\\w\\s-]*";
 export const version = "\\d(\\.\\d+)*";
 export const version_lax = version + "-?.*";
-
-/**********************************************************************************************
- *                      F I L T E R  M E T H O D S
- */
-
-export function filterInt(str) {
-  let filtered = str.replace(/[^0-9]/g, "");
-  filtered = filtered.replace(/^[0]+([1-9])/, "$1");
-  filtered = filtered.replace(/^[0]+$/, "0");
-  if (str && filtered.length && str[0] === "-") {
-    filtered = `-${filtered}`;
-  }
-  return filtered;
-}
-
-export function filterFloat(str) {
-  let filtered = str.replace(/[^0-9.]/g, "");
-  const regex = /(\..*)\./g;
-  const replace = "$1";
-  do {
-    filtered = filtered.replace(regex, replace);
-  } while (filtered != filtered.replace(regex, replace));
-  filtered === "." ? (filtered = "0.") : filtered;
-  filtered = filtered.replace(/^[0]+([1-9])/, "$1");
-  filtered = filtered.replace(/^[0]+($|\.)/, "0$1");
-  if (str && filtered.length && str[0] === "-") filtered = `-${filtered}`;
-  return filtered;
-}
-
-/**********************************************************************************************
- *                      E S C A P E  R E G E X P  S T R I N G S
- */
-
-/**
- * Escapes special characters for a JS regex. More reliable version of `escapeRegExp(text)`.
- * @param {string} text The string to escape.
- * @return {string} The same string with special regex characters escaped.
- */
-export function escapeStringRegexp(string) {
-  if (typeof string !== "string") throw new TypeError("Expected a string");
-  // Escape characters with special meaning either inside or outside character sets.
-  // Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
-  return string.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
-}
-
-/**
- * Escapes special characters for a JS regex.
- * @see https://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
- * @param {string} text The string to escape.
- * @return {string} The same string with special regex characters escaped.
- */
-export function escapeRegExp(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
