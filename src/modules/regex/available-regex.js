@@ -137,7 +137,7 @@ availableRegex.mac_address = new RegexInfo({
 
 availableRegex.url = new RegexInfo({
   allowChange: true,
-  description: "",
+  description: "Will match most common url formats.",
   displayName: "Generic Url",
   examples: ["www.example.com"],
   source:
