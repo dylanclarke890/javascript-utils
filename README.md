@@ -1,4 +1,4 @@
-# javascript-utils
+# dc-javascript-utils
 
 Utility functions/classes for JavaScript with no external dependencies.
 
