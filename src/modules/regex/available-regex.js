@@ -40,6 +40,14 @@ availableRegex.aws_access_key = new RegexInfo({
   source: /(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])/,
 });
 
+availableRegex.aws_default_private_hostname = new RegexInfo({
+  allowChange: true,
+  description: "Format is usually 'ip-xxx-xxx-xxx-xxx'.",
+  displayName: "AWS Default Private Hostname",
+  examples: ["ip-10-96-2-123"],
+  source: /ip(-[0-9]{1,3}){4}/,
+});
+
 availableRegex.aws_host_ip = new RegexInfo({
   allowChange: true,
   description: "",
@@ -55,14 +63,6 @@ availableRegex.aws_secret_key = new RegexInfo({
   displayName: "AWS Secret Key",
   examples: ["wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"],
   source: /(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])/,
-});
-
-availableRegex.aws_default_private_hostname = new RegexInfo({
-  allowChange: true,
-  description: "Format is usually 'ip-xxx-xxx-xxx-xxx'.",
-  displayName: "AWS Default Private Hostname",
-  examples: ["ip-10-96-2-123"],
-  source: /ip(-[0-9]{1,3}){4}/,
 });
 
 /********************************************************************************************
@@ -89,6 +89,15 @@ availableRegex.file_path = new RegexInfo({
  *                                 I N T E R N E T
  */
 
+availableRegex.http_url = new RegexInfo({
+  allowChange: true,
+  description: "",
+  displayName: "HTTP Url",
+  examples: ["www.example.com"],
+  source:
+    /(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?/,
+});
+
 availableRegex.ipv4 = new RegexInfo({
   allowChange: true,
   description: "",
@@ -106,15 +115,6 @@ availableRegex.ipv6 = new RegexInfo({
   source: /((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}/,
 });
 
-availableRegex.http_url = new RegexInfo({
-  allowChange: true,
-  description: "",
-  displayName: "HTTP Url",
-  examples: ["www.example.com"],
-  source:
-    /(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?/,
-});
-
 availableRegex.url = new RegexInfo({
   allowChange: true,
   description: "",
@@ -128,20 +128,12 @@ availableRegex.url = new RegexInfo({
  *                                    M I S C
  */
 
-availableRegex.scoped_npm_package = new RegexInfo({
+availableRegex.hsl_color = new RegexInfo({
   allowChange: true,
   description: "",
-  displayName: "Scoped NPM Package Name",
-  examples: [],
-  source: /@[a-z\\d][\\w-.]+\/[a-z\\d][\\w-.]*/,
-});
-
-availableRegex.js_line_comment = new RegexInfo({
-  allowChange: false,
-  description: "Matches against JS line comments (i.e //).",
-  displayName: "JavaScript Line Comment",
-  examples: ["// something", "// this is a comment"],
-  source: /(?:^|\s)\/\/(.+?)$/gms,
+  displayName: "HSL Color",
+  examples: ["hsl(227, 100%, 100%)"],
+  source: /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/,
 });
 
 availableRegex.js_block_comment = new RegexInfo({
@@ -152,12 +144,20 @@ availableRegex.js_block_comment = new RegexInfo({
   source: /\/\*(.*?)\*\//gms,
 });
 
-availableRegex.hsl_color = new RegexInfo({
+availableRegex.js_line_comment = new RegexInfo({
+  allowChange: false,
+  description: "Matches against JS line comments (i.e //).",
+  displayName: "JavaScript Line Comment",
+  examples: ["// something", "// this is a comment"],
+  source: /(?:^|\s)\/\/(.+?)$/gms,
+});
+
+availableRegex.scoped_npm_package = new RegexInfo({
   allowChange: true,
   description: "",
-  displayName: "HSL Color",
-  examples: ["hsl(227, 100%, 100%)"],
-  source: /hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/,
+  displayName: "Scoped NPM Package Name",
+  examples: [],
+  source: /@[a-z\\d][\\w-.]+\/[a-z\\d][\\w-.]*/,
 });
 
 availableRegex.uuid = new RegexInfo({
