@@ -376,7 +376,7 @@ availableRegex.us_state = new RegexInfo({
     /(?:A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])/,
 });
 
-availableRegex.us_state = new RegexInfo({
+availableRegex.us_zipcode = new RegexInfo({
   allowChange: true,
   description:
     "Validates US ZIP Codes, with an optional 4 number ZIP code extension.",
