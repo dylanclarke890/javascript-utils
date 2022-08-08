@@ -7,4 +7,5 @@ lib/__tests__
 lib/in-progress/
 lib/in-progress
 .babelrc
+babel.config.json
 src
