@@ -219,7 +219,7 @@ Utilities for working with objects and arrays, such as cloning and extending.
 - sortNums: Order an array of numbers.
 - removeNulls: Remove null values from a list.
 - unshift: "unshift" an array.
-- indexWrappedArray: reate an array which allows the usage of negative indices to retrieve its data.
+- indexWrappedArray: Create an array which allows the usage of negative indices to retrieve its data.
 - arrayMoveMutable: Move an item to a new position in the same array.
 - arrayMoveImmutable: Create a new array with an item in a new place.
 
